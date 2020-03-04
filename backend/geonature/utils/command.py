@@ -157,15 +157,22 @@ def tsconfig_app_templating(app=None):
             output_file.write(route_template)
 
     log.info("...%s\n", MSG_OK)
-    
+
 
 def create_frontend_config(conf_file):
     log.info("Generating configuration")
     configs_gn = load_and_validate_toml(conf_file, GnGeneralSchemaConf)
 
-    with open(str(ROOT_DIR / "frontend/src/conf/app.config.ts"), "w") as outputfile:
+    path = str(ROOT_DIR / "frontend/src/assets/config/config.json")
+    with open(path, "w") as outputfile:
+        json.dump(configs_gn, outputfile, indent=True)
+
+    # Old mechanism to delete at the end
+    path = str(ROOT_DIR / "frontend/src/conf/app.config.ts")
+    with open(path, "w") as outputfile:
         outputfile.write("export const AppConfig = ")
         json.dump(configs_gn, outputfile, indent=True)
+
     log.info("...%s\n", MSG_OK)
 
 

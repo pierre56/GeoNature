@@ -17,6 +17,8 @@ import { ChartModule } from 'angular2-chartjs';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { ConfigModule, ConfigLoader } from '@ngx-config/core';
+import { ConfigHttpLoader } from '@ngx-config/http-loader';
 
 // Modules
 import { GN2CommonModule } from '@geonature_common/GN2Common.module';
@@ -52,9 +54,13 @@ import { SideNavService } from './components/sidenav-items/sidenav-service';
 import { MyCustomInterceptor } from './services/http.interceptor';
 import { GlobalSubService } from './services/global-sub.service';
 
+export function configFactory(http: HttpClient): ConfigLoader {
+  return new ConfigHttpLoader(http, './assets/config/config.json');
+};
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
+};
 
 @NgModule({
   imports: [
@@ -64,6 +70,11 @@ export function createTranslateLoader(http: HttpClient) {
     FlexLayoutModule,
     routing,
     ChartModule,
+    ConfigModule.forRoot({
+      provide: ConfigLoader,
+      useFactory: (configFactory),
+      deps: [HttpClient]
+    }),
     ToastrModule.forRoot({
       positionClass: 'toast-top-center',
       tapToDismiss: true,

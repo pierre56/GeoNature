@@ -14,6 +14,7 @@ import { OccHabModalDownloadComponent } from "./components/occhab-map-list/modal
 import { OcchabInfoComponent } from "./components/occhab-info/occhab-info.component";
 import { ModalDeleteStation } from "./components/delete-modal/delete-modal.component";
 import { OccHabDatasetMapOverlayComponent } from "./components/occhab-map-form/dataset-map-overlay/dataset-map-overlay.component";
+
 // my module routing
 const routes: Routes = [
   { path: "form", component: OccHabFormComponent },
@@ -39,7 +40,6 @@ const routes: Routes = [
     NgbModule.forRoot()
   ],
   entryComponents: [OccHabModalDownloadComponent],
-
   providers: [OccHabDataService, OcchabStoreService, OccHabMapListService],
   bootstrap: []
 })

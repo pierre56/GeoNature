@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { OccHabMapListService } from "../../services/occhab-map-list.service";
-import { AppConfig } from "@geonature_config/app.config";
+import { ConfigService } from '@ngx-config/core'
 import { NgbDateParserFormatter } from "@ng-bootstrap/ng-bootstrap";
 import { ModuleConfig } from "../../module.config";
 
@@ -10,14 +10,19 @@ import { ModuleConfig } from "../../module.config";
   styleUrls: ["./occhab-map-list-filter.component.scss"]
 })
 export class OcchabMapListFilterComponent implements OnInit {
+  public moduleConfig = ModuleConfig;
+  public apiEndPoint: string;
+
   constructor(
     public mapListFormService: OccHabMapListService,
-    private _dateParser: NgbDateParserFormatter
+    private _dateParser: NgbDateParserFormatter,
+    private readonly appConfig: ConfigService
   ) {}
-  public appConfig = AppConfig;
-  public moduleConfig = ModuleConfig;
+
   @Output() onSearch = new EventEmitter<any>();
-  ngOnInit() {}
+  ngOnInit() {
+    this.apiEndPoint = this.appConfig.getSettings('API_ENDPOINT');
+  }
 
   formatter(item) {
     return item.search_name;

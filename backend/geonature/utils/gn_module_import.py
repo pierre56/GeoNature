@@ -388,18 +388,18 @@ def create_module_config(app, module_code, mod_path=None, build=True):
 
     with app.app_context():
         if not mod_path:
-            # get the symlink location to write the config file
+            # Get the symlink location to write the config file
             mod_path = os.readlink(
                 str(GN_EXTERNAL_MODULE / module_code.lower()))
 
-        # fetch the module in the DB from its name
+        # Fetch the module in the DB from its name
         module_object = (
             DB.session.query(TModules)
             .filter(TModules.module_code == module_code.upper())
             .one()
         )
 
-        # import du module dans le sys.path
+        # Import module in sys.path
         module_parent_dir = str(Path(mod_path).parent)
         module_schema_conf = "{}.config.conf_schema_toml".format(
             Path(mod_path).name
@@ -410,14 +410,35 @@ def create_module_config(app, module_code, mod_path=None, build=True):
             mod_path, "config/conf_gn_module.toml"
         )  # noqa
         config_module = utilstoml.load_and_validate_toml(
-            front_module_conf_file, module.config.conf_schema_toml.GnModuleSchemaConf
+            front_module_conf_file,
+            module.config.conf_schema_toml.GnModuleSchemaConf
         )
-        # set id_module and module_code
+
+        # Set id_module and module_code
         config_module["ID_MODULE"] = module_object.id_module
         config_module["MODULE_CODE"] = module_object.module_code
         config_module["MODULE_URL"] = module_object.module_path.replace(
             " ", "")
 
+        # Generate module config file
+        path = os.path.join(
+            ROOT_DIR,
+            "frontend/src/assets/plugins/",
+            module_object.module_code.lower(),
+            "config.json"
+        )
+        try:
+            os.mkdir(os.path.dirname(path))
+        except OSError:
+            print("Creation of the directory %s failed" % path)
+        try:
+            with open(path, "w") as outputfile:
+                json.dump(config_module, outputfile,
+                          indent=True, sort_keys=True)
+        except FileNotFoundError:
+            log.info("No frontend config file")
+
+        # TODO: Old config generating mechanism need to remove at the end
         frontend_config_path = os.path.join(
             mod_path, "frontend/app/module.config.ts"
         )  # noqa
