@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AppConfig } from '../../../conf/app.config';
+
 import { MapService } from '@geonature_common/map/map.service';
 import { SideNavService } from '../sidenav-items/sidenav-service';
 import { DataService } from '@geonature/syntheseModule/services/data.service';
 import { GlobalSubService } from '../../services/global-sub.service';
 import { DataFormService } from '@geonature_common/form/data-form.service';
 import { ModuleService } from '../../services/module.service';
+import { ConfigService } from '@geonature/utils/configModule/core';
 
 @Component({
   selector: 'pnx-home-content',
@@ -25,18 +26,18 @@ export class HomeContentComponent implements OnInit {
     private _globalSub: GlobalSubService,
     private _api: DataFormService,
     private _moduleService: ModuleService,
-    private _mapService: MapService
+    private _mapService: MapService,
+    private _configService: ConfigService
   ) {}
 
   ngOnInit() {
     this._SideNavService.sidenav.open();
-    this.appConfig = AppConfig;
-    if (AppConfig.FRONTEND.DISPLAY_MAP_LAST_OBS) {
+    if (this._configService.getSettings('FRONTEND.DISPLAY_MAP_LAST_OBS')) {
       this._syntheseApi.getSyntheseData({ limit: 100 }).subscribe(result => {
         this.lastObs = result.data;
       });
     }
-    if (AppConfig.FRONTEND.DISPLAY_STAT_BLOC) {
+    if (this._configService.getSettings('FRONTEND.DISPLAY_STAT_BLOC')) {
       // get general stats
       this._syntheseApi
         .getSyntheseGeneralStat()

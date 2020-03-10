@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Map, GeoJSON, Layer, FeatureGroup, Marker, LatLng } from 'leaflet';
+import { Map, GeoJSON, Layer, FeatureGroup, Marker } from 'leaflet';
 import { Subject, Observable } from 'rxjs';
 
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
-import { AppConfig } from '@geonature_config/app.config';
+
 import { CommonService } from '../service/common.service';
+import { ConfigService } from '@geonature/utils/configModule/core';
 
 @Injectable()
 export class MapService {
@@ -49,7 +49,7 @@ export class MapService {
     color: 'green'
   };
 
-  constructor(private http: HttpClient, private _commonService: CommonService) {}
+  constructor(private _commonService: CommonService, private _configService: ConfigService) {}
 
   setMap(map) {
     this.map = map;
@@ -213,7 +213,7 @@ export class MapService {
       };
       this.setGeojsonCoord(geojson);
       this.marker.on('moveend', (event: L.LeafletMouseEvent) => {
-        if (this.map.getZoom() < AppConfig.MAPCONFIG.ZOOM_LEVEL_RELEVE) {
+        if (this.map.getZoom() < this._configService.getSettings('MAPCONFIG.ZOOM_LEVEL_RELEVE')) {
           this._commonService.translateToaster('warning', 'Map.ZoomWarning');
         } else {
           markerCoord = this.marker.getLatLng();

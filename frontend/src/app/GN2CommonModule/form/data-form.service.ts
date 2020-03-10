@@ -6,9 +6,10 @@ import {
   HttpErrorResponse,
   HttpEvent
 } from '@angular/common/http';
-import { AppConfig } from '../../../conf/app.config';
 import { Taxon } from './taxonomy/taxonomy.component';
 import { Observable } from 'rxjs';
+
+import { ConfigService } from '@geonature/utils/configModule/core';
 
 /** Interface for queryString parameters*/
 interface ParamsDict {
@@ -24,7 +25,12 @@ export const FormatMapMime = new Map([
 @Injectable()
 export class DataFormService {
   private _blob: Blob;
-  constructor(private _http: HttpClient) {}
+  public readonly API_ENDPOINT: string;
+  public readonly API_TAXHUB: string;
+  constructor(private _http: HttpClient, private _configService: ConfigService) {
+    this.API_ENDPOINT = this._configService.getSettings('API_ENDPOINT');
+    this.API_TAXHUB = this._configService.getSettings('API_TAXHUB');
+  }
 
   getNomenclature(
     codeNomenclatureType: string,
@@ -44,7 +50,7 @@ export class DataFormService {
       params = params.set('order', filters['order']);
     }
     return this._http.get<any>(
-      `${AppConfig.API_ENDPOINT}/nomenclatures/nomenclature/${codeNomenclatureType}`,
+      `${this.API_ENDPOINT}/nomenclatures/nomenclature/${codeNomenclatureType}`,
       { params: params }
     );
   }
@@ -56,7 +62,7 @@ export class DataFormService {
       params = params.append('code_type', code);
     });
 
-    return this._http.get<any>(`${AppConfig.API_ENDPOINT}/nomenclatures/nomenclatures`, {
+    return this._http.get<any>(`${this.API_ENDPOINT}/nomenclatures/nomenclatures`, {
       params: params
     });
   }
@@ -70,7 +76,7 @@ export class DataFormService {
     mnemoniques.forEach(mnem => {
       queryString = queryString.append('mnemonique', mnem);
     });
-    return this._http.get<any>(`${AppConfig.API_ENDPOINT}/${path}/defaultNomenclatures`, {
+    return this._http.get<any>(`${this.API_ENDPOINT}/${path}/defaultNomenclatures`, {
       params: queryString
     });
   }
@@ -96,17 +102,17 @@ export class DataFormService {
       }
     }
 
-    return this._http.get<any>(`${AppConfig.API_ENDPOINT}/meta/datasets`, {
+    return this._http.get<any>(`${this.API_ENDPOINT}/meta/datasets`, {
       params: queryString
     });
   }
 
   getObservers(idMenu) {
-    return this._http.get<any>(`${AppConfig.API_ENDPOINT}/users/menu/${idMenu}`);
+    return this._http.get<any>(`${this.API_ENDPOINT}/users/menu/${idMenu}`);
   }
 
   getObserversFromCode(codeList) {
-    return this._http.get<any>(`${AppConfig.API_ENDPOINT}/users/menu_from_code/${codeList}`);
+    return this._http.get<any>(`${this.API_ENDPOINT}/users/menu_from_code/${codeList}`);
   }
 
   autocompleteTaxon(api_endpoint: string, searh_name: string, params?: { [key: string]: string }) {
@@ -123,7 +129,7 @@ export class DataFormService {
   }
 
   getTaxonInfo(cd_nom: number) {
-    return this._http.get<Taxon>(`${AppConfig.API_TAXHUB}/taxref/${cd_nom}`);
+    return this._http.get<Taxon>(`${this.API_TAXHUB}/taxref/${cd_nom}`);
   }
 
   getTaxonAttributsAndMedia(cd_nom: number, id_attributs?: Array<number>) {
@@ -134,32 +140,32 @@ export class DataFormService {
       });
     }
 
-    return this._http.get<any>(`${AppConfig.API_TAXHUB}/bibnoms/taxoninfo/${cd_nom}`, {
+    return this._http.get<any>(`${this.API_TAXHUB}/bibnoms/taxoninfo/${cd_nom}`, {
       params: query_string
     });
   }
 
   async getTaxonInfoSynchrone(cd_nom: number): Promise<any> {
     const response = await this._http
-      .get<Taxon>(`${AppConfig.API_TAXHUB}/taxref/${cd_nom}`)
+      .get<Taxon>(`${this._configService.getSettings('API_TAXHUB')}/taxref/${cd_nom}`)
       .toPromise();
     return response;
   }
 
   getRegneAndGroup2Inpn() {
-    return this._http.get<any>(`${AppConfig.API_TAXHUB}/taxref/regnewithgroupe2`);
+    return this._http.get<any>(`${this.API_TAXHUB}/taxref/regnewithgroupe2`);
   }
 
   getTaxhubBibAttributes() {
-    return this._http.get<any>(`${AppConfig.API_TAXHUB}/bibattributs/`);
+    return this._http.get<any>(`${this.API_TAXHUB}/bibattributs/`);
   }
 
   getTaxonomyLR() {
-    return this._http.get<any>(`${AppConfig.API_TAXHUB}/taxref/bib_lr`);
+    return this._http.get<any>(`${this.API_TAXHUB}/taxref/bib_lr`);
   }
 
   getTaxonomyHabitat() {
-    return this._http.get<any>(`${AppConfig.API_TAXHUB}/taxref/bib_habitats`);
+    return this._http.get<any>(`${this.API_TAXHUB}/taxref/bib_habitats`);
   }
 
   getTypologyHabitat(id_list: number) {
@@ -168,37 +174,35 @@ export class DataFormService {
     if (id_list) {
       params = params.set('id_list', id_list.toString());
     }
-    return this._http
-      .get<any>(`${AppConfig.API_ENDPOINT}/habref/typo`, { params: params })
-      .map(data => {
-        // replace '_' with space because habref is super clean !
-        return data.map(d => {
-          d['lb_nom_typo'] = d['lb_nom_typo'].replace(/_/g, ' ');
-          return d;
-        });
+    return this._http.get<any>(`${this.API_ENDPOINT}/habref/typo`, { params: params }).map(data => {
+      // replace '_' with space because habref is super clean !
+      return data.map(d => {
+        d['lb_nom_typo'] = d['lb_nom_typo'].replace(/_/g, ' ');
+        return d;
       });
+    });
   }
 
   getHabitatInfo(cd_hab) {
-    return this._http.get<any>(`${AppConfig.API_ENDPOINT}/habref/habitat/${cd_hab}`);
+    return this._http.get<any>(`${this.API_ENDPOINT}/habref/habitat/${cd_hab}`);
   }
 
   getGeoInfo(geojson) {
-    return this._http.post<any>(`${AppConfig.API_ENDPOINT}/geo/info`, geojson);
+    return this._http.post<any>(`${this.API_ENDPOINT}/geo/info`, geojson);
   }
 
   getGeoIntersection(geojson, idType?) {
     if (idType) {
       geojson['id_type'] = idType;
     }
-    return this._http.post(`${AppConfig.API_ENDPOINT}/geo/areas`, geojson);
+    return this._http.post(`${this.API_ENDPOINT}/geo/areas`, geojson);
   }
 
   getFormatedGeoIntersection(geojson, idType?) {
     if (idType) {
       geojson['id_type'] = idType;
     }
-    return this._http.post(`${AppConfig.API_ENDPOINT}/geo/areas`, geojson).map(res => {
+    return this._http.post(`${this.API_ENDPOINT}/geo/areas`, geojson).map(res => {
       const areasIntersected = [];
       Object.keys(res).forEach(key => {
         const typeName = res[key]['type_name'];
@@ -215,7 +219,7 @@ export class DataFormService {
   }
 
   getAreaSize(geojson) {
-    return this._http.post<number>(`${AppConfig.API_ENDPOINT}/geo/area_size`, geojson);
+    return this._http.post<number>(`${this.API_ENDPOINT}/geo/area_size`, geojson);
   }
 
   getMunicipalities(nom_com?, limit?) {
@@ -228,7 +232,7 @@ export class DataFormService {
       params = params.set('limit', limit);
     }
 
-    return this._http.get<any>(`${AppConfig.API_ENDPOINT}/geo/municipalities`, { params: params });
+    return this._http.get<any>(`${this.API_ENDPOINT}/geo/municipalities`, { params: params });
   }
 
   getAreas(area_type_list: Array<number>, area_name?) {
@@ -242,7 +246,7 @@ export class DataFormService {
       params = params.set('area_name', area_name);
     }
 
-    return this._http.get<any>(`${AppConfig.API_ENDPOINT}/geo/areas`, { params: params });
+    return this._http.get<any>(`${this.API_ENDPOINT}/geo/areas`, { params: params });
   }
 
   /**
@@ -263,13 +267,13 @@ export class DataFormService {
         }
       }
     }
-    return this._http.get<any>(`${AppConfig.API_ENDPOINT}/meta/acquisition_frameworks`, {
+    return this._http.get<any>(`${this.API_ENDPOINT}/meta/acquisition_frameworks`, {
       params: queryString
     });
   }
 
   getAcquisitionFramework(id_af) {
-    return this._http.get<any>(`${AppConfig.API_ENDPOINT}/meta/acquisition_framework/${id_af}`);
+    return this._http.get<any>(`${this.API_ENDPOINT}/meta/acquisition_framework/${id_af}`);
   }
 
   getOrganisms(orderByName = true) {
@@ -277,7 +281,7 @@ export class DataFormService {
     if (orderByName) {
       queryString = this.addOrderBy(queryString, 'nom_organisme');
     }
-    return this._http.get<any>(`${AppConfig.API_ENDPOINT}/users/organisms`, {
+    return this._http.get<any>(`${this.API_ENDPOINT}/users/organisms`, {
       params: queryString
     });
   }
@@ -287,13 +291,13 @@ export class DataFormService {
     if (orderByName) {
       queryString = this.addOrderBy(queryString, 'nom_organisme');
     }
-    return this._http.get<any>(`${AppConfig.API_ENDPOINT}/users/organisms_dataset_actor`, {
+    return this._http.get<any>(`${this.API_ENDPOINT}/users/organisms_dataset_actor`, {
       params: queryString
     });
   }
 
   getRole(id: number) {
-    return this._http.get<any>(`${AppConfig.API_ENDPOINT}/users/role/${id}`);
+    return this._http.get<any>(`${this.API_ENDPOINT}/users/role/${id}`);
   }
 
   getRoles(params?: ParamsDict, orderByName = true) {
@@ -307,11 +311,11 @@ export class DataFormService {
         queryString = queryString.set(key, params[key]);
       }
     }
-    return this._http.get<any>(`${AppConfig.API_ENDPOINT}/users/roles`, { params: queryString });
+    return this._http.get<any>(`${this.API_ENDPOINT}/users/roles`, { params: queryString });
   }
 
   getDataset(id) {
-    return this._http.get<any>(`${AppConfig.API_ENDPOINT}/meta/dataset/${id}`);
+    return this._http.get<any>(`${this.API_ENDPOINT}/meta/dataset/${id}`);
   }
 
   getModulesList(exclude: Array<string>) {
@@ -319,13 +323,13 @@ export class DataFormService {
     exclude.forEach(mod_code => {
       queryString = queryString.append('exclude', mod_code);
     });
-    return this._http.get<any>(`${AppConfig.API_ENDPOINT}/gn_commons/modules`, {
+    return this._http.get<any>(`${this.API_ENDPOINT}/gn_commons/modules`, {
       params: queryString
     });
   }
 
   getModuleByCodeName(module_code) {
-    return this._http.get<any>(`${AppConfig.API_ENDPOINT}/gn_commons/modules/${module_code}`);
+    return this._http.get<any>(`${this.API_ENDPOINT}/gn_commons/modules/${module_code}`);
   }
 
   getCruved(modules_code?: Array<string>) {
@@ -335,7 +339,7 @@ export class DataFormService {
         queryString = queryString.append('module_code', mod_code);
       });
     }
-    return this._http.get<any>(`${AppConfig.API_ENDPOINT}/permissions/cruved`, {
+    return this._http.get<any>(`${this.API_ENDPOINT}/permissions/cruved`, {
       params: queryString
     });
   }

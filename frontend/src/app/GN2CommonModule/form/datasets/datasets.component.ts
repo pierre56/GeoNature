@@ -7,8 +7,9 @@ import {
   IterableDiffers,
   IterableDiffer
 } from '@angular/core';
+
 import { DataFormService } from '../data-form.service';
-import { AppConfig } from '../../../../conf/app.config';
+import { ConfigService } from '@geonature/utils/configModule/core';
 import { GenericFormComponent } from '@geonature_common/form/genericForm.component';
 import { CommonService } from '../../service/common.service';
 
@@ -59,7 +60,8 @@ export class DatasetsComponent extends GenericFormComponent implements OnInit, O
   constructor(
     private _dfs: DataFormService,
     private _commonService: CommonService,
-    private _iterableDiffers: IterableDiffers
+    private _iterableDiffers: IterableDiffers,
+    private _configService: ConfigService
   ) {
     super();
     this.iterableDiffer = this._iterableDiffers.find([]).create(null);
@@ -90,7 +92,7 @@ export class DatasetsComponent extends GenericFormComponent implements OnInit, O
         if (error.status === 500) {
           this._commonService.translateToaster('error', 'MetaData.JddError');
         } else if (error.status === 404) {
-          if (AppConfig.CAS_PUBLIC.CAS_AUTHENTIFICATION) {
+          if (this._configService.getSettings('CAS_PUBLIC.CAS_AUTHENTIFICATION')) {
             this._commonService.translateToaster('warning', 'MetaData.NoJDDMTD');
           } else {
             this._commonService.translateToaster('warning', 'MetaData.NoJDD');

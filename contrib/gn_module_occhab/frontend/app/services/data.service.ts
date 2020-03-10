@@ -1,25 +1,25 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
-import {
-  DataFormService,
-  FormatMapMime
-} from "@geonature_common/form/data-form.service";
 
-import { AppConfig } from "@geonature_config/app.config";
-import { ModuleConfig } from "../module.config";
+import { DataFormService } from "@geonature_common/form/data-form.service";
+import { ConfigService } from "@geonature/utils/configModule/core";
 
 @Injectable()
 export class OccHabDataService {
+  public ASBSOLUTE_MODULE_URL: string;
   constructor(
     private _http: HttpClient,
-    private _gnDataService: DataFormService
-  ) {}
+    private _gnDataService: DataFormService,
+    private _configService: ConfigService
+  ) {
+    this.ASBSOLUTE_MODULE_URL =
+      this._configService.getSettings("API_ENDPOINT") +
+      "/" +
+      this._configService.getSettings("OCCHAB.MODULE_URL");
+  }
 
   postStation(data) {
-    return this._http.post(
-      `${AppConfig.API_ENDPOINT}/${ModuleConfig.MODULE_URL}/station`,
-      data
-    );
+    return this._http.post(`${this.ASBSOLUTE_MODULE_URL}/station`, data);
   }
 
   getStations(params?) {
@@ -29,27 +29,26 @@ export class OccHabDataService {
         queryString = queryString.set(key, params[key]);
       }
     }
-    return this._http.get<any>(
-      `${AppConfig.API_ENDPOINT}/${ModuleConfig.MODULE_URL}/stations`,
-      { params: queryString }
-    );
+    return this._http.get<any>(`${this.ASBSOLUTE_MODULE_URL}/stations`, {
+      params: queryString
+    });
   }
 
   getOneStation(idStation) {
     return this._http.get<any>(
-      `${AppConfig.API_ENDPOINT}/${ModuleConfig.MODULE_URL}/station/${idStation}`
+      `${this.ASBSOLUTE_MODULE_URL}/station/${idStation}`
     );
   }
 
   deleteOneStation(idStation) {
     return this._http.delete<any>(
-      `${AppConfig.API_ENDPOINT}/${ModuleConfig.MODULE_URL}/station/${idStation}`
+      `${this.ASBSOLUTE_MODULE_URL}/station/${idStation}`
     );
   }
 
   exportStations(export_format, idsStation?: Array<number>) {
     const sub = this._http.post(
-      `${AppConfig.API_ENDPOINT}/${ModuleConfig.MODULE_URL}/export_stations/${export_format}`,
+      `${this.ASBSOLUTE_MODULE_URL}/export_stations/${export_format}`,
       { idsStation: idsStation },
       {
         observe: "events",

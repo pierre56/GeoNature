@@ -5,7 +5,8 @@
     </button>
   </div>
   <div class="modal-body">
-      <pnx-autocomplete [apiEndPoint]="URL_AUTOCOMPLETE"
+      <pnx-autocomplete 
+      [apiEndPoint]="URL_AUTOCOMPLETE"
       [searchAsParameter]="'true'"  
       [parentFormControl]="formService.searchForm.controls.taxon_rank"
       [formatter]="formatter"
@@ -35,7 +36,7 @@
         <i *ngIf="!showTree" class="fa fa-chevron-right" aria-expanded="false"> </i>
       </button>
   
-      <div [hidden]="!AppConfig.SYNTHESE.DISPLAY_TAXON_TREE" class="collapse" id="collapseTree">
+      <div hidden="! {{'SYNTHESE.DISPLAY_TAXON_TREE' | config}}" class="collapse" id="collapseTree">
       <small> Selectionner un ou plusieurs taxons à partir de la hierarchie taxonomique </small> <br>
       <span *ngIf="isLoading"> Chargement... <img  src="assets/images/Spinner.gif" alt="Chargement..." height="40" width="40"> </span>
       <div class="card">

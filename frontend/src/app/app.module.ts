@@ -17,8 +17,8 @@ import { ChartModule } from 'angular2-chartjs';
 import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
-import { ConfigModule, ConfigLoader } from '@ngx-config/core';
-import { ConfigHttpLoader } from '@ngx-config/http-loader';
+import { ConfigModule, ConfigLoader } from './utils/configModule/core';
+import { ConfigHttpLoader } from './utils/configModule/http-loader';
 
 // Modules
 import { GN2CommonModule } from '@geonature_common/GN2Common.module';
@@ -56,11 +56,11 @@ import { GlobalSubService } from './services/global-sub.service';
 
 export function configFactory(http: HttpClient): ConfigLoader {
   return new ConfigHttpLoader(http, './assets/config/config.json');
-};
+}
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-};
+}
 
 @NgModule({
   imports: [
@@ -72,7 +72,7 @@ export function createTranslateLoader(http: HttpClient) {
     ChartModule,
     ConfigModule.forRoot({
       provide: ConfigLoader,
-      useFactory: (configFactory),
+      useFactory: configFactory,
       deps: [HttpClient]
     }),
     ToastrModule.forRoot({

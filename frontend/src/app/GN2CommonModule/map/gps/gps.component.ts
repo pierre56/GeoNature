@@ -3,8 +3,10 @@ import { MarkerComponent } from '../marker/marker.component';
 import { MapService } from '../map.service';
 import { MapListService } from '../../map-list/map-list.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { CommonService } from '../../service/common.service';
 import * as L from 'leaflet';
+
+import { CommonService } from '../../service/common.service';
+import { ConfigService } from '@geonature/utils/configModule/core';
 
 /**
  * Affiche une modale permettant de renseigner les coordonnées d'une observation, puis affiche un marker à la position renseignée.
@@ -21,9 +23,10 @@ export class GPSComponent extends MarkerComponent implements OnInit {
     public mapService: MapService,
     public modalService: NgbModal,
     public commonService: CommonService,
-    private _mapListServive: MapListService
+    private _mapListServive: MapListService,
+    public configService: ConfigService
   ) {
-    super(mapService, commonService);
+    super(mapService, commonService, configService);
   }
 
   ngOnInit() {

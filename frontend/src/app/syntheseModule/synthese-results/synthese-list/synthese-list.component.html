@@ -4,7 +4,7 @@
   #table 
   class="material striped margin-top-xs table-size expandable"
   [rows]="mapListService.tableData" 
-  [columns]="SYNTHESE_CONFIG.LIST_COLUMNS_FRONTEND" 
+  columns="'{{SYNTHESE.LIST_COLUMNS_FRONTEND' | config}}" 
   [columnMode]="'force'"
   [headerHeight]="50" 
   [footerHeight]="35" 
@@ -35,7 +35,7 @@
 
 
   <!-- DATA COLOMNS -->
-  <div *ngFor="let col of SYNTHESE_CONFIG.LIST_COLUMNS_FRONTEND ">
+  <div *ngFor="let col of 'SYNTHESE.LIST_COLUMNS_FRONTEND' |json ">
     <!-- custom columns for date in order to format them and order them -->
     <span *ngIf="col.prop == 'date_max' || col.prop == 'date_min'; else notDate">
         <ngx-datatable-column

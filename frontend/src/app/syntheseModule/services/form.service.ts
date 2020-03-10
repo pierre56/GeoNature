@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, ValidatorFn } from '@angular/forms';
-import { AppConfig } from '@geonature_config/app.config';
 import { stringify as toWKT } from 'wellknown';
 import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
-import { NgbDatePeriodParserFormatter } from '@geonature_common/form/date/ngb-date-custom-parser-formatter'; 
+import { NgbDatePeriodParserFormatter } from '@geonature_common/form/date/ngb-date-custom-parser-formatter';
 import { DYNAMIC_FORM_DEF } from '@geonature_common/form/synthese-form/dynamycFormConfig';
 import { isArray } from 'util';
+
+import { ConfigService } from '@geonature/utils/configModule/core';
 
 @Injectable()
 export class SyntheseFormService {
@@ -18,7 +19,8 @@ export class SyntheseFormService {
   constructor(
     private _fb: FormBuilder,
     private _dateParser: NgbDateParserFormatter,
-    private _periodFormatter: NgbDatePeriodParserFormatter 
+    private _periodFormatter: NgbDatePeriodParserFormatter,
+    private _configService: ConfigService
   ) {
     this.searchForm = this._fb.group({
       cd_nom: null,
@@ -39,16 +41,13 @@ export class SyntheseFormService {
 
     this.searchForm.setValidators([this.periodValidator()]);
 
-    AppConfig.SYNTHESE.AREA_FILTERS.forEach(area => {
-      const control_name = 'area_' + area.id_type;
-      this.searchForm.addControl(control_name, new FormControl(new Array()));
-      const control = this.searchForm.controls[control_name];
-      area['control'] = control;
-    });
     // init the dynamic form with the user parameters
-    // remove the filters which are in AppConfig.SYNTHESE.EXCLUDED_COLUMNS
     this.dynamycFormDef = DYNAMIC_FORM_DEF.filter(formDef => {
-      return AppConfig.SYNTHESE.EXCLUDED_COLUMNS.indexOf(formDef.attribut_name) === -1;
+      return (
+        this._configService
+          .getSettings('SYNTHESE.EXCLUDED_COLUMNS')
+          .indexOf(formDef.attribut_name) === -1
+      );
     });
     this.formBuilded = true;
   }

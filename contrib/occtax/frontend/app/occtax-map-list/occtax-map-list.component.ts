@@ -5,22 +5,22 @@ import {
   ViewChild,
   Renderer2
 } from "@angular/core";
-import { MapListService } from "@geonature_common/map-list/map-list.service";
-import { MapService } from "@geonature_common/map/map.service";
-import { OcctaxDataService } from "../services/occtax-data.service";
-import { CommonService } from "@geonature_common/service/common.service";
 import { Router } from "@angular/router";
+import { FormGroup } from "@angular/forms";
+
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { DatatableComponent } from "@swimlane/ngx-datatable/release";
-import { ModuleConfig } from "../module.config";
-import { TaxonomyComponent } from "@geonature_common/form/taxonomy/taxonomy.component";
-import { FormGroup, FormBuilder } from "@angular/forms";
-import { GenericFormGeneratorComponent } from "@geonature_common/form/dynamic-form-generator/dynamic-form-generator.component";
-import { AppConfig } from "@geonature_config/app.config";
-import { GlobalSubService } from "@geonature/services/global-sub.service";
 import { Subscription } from "rxjs/Subscription";
-import { HttpParams } from "@angular/common/http";
 import * as moment from "moment";
+
+import { MapListService } from "@geonature_common/map-list/map-list.service";
+import { OcctaxDataService } from "../services/occtax-data.service";
+import { CommonService } from "@geonature_common/service/common.service";
+import { ConfigService } from "@geonature/utils/configModule/core";
+import { GlobalSubService } from "@geonature/services/global-sub.service";
+
+import { TaxonomyComponent } from "@geonature_common/form/taxonomy/taxonomy.component";
+import { GenericFormGeneratorComponent } from "@geonature_common/form/dynamic-form-generator/dynamic-form-generator.component";
 
 @Component({
   selector: "pnx-occtax-map-list",
@@ -35,11 +35,11 @@ export class OcctaxMapListComponent implements OnInit, OnDestroy {
   public pathInfo: string;
   public idName: string;
   public apiEndPoint: string;
-  public occtaxConfig: any;
   // public formsDefinition = FILTERSLIST;
   public dynamicFormGroup: FormGroup;
   public formsSelected = [];
   public moduleSub: Subscription;
+  public MAX_EXPORT_NUMBER: number;
 
   advandedFilterOpen = false;
   @ViewChild(NgbModal)
@@ -55,15 +55,17 @@ export class OcctaxMapListComponent implements OnInit, OnDestroy {
     public mapListService: MapListService,
     private _occtaxService: OcctaxDataService,
     private _commonService: CommonService,
-    private _router: Router,
     public ngbModal: NgbModal,
     public globalSub: GlobalSubService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private _configService: ConfigService
   ) {}
 
   ngOnInit() {
+    this.MAX_EXPORT_NUMBER = this._configService.getSettings(
+      "OCCTAX.MAX_EXPORT_NUMBER"
+    );
     //config
-    this.occtaxConfig = ModuleConfig;
     this.idName = "id_releve_occtax";
     this.apiEndPoint = "occtax/releves";
 
@@ -77,9 +79,13 @@ export class OcctaxMapListComponent implements OnInit, OnDestroy {
 
     // parameters for maplist
     // columns to be default displayed
-    this.mapListService.displayColumns = this.occtaxConfig.default_maplist_columns;
+    this.mapListService.displayColumns = this._configService.getSettings(
+      "OCCTAX.default_maplist_columns"
+    );
     // columns available for display
-    this.mapListService.availableColumns = this.occtaxConfig.available_maplist_column;
+    this.mapListService.availableColumns = this._configService.getSettings(
+      "OCCTAX.available_maplist_column"
+    );
 
     this.mapListService.idName = this.idName;
     // FETCH THE DATA
@@ -157,9 +163,11 @@ export class OcctaxMapListComponent implements OnInit, OnDestroy {
     //https://github.com/angular/angular/issues/20430
     let queryString = this.mapListService.urlQuery.delete("limit");
     queryString = queryString.delete("offset");
-    const url = `${
-      AppConfig.API_ENDPOINT
-    }/occtax/export?${queryString.toString()}&format=${format}`;
+    const url = `${this._configService.getSettings(
+      "API_ENDPOINT"
+    )}/${this._configService.getSettings(
+      "OCCTAX.MODULE_URL"
+    )}/export?${queryString.toString()}&format=${format}`;
 
     document.location.href = url;
   }

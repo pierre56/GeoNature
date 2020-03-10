@@ -2,9 +2,9 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AppConfig } from '../../../conf/app.config';
 import { CookieService } from 'ng2-cookies';
 import 'rxjs/add/operator/delay';
+import { ConfigService } from '@geonature/utils/configModule/core';
 
 export interface User {
   user_login: string;
@@ -22,7 +22,15 @@ export class AuthService {
   token: string;
   loginError: boolean;
   public isLoading = false;
-  constructor(private router: Router, private _http: HttpClient, private _cookie: CookieService) {}
+  public API_ENDPOINT: string;
+  constructor(
+    private router: Router,
+    private _http: HttpClient,
+    private _cookie: CookieService,
+    private _configService: ConfigService
+  ) {
+    this.API_ENDPOINT = this._configService.getSettings('API_ENDPOINT');
+  }
 
   setCurrentUser(user) {
     localStorage.setItem('current_user', JSON.stringify(user));
@@ -55,17 +63,17 @@ export class AuthService {
   checkUserExist(username: string): Observable<any> {
     const options = {
       identifiant: username,
-      id_application: AppConfig.ID_APPLICATION_GEONATURE
+      id_application: this._configService.getSettings('ID_APPLICATION_GEONATURE')
     };
-    return this._http.post<any>(`${AppConfig.API_ENDPOINT}/auth/login/check`, options);
+    return this._http.post<any>(`${this.API_ENDPOINT}/auth/login/check`, options);
   }
 
   loginOrPwdRecovery(data: any): Observable<any> {
-    return this._http.post<any>(`${AppConfig.API_ENDPOINT}/users/login/recovery`, data);
+    return this._http.post<any>(`${this.API_ENDPOINT}/users/login/recovery`, data);
   }
 
   passwordChange(data: any): Observable<any> {
-    return this._http.put<any>(`${AppConfig.API_ENDPOINT}/users/password/new`, data);
+    return this._http.put<any>(`${this.API_ENDPOINT}/users/password/new`, data);
   }
 
   signinUser(user: any) {
@@ -74,10 +82,10 @@ export class AuthService {
     const options = {
       login: user.username,
       password: user.password,
-      id_application: AppConfig.ID_APPLICATION_GEONATURE
+      id_application: this._configService.getSettings('ID_APPLICATION_GEONATURE')
     };
     this._http
-      .post<any>(`${AppConfig.API_ENDPOINT}/auth/login`, options)
+      .post<any>(`${this.API_ENDPOINT}/auth/login`, options)
       .finally(() => (this.isLoading = false))
       .subscribe(
         data => {
@@ -102,7 +110,7 @@ export class AuthService {
 
   signupUser(data: any): Observable<any> {
     const options = data;
-    return this._http.post<any>(`${AppConfig.API_ENDPOINT}/users/inscription`, options);
+    return this._http.post<any>(`${this.API_ENDPOINT}/users/inscription`, options);
   }
 
   decodeObjectCookies(val) {
@@ -126,14 +134,14 @@ export class AuthService {
 
   logout() {
     this.deleteAllCookies();
-    if (AppConfig.CAS_PUBLIC.CAS_AUTHENTIFICATION) {
-      document.location.href = AppConfig.CAS_PUBLIC.CAS_URL_LOGOUT;
+    if (this._configService.getSettings('CAS_PUBLIC.CAS_AUTHENTIFICATION')) {
+      document.location.href = this._configService.getSettings('CAS_PUBLIC.CAS_URL_LOGOUT');
     } else {
       this.router.navigate(['/login']);
       // call the logout route to delete the session
       // TODO: in case of different cruved user in DEPOBIO context must run this routes
       // but actually make bug the INPN CAS deconnexion
-      this._http.get<any>(`${AppConfig.API_ENDPOINT}/gn_auth/logout_cruved`).subscribe(() => {});
+      this._http.get<any>(`${this.API_ENDPOINT}/gn_auth/logout_cruved`).subscribe(() => {});
       // refresh the page to refresh all the shared service to avoid cruved conflict
       location.reload();
     }

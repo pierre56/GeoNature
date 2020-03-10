@@ -5,7 +5,7 @@ import { SyntheseFormService } from '@geonature_common/form/synthese-form/synthe
 import { DynamicFormService } from '@geonature_common/form/dynamic-form-generator/dynamic-form.service';
 import { FormGroup } from '@angular/forms';
 import { TaxonAdvancedStoreService } from '@geonature_common/form/synthese-form/advanced-form/synthese-advanced-form-store.service';
-import { AppConfig } from '@geonature_config/app.config';
+import { ConfigService } from '@geonature/utils/configModule/core';
 
 @Component({
   selector: 'pnx-validation-taxon-advanced',
@@ -15,8 +15,7 @@ import { AppConfig } from '@geonature_config/app.config';
 })
 export class TaxonAdvancedModalComponent implements OnInit, AfterContentInit {
   @ViewChild('tree') treeComponent: TreeComponent;
-  public AppConfig = AppConfig;
-  public URL_AUTOCOMPLETE = AppConfig.API_TAXHUB + '/taxref/search/lb_nom';
+  public URL_AUTOCOMPLETE: string;
   public taxonsTree;
   public treeOptions;
   public selectedNodes = [];
@@ -30,7 +29,8 @@ export class TaxonAdvancedModalComponent implements OnInit, AfterContentInit {
   constructor(
     public activeModal: NgbActiveModal,
     public formService: SyntheseFormService,
-    public storeService: TaxonAdvancedStoreService
+    public storeService: TaxonAdvancedStoreService,
+    private _configService: ConfigService
   ) {
     const actionMapping: IActionMapping = {
       mouse: {
@@ -51,6 +51,7 @@ export class TaxonAdvancedModalComponent implements OnInit, AfterContentInit {
   }
 
   ngOnInit() {
+    this.URL_AUTOCOMPLETE = this._configService.getSettings('API_TAXHUB') + '/taxref/search/lb_nom';
     // if the modal has already been open, reload the former state of the taxon tree
     if (this.storeService.taxonTreeState) {
       this.storeService.treeModel.setState(this.storeService.taxonTreeState);

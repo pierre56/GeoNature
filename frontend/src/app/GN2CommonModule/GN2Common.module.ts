@@ -20,6 +20,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AutoCompleteModule } from 'primeng/primeng';
 import { TreeModule } from 'angular-tree-component';
 
+import { ConfigModule } from '@geonature/utils/configModule/core';
+
 // Components
 import { NomenclatureComponent } from './form/nomenclature/nomenclature.component';
 import { ObserversComponent } from './form/observers/observers.component';
@@ -96,6 +98,7 @@ import { MultiSelectComponent } from './form/multiselect/multiselect.component';
     NgxDatatableModule,
     TranslateModule.forChild(),
     NgbModule.forRoot(),
+    ConfigModule.forChild(),
     AutoCompleteModule,
     TreeModule
   ],

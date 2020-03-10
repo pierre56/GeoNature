@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SyntheseDataService } from '@geonature_common/form/synthese-form/synthese-data.service';
 import { DataFormService } from '@geonature_common/form/data-form.service';
-import { AppConfig } from '@geonature_config/app.config';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ConfigService } from '@geonature/utils/configModule/core';
 
 @Component({
   selector: 'pnx-synthese-modal-info-obs',
@@ -14,11 +14,11 @@ export class ModalInfoObsComponent implements OnInit {
   public selectedObs;
   public selectedObsTaxonDetail;
   public formatedAreas = [];
-  public SYNTHESE_CONFIG = AppConfig.SYNTHESE;
   constructor(
     private _gnDataService: DataFormService,
     private _dataService: SyntheseDataService,
-    public activeModal: NgbActiveModal
+    public activeModal: NgbActiveModal,
+    private _configService: ConfigService
   ) {}
 
   ngOnInit() {
@@ -50,7 +50,10 @@ export class ModalInfoObsComponent implements OnInit {
       //   }/fr_light_l93,fr_light_mer_l93,fr_lit_l93)`;
     });
     this._gnDataService
-      .getTaxonAttributsAndMedia(oneObsSynthese.cd_nom, this.SYNTHESE_CONFIG.ID_ATTRIBUT_TAXHUB)
+      .getTaxonAttributsAndMedia(
+        oneObsSynthese.cd_nom,
+        this._configService.getSettings('SYNTHESE.ID_ATTRIBUT_TAXHUB')
+      )
       .subscribe(data => {
         this.selectObsTaxonInfo = data;
       });

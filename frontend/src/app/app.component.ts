@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from '@geonature/components/auth/auth.service';
-import { AppConfig } from '../conf/app.config';
+import { ConfigService } from '@geonature/utils/configModule/core';
 
 @Component({
   selector: 'pnx-root',
@@ -10,12 +10,14 @@ import { AppConfig } from '../conf/app.config';
 })
 export class AppComponent implements OnInit {
   constructor(
-  	private _authService: AuthService, 
-  	private translate: TranslateService
+    private _authService: AuthService,
+    private translate: TranslateService,
+    private _configService: ConfigService
   ) {
-  	translate.addLangs(['en', 'fr', 'cn']);
-    translate.setDefaultLang(AppConfig.DEFAULT_LANGUAGE);
-    translate.use(AppConfig.DEFAULT_LANGUAGE);
+    translate.addLangs(['en', 'fr', 'cn']);
+    const DEFAULT_LANGUAGE = this._configService.getSettings('DEFAULT_LANGUAGE');
+    translate.setDefaultLang(DEFAULT_LANGUAGE);
+    translate.use(DEFAULT_LANGUAGE);
   }
 
   ngOnInit() {}

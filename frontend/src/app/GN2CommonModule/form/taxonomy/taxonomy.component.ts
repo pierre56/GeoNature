@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable ,  of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { DataFormService } from '../data-form.service';
 import { NgbTypeaheadSelectItemEvent } from '@ng-bootstrap/ng-bootstrap';
+
 import { CommonService } from '@geonature_common/service/common.service';
-import { AppConfig } from '@geonature_config/app.config';
+import { ConfigService } from '@geonature/utils/configModule/core';
 
 export interface Taxon {
   search_name?: string;
@@ -78,12 +79,17 @@ export class TaxonomyComponent implements OnInit {
   @Output() onChange = new EventEmitter<NgbTypeaheadSelectItemEvent>(); // renvoie l'evenement, le taxon est récupérable grâce à e.item
   @Output() onDelete = new EventEmitter<Taxon>();
 
-  constructor(private _dfService: DataFormService, private _commonService: CommonService) {}
+  constructor(
+    private _dfService: DataFormService,
+    private _commonService: CommonService,
+    private _configService: ConfigService
+  ) {}
 
   ngOnInit() {
     // set default to apiEndPoint for retrocompatibility
     this.apiEndPoint =
-      this.apiEndPoint || `${AppConfig.API_TAXHUB}/taxref/allnamebylist/${this.idList}`;
+      this.apiEndPoint ||
+      `${this._configService.getSettings('API_TAXHUB')}/taxref/allnamebylist/${this.idList}`;
 
     this.parentFormControl.valueChanges
       .filter(value => value !== null && value.length === 0)

@@ -4,6 +4,8 @@ import { GN2CommonModule } from "@geonature_common/GN2Common.module";
 import { Routes, RouterModule } from "@angular/router";
 import { MatTabsModule } from "@angular/material/tabs";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { ConfigModule } from "@geonature/utils/configModule/core";
+
 //components
 import { ValidationComponent } from "./components/validation.component";
 import { ValidationSyntheseListComponent } from "./components/validation-synthese-list/validation-synthese-list.component";
@@ -36,7 +38,8 @@ const routes: Routes = [{ path: "", component: ValidationComponent }];
     RouterModule.forChild(routes),
     CommonModule,
     MatTabsModule,
-    NgbModule
+    NgbModule,
+    ConfigModule.forChild()
   ],
   entryComponents: [ValidationModalInfoObsComponent],
 

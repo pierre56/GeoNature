@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { OccHabMapListService } from "../../services/occhab-map-list.service";
-import { ConfigService } from '@ngx-config/core'
+import { ConfigService } from "@ngx-config/core";
 import { NgbDateParserFormatter } from "@ng-bootstrap/ng-bootstrap";
 import { ModuleConfig } from "../../module.config";
 
@@ -11,7 +11,6 @@ import { ModuleConfig } from "../../module.config";
 })
 export class OcchabMapListFilterComponent implements OnInit {
   public moduleConfig = ModuleConfig;
-  public apiEndPoint: string;
 
   constructor(
     public mapListFormService: OccHabMapListService,
@@ -20,9 +19,7 @@ export class OcchabMapListFilterComponent implements OnInit {
   ) {}
 
   @Output() onSearch = new EventEmitter<any>();
-  ngOnInit() {
-    this.apiEndPoint = this.appConfig.getSettings('API_ENDPOINT');
-  }
+  ngOnInit() {}
 
   formatter(item) {
     return item.search_name;

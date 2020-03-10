@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { AppConfig } from '@geonature_config/app.config';
 import { FormArray } from '@angular/forms/src/model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonService } from '@geonature_common/service/common.service';
 import { DataFormService } from '@geonature_common/form/data-form.service';
 import { MetadataFormService } from '../services/metadata-form.service';
 import { ModuleService } from '@geonature/services/module.service';
+import { ConfigService } from '@geonature/utils/configModule/core';
 
 @Component({
   selector: 'pnx-datasets-form',
@@ -33,6 +33,7 @@ export class DatasetFormComponent implements OnInit {
     private _commonService: CommonService,
     private _dfs: DataFormService,
     private _formService: MetadataFormService,
+    private _configService: ConfigService,
     public moduleService: ModuleService
   ) {}
 
@@ -118,19 +119,21 @@ export class DatasetFormComponent implements OnInit {
       dataset.modules = dataset.modules.map(mod => mod.id_module);
 
       dataset['cor_dataset_actor'] = update_cor_dataset_actor;
-      this._api.post<any>(`${AppConfig.API_ENDPOINT}/meta/dataset`, dataset).subscribe(
-        data => {
-          this._router.navigate(['/metadata']);
-          this._commonService.translateToaster('success', 'MetaData.Datasetadded');
-        },
-        error => {
-          if (error.status === 403) {
-            this._commonService.translateToaster('error', 'NotAllowed');
-          } else {
-            this._commonService.translateToaster('error', 'ErrorMessage');
+      this._api
+        .post<any>(`${this._configService.getSettings('API_ENDPOINT')}/meta/dataset`, dataset)
+        .subscribe(
+          data => {
+            this._router.navigate(['/metadata']);
+            this._commonService.translateToaster('success', 'MetaData.Datasetadded');
+          },
+          error => {
+            if (error.status === 403) {
+              this._commonService.translateToaster('error', 'NotAllowed');
+            } else {
+              this._commonService.translateToaster('error', 'ErrorMessage');
+            }
           }
-        }
-      );
+        );
     }
   }
 }

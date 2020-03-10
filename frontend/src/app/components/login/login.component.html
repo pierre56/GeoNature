@@ -1,7 +1,7 @@
 
 
 <div id="login-body">
-  <div *ngIf="!casLogin" class="container">
+  <div *ngIf="!'CAS_PUBLIC.CAS_AUTHENTIFICATION' |config" class="container">
       <div class="row">
         <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
             <div class="panel panel-default panel-signin" style="padding: 20px">
@@ -36,12 +36,12 @@
                                         <i class=" addon fa fa-lock"></i>
                                         <input type="password" name="password" class="form-control" placeholder="Mot de passe" ngModel>
                                     </div>
-                                    <div *ngIf="enable_user_management" class="forgot" (click)="login_or_pass_recovery=true">{{ 'ForgotPasswordOrLogin' | translate }}</div>
+                                    <div *ngIf="'ACCOUNT_MANAGEMENT.ENABLE_USER_MANAGEMENT' |config" class="forgot" (click)="login_or_pass_recovery=true">{{ 'ForgotPasswordOrLogin' | translate }}</div>
 
                                     <button class="btn btn-lg btn-success btn-block text-uppercase" type="submit">Se connecter</button>
                                     <br>
 
-                                    <div  *ngIf="enable_sign_up">
+                                    <div  *ngIf="'ACCOUNT_MANAGEMENT.ENABLE_SIGN_UP' |config">
                                       <div class="inscription">
                                         <a routerLink="/inscription">{{ 'CreateAccount' | translate }}</a>
                                       </div>

@@ -2,11 +2,12 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { SyntheseDataService } from '@geonature_common/form/synthese-form/synthese-data.service';
 import { SyntheseFormService } from '@geonature_common/form/synthese-form/synthese-form.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AppConfig } from '@geonature_config/app.config';
 import { MapService } from '@geonature_common/map/map.service';
 import { TaxonAdvancedModalComponent } from '@geonature_common/form/synthese-form/advanced-form/synthese-advanced-form-component';
 import { TaxonAdvancedStoreService } from '@geonature_common/form/synthese-form/advanced-form/synthese-advanced-form-store.service';
 import { DataFormService } from '@geonature_common/form/data-form.service';
+
+import { ConfigService } from '@geonature/utils/configModule/core';
 
 @Component({
   selector: 'pnx-synthese-search',
@@ -15,10 +16,9 @@ import { DataFormService } from '@geonature_common/form/data-form.service';
   providers: []
 })
 export class SyntheseSearchComponent implements OnInit {
-  public AppConfig = AppConfig;
   public organisms: any;
   public areaFilters: Array<any>;
-  public taxonApiEndPoint = `${AppConfig.API_ENDPOINT}/synthese/taxons_autocomplete`;
+  public taxonApiEndPoint: string;
   public validationStatus: Array<any>;
   @Input() displayValidation = false;
   @Output() searchClicked = new EventEmitter();
@@ -28,24 +28,29 @@ export class SyntheseSearchComponent implements OnInit {
     public ngbModal: NgbModal,
     public mapService: MapService,
     private _storeService: TaxonAdvancedStoreService,
-    private _api: DataFormService
+    private _api: DataFormService,
+    private _configService: ConfigService
   ) {}
 
   ngOnInit() {
+    this.taxonApiEndPoint =
+      this._configService.getSettings('API_ENDPOINT') + '/synthese/taxons_autocomplete';
     // get organisms:
     this._api.getOrganismsDatasets().subscribe(data => {
       this.organisms = data;
     });
 
     // format areas filter
-    this.areaFilters = AppConfig.SYNTHESE.AREA_FILTERS.map(area => {
-      if (typeof area.id_type === 'number') {
-        area['id_type_array'] = [area.id_type];
-      } else {
-        area['id_type_array'] = area.id_type;
-      }
-      return area;
-    });
+    // const AREA_FILTERS = this._configService.getSettings('SYNTHESE.AREA_FILTERS');
+
+    // this.areaFilters = AREA_FILTERS.map(area => {
+    //   if (typeof area.id_type === 'number') {
+    //     area['id_type_array'] = [area.id_type];
+    //   } else {
+    //     area['id_type_array'] = area.id_type;
+    //   }
+    //   return area;
+    // });
 
     if (this.displayValidation) {
       this._api.getNomenclatures(['STATUT_VALID']).subscribe(data => {

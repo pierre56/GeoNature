@@ -8,11 +8,13 @@ import {
   HttpEvent
 } from '@angular/common/http';
 import { GeoJSON } from 'leaflet';
-import { AppConfig } from '@geonature_config/app.config';
+
 import { isArray } from 'util';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { CommonService } from '@geonature_common/service/common.service';
 import { Observable } from 'rxjs';
+
+import { CommonService } from '@geonature_common/service/common.service';
+import { ConfigService } from '@geonature/utils/configModule/core';
 
 export const FormatMapMime = new Map([
   ['csv', 'text/csv'],
@@ -25,9 +27,15 @@ export class SyntheseDataService {
   public dataLoaded: Boolean = false;
   public isDownloading: Boolean = false;
   public downloadProgress: BehaviorSubject<number>;
+  public API_ENDPOINT: string;
   private _blob: Blob;
-  constructor(private _api: HttpClient, private _commonService: CommonService) {
+  constructor(
+    private _api: HttpClient,
+    private _commonService: CommonService,
+    private _configService: ConfigService
+  ) {
     this.downloadProgress = <BehaviorSubject<number>>new BehaviorSubject(0.0);
+    this.API_ENDPOINT = this._configService.getSettings('API_ENDPOINT');
   }
 
   buildQueryUrl(params): HttpParams {
@@ -45,30 +53,28 @@ export class SyntheseDataService {
   }
 
   getSyntheseData(params) {
-    return this._api.post<any>(`${AppConfig.API_ENDPOINT}/synthese/for_web`,
-      params
-    );
+    return this._api.post<any>(`${this.API_ENDPOINT}/synthese/for_web`, params);
   }
 
   getSyntheseGeneralStat() {
-    return this._api.get<any>(`${AppConfig.API_ENDPOINT}/synthese/general_stats`);
+    return this._api.get<any>(`${this.API_ENDPOINT}/synthese/general_stats`);
   }
 
   getOneSyntheseObservation(id_synthese) {
-    return this._api.get<GeoJSON>(`${AppConfig.API_ENDPOINT}/synthese/vsynthese/${id_synthese}`);
+    return this._api.get<GeoJSON>(`${this.API_ENDPOINT}/synthese/vsynthese/${id_synthese}`);
   }
 
   // validation data
   getDefinitionData() {
-    return this._api.get<any>(`${AppConfig.API_ENDPOINT}/validation/definitions`);
+    return this._api.get<any>(`${this.API_ENDPOINT}/validation/definitions`);
   }
 
   getStatusNames() {
-    return this._api.get<any>(`${AppConfig.API_ENDPOINT}/validation/statusNames`);
+    return this._api.get<any>(`${this.API_ENDPOINT}/validation/statusNames`);
   }
 
   getTaxonTree() {
-    return this._api.get<any>(`${AppConfig.API_ENDPOINT}/synthese/taxons_tree`);
+    return this._api.get<any>(`${this.API_ENDPOINT}/synthese/taxons_tree`);
   }
 
   downloadObservations(idSyntheseList: Array<number>, format: string) {
@@ -76,7 +82,7 @@ export class SyntheseDataService {
     const queryString = new HttpParams().set('export_format', format);
 
     const source = this._api.post(
-      `${AppConfig.API_ENDPOINT}/synthese/export_observations`,
+      `${this.API_ENDPOINT}/synthese/export_observations`,
       idSyntheseList,
       {
         params: queryString,
@@ -93,15 +99,12 @@ export class SyntheseDataService {
   downloadTaxons(idSyntheseList: Array<number>, format: string, filename: string) {
     this.isDownloading = true;
 
-    const source = this._api.post(
-      `${AppConfig.API_ENDPOINT}/synthese/export_taxons`,
-      idSyntheseList,
-      {
-        headers: new HttpHeaders().set('Content-Type', 'application/json'),
-        observe: 'events',
-        responseType: 'blob',
-        reportProgress: true
-      });
+    const source = this._api.post(`${this.API_ENDPOINT}/synthese/export_taxons`, idSyntheseList, {
+      headers: new HttpHeaders().set('Content-Type', 'application/json'),
+      observe: 'events',
+      responseType: 'blob',
+      reportProgress: true
+    });
 
     this.subscribeAndDownload(source, filename, format);
   }

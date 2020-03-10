@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AppConfig } from '@geonature_config/app.config';
 import { GlobalSubService } from '../../services/global-sub.service';
 import { ModuleService } from '../../services/module.service';
 import { SideNavService } from './sidenav-service';
@@ -13,7 +12,6 @@ import { SideNavService } from './sidenav-service';
 export class SidenavItemsComponent implements OnInit {
   public nav = [{}];
   public appConfig: any;
-  public version = AppConfig.GEONATURE_VERSION;
   public home_page: any;
   public exportModule: any;
 

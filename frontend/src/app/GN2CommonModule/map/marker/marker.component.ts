@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { Map, Marker } from 'leaflet';
-import { MapService } from '../map.service';
-import { AppConfig } from '@geonature_config/app.config';
 import * as L from 'leaflet';
-import { CommonService } from '../../service/common.service';
 import { GeoJson } from 'togeojson';
+
+import { CommonService } from '../../service/common.service';
+import { MapService } from '../map.service';
+import { ConfigService } from '@geonature/utils/configModule/core';
 
 /**
  * Ce composant permet d'afficher un marker au clic sur la carte ainsi qu'un controleur permettant d'afficher/désafficher le marker.
@@ -25,11 +26,16 @@ export class MarkerComponent implements OnInit, OnChanges {
   /** Contrôle si le marker est activé par défaut au lancement du composant */
   @Input() defaultEnable = true;
   @Output() markerChanged = new EventEmitter<GeoJson>();
-  constructor(public mapservice: MapService, private _commonService: CommonService) {}
+  constructor(
+    public mapservice: MapService,
+    private _commonService: CommonService,
+    private _configService: ConfigService
+  ) {}
 
   ngOnInit() {
     this.map = this.mapservice.map;
-    this.zoomLevel = this.zoomLevel || AppConfig.MAPCONFIG.ZOOM_LEVEL_RELEVE;
+    this.zoomLevel =
+      this.zoomLevel || this._configService.getSettings('MAPCONFIG.ZOOM_LEVEL_RELEVE');
     this.setMarkerLegend();
     // activation or not of the marker
     if (this.defaultEnable) {

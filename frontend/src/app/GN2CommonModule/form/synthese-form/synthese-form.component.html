@@ -4,10 +4,10 @@
       
       <div>
           <small> Statut de validation</small>
-          <pnx-multiselect [values]="validationStatus" [parentFormControl]="formService.searchForm.controls.id_nomenclature_valid_status" keyLabel="label_fr"
+          <!-- <pnx-multiselect [values]="validationStatus" [parentFormControl]="formService.searchForm.controls.id_nomenclature_valid_status" keyLabel="label_fr"
             keyValue="id_nomenclature" [label]="label" debounceTime="500" [searchBar]="searchBar" [disabled]="disabled"
             [displayAll]="displayAll" [bindAllItem]="bindAllItem">
-          </pnx-multiselect>
+          </pnx-multiselect> -->
       </div>
 
       <div id="modif" [formGroup]="formService.searchForm" class="form-check">
@@ -18,8 +18,14 @@
     </fieldset>
     <fieldset >
       <legend> Quoi ?</legend>
-      <pnx-taxonomy label="{{'Taxon.Taxon' | translate }} " [parentFormControl]="formService.searchForm.controls.cd_nom"
-        [idList]="500" [charNumber]="3" [listLength]="AppConfig.SYNTHESE.TAXON_RESULT_NUMBER" [apiEndPoint]="taxonApiEndPoint" (onChange)=formService.getCurrentTaxon($event)>
+      <pnx-taxonomy 
+        label="{{'Taxon.Taxon' | translate }}" 
+        [parentFormControl]="formService.searchForm.controls.cd_nom"
+        [idList]="500" 
+        [charNumber]="3" 
+        listLength="'SYNTHESE.TAXON_RESULT_NUMBER' | config" 
+        [apiEndPoint]="taxonApiEndPoint" 
+        (onChange)=formService.getCurrentTaxon($event)>
       </pnx-taxonomy>
       <div class="alert alert-warning taxon-alert" *ngIf="formService.selectedtaxonFromComponent.length > 0">
         <p class="taxon-list">
@@ -81,9 +87,13 @@
       <legend> Ou ?</legend>
 
       <div *ngIf="formService.formBuilded">
-        <div *ngFor="let area of areaFilters; let i = index;">
+        <div *ngFor="let area of formService.areaFilters; let i = index;">
           {{areas}}
-          <pnx-areas [searchBar]="true" [parentFormControl]="area.control" [label]="area.label" [idTypes]="area.id_type_array">
+          <pnx-areas 
+            [searchBar]="true" 
+            [parentFormControl]="area.control" 
+            [label]="area.label" 
+            [idTypes]="area.id_type_array">
           </pnx-areas>
         </div>
       </div>
@@ -99,10 +109,16 @@
       </pnx-observers-text>
 
       
-      <pnx-multiselect [values]="organisms" [parentFormControl]="formService.searchForm.controls.id_organism" keyLabel="nom_organisme" keyValue="id_organisme"
-      [label]="'Form.Organism' | translate" debounceTime="500" [searchBar]="false"
-      [disabled]="disabled">
-    </pnx-multiselect>
+      <!-- <pnx-multiselect 
+        [values]="organisms" 
+        [parentFormControl]="formService.searchForm.controls.id_organism" 
+        keyLabel="nom_organisme" 
+        keyValue="id_organisme"
+        [label]="'Form.Organism' | translate" 
+        debounceTime="500" 
+        [searchBar]="false"
+        [disabled]="disabled">
+    </pnx-multiselect> -->
 
   </fieldset>
 

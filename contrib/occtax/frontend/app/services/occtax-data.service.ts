@@ -1,26 +1,33 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { AppConfig } from "@geonature_config/app.config";
+
+import { ConfigService } from "@geonature/utils/configModule/core";
 
 @Injectable()
 export class OcctaxDataService {
-  constructor(private _api: HttpClient) {}
+  public readonly ABSOLUTE_MODULE_URL: string;
+  constructor(private _api: HttpClient, private _configService: ConfigService) {
+    this.ABSOLUTE_MODULE_URL =
+      this._configService.getSettings("API_ENDPOINT") +
+      "/" +
+      this._configService.getSettings("OCCTAX.MODULE_URL");
+  }
 
   getOneReleve(id) {
-    return this._api.get<any>(`${AppConfig.API_ENDPOINT}/occtax/releve/${id}`);
+    return this._api.get<any>(`${this.ABSOLUTE_MODULE_URL}/releve/${id}`);
   }
 
   deleteReleve(id) {
-    return this._api.delete(`${AppConfig.API_ENDPOINT}/occtax/releve/${id}`);
+    return this._api.delete(`${this.ABSOLUTE_MODULE_URL}/releve/${id}`);
   }
 
   postOcctax(form) {
-    return this._api.post(`${AppConfig.API_ENDPOINT}/occtax/releve`, form);
+    return this._api.post(`${this.ABSOLUTE_MODULE_URL}/releve`, form);
   }
 
   getOneCounting(id_counting) {
     return this._api.get<any>(
-      `${AppConfig.API_ENDPOINT}/occtax/counting/${id_counting}`
+      `${this.ABSOLUTE_MODULE_URL}/counting/${id_counting}`
     );
   }
 }

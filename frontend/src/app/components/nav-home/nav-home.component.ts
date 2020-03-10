@@ -2,11 +2,11 @@ import { Component, OnInit, OnDestroy, Inject, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthService, User } from '../../components/auth/auth.service';
-import { AppConfig } from '../../../conf/app.config';
 import { MatSidenav } from '@angular/material/sidenav';
-import { SideNavService } from '../sidenav-items/sidenav-service';
 import { Location } from '@angular/common';
+
+import { AuthService, User } from '../../components/auth/auth.service';
+import { SideNavService } from '../sidenav-items/sidenav-service';
 import { GlobalSubService } from '../../services/global-sub.service';
 
 @Component({
@@ -32,7 +32,6 @@ export class NavHomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.appConfig = AppConfig;
     // subscribe to router event
     this.subscription = this.activatedRoute.queryParams.subscribe((param: any) => {
       const locale = param['locale'];

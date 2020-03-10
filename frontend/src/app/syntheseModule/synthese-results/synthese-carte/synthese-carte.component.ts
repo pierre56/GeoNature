@@ -1,12 +1,14 @@
 import { Component, OnInit, Input, AfterViewInit, OnChanges } from '@angular/core';
 import { GeoJSON } from 'leaflet';
+
+import { leafletDrawOption } from '@geonature_common/map/leaflet-draw.options';
+import * as L from 'leaflet';
+
+import { ConfigService } from '@geonature/utils/configModule/core';
+import { CommonService } from '@geonature_common/service/common.service';
+import { SyntheseFormService } from '@geonature_common/form/synthese-form/synthese-form.service';
 import { MapListService } from '@geonature_common/map-list/map-list.service';
 import { MapService } from '@geonature_common/map/map.service';
-import { leafletDrawOption } from '@geonature_common/map/leaflet-draw.options';
-import { SyntheseFormService } from '@geonature_common/form/synthese-form/synthese-form.service';
-import { CommonService } from '@geonature_common/service/common.service';
-import { AppConfig } from '@geonature_config/app.config';
-import * as L from 'leaflet';
 
 @Component({
   selector: 'pnx-synthese-carte',
@@ -18,11 +20,8 @@ export class SyntheseCarteComponent implements OnInit, AfterViewInit, OnChanges 
   public leafletDrawOptions = leafletDrawOption;
   public currentLeafletDrawCoord: any;
   public firstFileLayerMessage = true;
-  public SYNTHESE_CONFIG = AppConfig.SYNTHESE;
   // set a new featureGroup - cluster or not depending of the synthese config
-  public cluserOrSimpleFeatureGroup = AppConfig.SYNTHESE.ENABLE_LEAFLET_CLUSTER
-    ? (L as any).markerClusterGroup()
-    : new L.FeatureGroup();
+  public cluserOrSimpleFeatureGroup: any;
 
   originStyle = {
     color: '#3388ff',
@@ -41,10 +40,16 @@ export class SyntheseCarteComponent implements OnInit, AfterViewInit, OnChanges 
     public mapListService: MapListService,
     private _ms: MapService,
     public formService: SyntheseFormService,
-    private _commonService: CommonService
+    private _commonService: CommonService,
+    private _configService: ConfigService
   ) {}
 
   ngOnInit() {
+    this.cluserOrSimpleFeatureGroup = this._configService.getSettings(
+      'SYNTHESE.ENABLE_LEAFLET_CLUSTER'
+    )
+      ? (L as any).markerClusterGroup()
+      : new L.FeatureGroup();
     this.leafletDrawOptions.draw.rectangle = true;
     this.leafletDrawOptions.draw.circle = true;
     this.leafletDrawOptions.draw.polyline = false;
@@ -56,7 +61,6 @@ export class SyntheseCarteComponent implements OnInit, AfterViewInit, OnChanges 
     // On table click, change style layer and zoom
     this.mapListService.onTableClick$.subscribe(id => {
       const selectedLayer = this.mapListService.layerDict[id];
-      //selectedLayer.bringToFront();
       this.toggleStyle(selectedLayer);
       this.mapListService.zoomOnSelectedLayer(this._ms.map, selectedLayer);
     });
@@ -135,28 +139,30 @@ export class SyntheseCarteComponent implements OnInit, AfterViewInit, OnChanges 
     }
     if (change && change.inputSyntheseData.currentValue) {
       // regenerate the featuregroup
-      this.cluserOrSimpleFeatureGroup = AppConfig.SYNTHESE.ENABLE_LEAFLET_CLUSTER
+      this.cluserOrSimpleFeatureGroup = this._configService.getSettings(
+        'SYNTHESE.ENABLE_LEAFLET_CLUSTER'
+      )
         ? (L as any).markerClusterGroup()
         : new L.FeatureGroup();
 
       change.inputSyntheseData.currentValue.features.forEach(geojson => {
         // we don't create a generic function for setStyle and event on each layer to avoid
         // a if on possible milion of point (with multipoint we must set the event on each point)
-        if (geojson.type == 'Point' || geojson.type == 'MultiPoint') {
-          if (geojson.type == 'Point') {
+        if (geojson.type === 'Point' || geojson.type === 'MultiPoint') {
+          if (geojson.type === 'Point') {
             geojson.coordinates = [geojson.coordinates];
           }
           for (let i = 0; i < geojson.coordinates.length; i++) {
             const latLng = L.GeoJSON.coordsToLatLng(geojson.coordinates[i]);
             this.setStyleEventAndAdd(L.circleMarker(latLng), geojson.properties.id);
           }
-        } else if (geojson.type == 'Polygon' || geojson.type == 'MultiPolygon') {
+        } else if (geojson.type === 'Polygon' || geojson.type === 'MultiPolygon') {
           const latLng = L.GeoJSON.coordsToLatLngs(
             geojson.coordinates,
             geojson.type === 'Polygon' ? 1 : 2
           );
           this.setStyleEventAndAdd(new L.Polygon(latLng), geojson.properties.id);
-        } else if (geojson.type == 'LineString' || geojson.type == 'MultiLineString') {
+        } else if (geojson.type == 'LineString' || geojson.type === 'MultiLineString') {
           const latLng = L.GeoJSON.coordsToLatLngs(
             geojson.coordinates,
             geojson.type === 'LineString' ? 0 : 1

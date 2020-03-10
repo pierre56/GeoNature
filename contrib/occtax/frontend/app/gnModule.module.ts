@@ -2,7 +2,10 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { GN2CommonModule } from "@geonature_common/GN2Common.module";
 import { Routes, RouterModule } from "@angular/router";
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { ConfigModule } from "@geonature/utils/configModule/core";
+
 // Components
 import { OcctaxMapFormComponent } from "./occtax-map-form/occtax-map-form.component";
 import { ReleveComponent } from "./occtax-map-form/form/releve/releve.component";
@@ -17,9 +20,7 @@ import { OcctaxMapInfoComponent } from "./occtax-map-info/occtax-map-info.compon
 import { OcctaxDataService } from "./services/occtax-data.service";
 import { MapListService } from "@geonature_common/map-list/map-list.service";
 
-import {
-  MatSlideToggleModule
-} from '@angular/material';
+import { MatSlideToggleModule } from "@angular/material";
 
 const routes: Routes = [
   { path: "", component: OcctaxMapListComponent },
@@ -35,11 +36,12 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes), 
-    GN2CommonModule, 
-    CommonModule, 
-    MatSlideToggleModule, 
-    NgbModule
+    RouterModule.forChild(routes),
+    GN2CommonModule,
+    CommonModule,
+    MatSlideToggleModule,
+    NgbModule,
+    ConfigModule.forChild()
   ],
   declarations: [
     OcctaxMapFormComponent,
@@ -55,4 +57,4 @@ const routes: Routes = [
   providers: [OcctaxDataService, MapListService],
   bootstrap: [OcctaxMapFormComponent]
 })
-export class GeonatureModule { }
+export class GeonatureModule {}

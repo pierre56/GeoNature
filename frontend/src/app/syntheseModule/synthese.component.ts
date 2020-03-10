@@ -7,8 +7,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SyntheseFormService } from '@geonature_common/form/synthese-form/synthese-form.service';
 import { SyntheseStoreService } from '@geonature_common/form/synthese-form/synthese-store.service';
 import { SyntheseModalDownloadComponent } from './synthese-results/synthese-list/modal-download/modal-download.component';
-import { AppConfig } from '@geonature_config/app.config';
 import { ToastrService } from 'ngx-toastr';
+import { ConfigService } from '@geonature/utils/configModule/core';
 
 @Component({
   selector: 'pnx-synthese',
@@ -20,7 +20,6 @@ export class SyntheseComponent implements OnInit {
   public searchBarHidden = false;
   public marginButton: number;
   public firstLoad = true;
-  public CONFIG = AppConfig;
 
   constructor(
     public searchService: SyntheseDataService,
@@ -29,7 +28,8 @@ export class SyntheseComponent implements OnInit {
     private _modalService: NgbModal,
     private _fs: SyntheseFormService,
     private _syntheseStore: SyntheseStoreService,
-    private _toasterService: ToastrService
+    private _toasterService: ToastrService,
+    private _configService: ConfigService
   ) {}
 
   loadAndStoreData(formParams) {
@@ -64,7 +64,9 @@ export class SyntheseComponent implements OnInit {
     if (this.firstLoad) {
       //toaster
       this._toasterService.info(
-        `Les ${AppConfig.SYNTHESE.NB_LAST_OBS} dernières observations de la synthèse`,
+        `Les ${this._configService.getSettings(
+          'SYNTHESE.NB_LAST_OBS'
+        )} dernières observations de la synthèse`,
         ''
       );
     }
@@ -77,7 +79,7 @@ export class SyntheseComponent implements OnInit {
     this._fs.selectedCdRefFromTree = [];
     this._fs.selectedTaxonFromRankInput = [];
     this._fs.selectedtaxonFromComponent = [];
-    const initialFilter = { limit: AppConfig.SYNTHESE.NB_LAST_OBS };
+    const initialFilter = { limit: this._configService.getSettings('SYNTHESE.NB_LAST_OBS') };
     this.loadAndStoreData(initialFilter);
   }
 

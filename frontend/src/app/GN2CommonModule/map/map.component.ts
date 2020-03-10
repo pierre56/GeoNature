@@ -1,11 +1,11 @@
 import { Component, Input, OnInit, ViewChild, OnChanges, Injectable } from '@angular/core';
 import { MapService } from './map.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Map, LatLngExpression } from 'leaflet';
-import { AppConfig } from '@geonature_config/app.config';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import * as L from 'leaflet';
+
 import { CommonService } from '../service/common.service';
+import { ConfigService } from '@geonature/utils/configModule/core';
 
 import 'leaflet-draw';
 import { FormControl } from '@angular/forms';
@@ -58,7 +58,7 @@ export class MapComponent implements OnInit {
    */
   @Input() center: Array<number>;
   /** Niveaux de zoom à l'initialisation de la carte */
-  @Input() zoom: number = AppConfig.MAPCONFIG.ZOOM_LEVEL;
+  @Input() zoom: number;
   /** Hauteur de la carte (obligatoire) */
   @Input() height: string;
   /** Activer la barre de recherche */
@@ -72,12 +72,14 @@ export class MapComponent implements OnInit {
     private mapService: MapService,
     private _commonService: CommonService,
     private _http: HttpClient,
-    private _nominatim: NominatimService
+    private _nominatim: NominatimService,
+    private _configService: ConfigService
   ) {
     this.searchLocation = '';
   }
 
   ngOnInit() {
+    this.zoom = this.zoom || this._configService.getSettings('MAPCONFIG.ZOOM_LEVEL');
     this.initialize();
   }
 
@@ -109,34 +111,37 @@ export class MapComponent implements OnInit {
     if (this.center !== undefined) {
       center = L.latLng(this.center[0], this.center[1]);
     } else {
-      center = L.latLng(AppConfig.MAPCONFIG.CENTER[0], AppConfig.MAPCONFIG.CENTER[1]);
+      center = L.latLng(
+        this._configService.getSettings('MAPCONFIG.CENTER')[0],
+        this._configService.getSettings('MAPCONFIG.CENTER')[1]
+      );
     }
 
-    const map = L.map('map', {
+    const createdMap = L.map('map', {
       zoomControl: false,
       center: center,
       zoom: this.zoom,
       preferCanvas: true
     });
-    this.map = map;
-    (map as any)._onResize();
+    this.map = createdMap;
+    (createdMap as any)._onResize();
 
-    L.control.zoom({ position: 'topright' }).addTo(map);
+    L.control.zoom({ position: 'topright' }).addTo(createdMap);
     const baseControl = {};
-    AppConfig.MAPCONFIG.BASEMAP.forEach((basemap, index) => {
+    this._configService.getSettings('MAPCONFIG.BASEMAP').forEach((basemap, index) => {
       const configObj = (basemap as any).subdomains
         ? { attribution: basemap.attribution, subdomains: (basemap as any).subdomains }
         : { attribution: basemap.attribution };
       baseControl[basemap.name] = L.tileLayer(basemap.layer, configObj);
       if (index === 0) {
-        map.addLayer(baseControl[basemap.name]);
+        createdMap.addLayer(baseControl[basemap.name]);
       }
     });
     this.mapService.layerControl = L.control.layers(baseControl);
-    this.mapService.layerControl.addTo(map);
-    L.control.scale().addTo(map);
+    this.mapService.layerControl.addTo(createdMap);
+    L.control.scale().addTo(createdMap);
 
-    this.mapService.setMap(map);
+    this.mapService.setMap(createdMap);
     this.mapService.initializeLeafletDrawFeatureGroup();
   }
 

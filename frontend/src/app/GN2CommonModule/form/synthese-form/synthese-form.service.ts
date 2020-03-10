@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, ValidatorFn } from '@angular/forms';
-import { AppConfig } from '@geonature_config/app.config';
 import { stringify } from 'wellknown';
 import { NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+
+import { ConfigService } from '@geonature/utils/configModule/core';
 import { NgbDatePeriodParserFormatter } from '@geonature_common/form/date/ngb-date-custom-parser-formatter';
 import { DYNAMIC_FORM_DEF } from '@geonature_common/form/synthese-form/dynamycFormConfig';
 
@@ -14,11 +15,13 @@ export class SyntheseFormService {
   public selectedCdRefFromTree = [];
   public selectedTaxonFromRankInput = [];
   public dynamycFormDef: Array<any>;
+  public areaFilters: Array<any>;
 
   constructor(
     private _fb: FormBuilder,
     private _dateParser: NgbDateParserFormatter,
-    private _periodFormatter: NgbDatePeriodParserFormatter
+    private _periodFormatter: NgbDatePeriodParserFormatter,
+    private _configService: ConfigService
   ) {
     this.searchForm = this._fb.group({
       cd_nom: null,
@@ -42,17 +45,27 @@ export class SyntheseFormService {
     });
 
     this.searchForm.setValidators([this.periodValidator()]);
-    AppConfig.SYNTHESE.AREA_FILTERS.forEach(area => {
+    this.areaFilters = this._configService.getSettings('SYNTHESE.AREA_FILTERS');
+    this.areaFilters.forEach(area => {
       const control_name = 'area_' + area.id_type;
       this.searchForm.addControl(control_name, new FormControl(new Array()));
       const control = this.searchForm.controls[control_name];
       area['control'] = control;
+      if (typeof area.id_type === 'number') {
+        area['id_type_array'] = [area.id_type];
+      } else {
+        area['id_type_array'] = area.id_type;
+      }
     });
 
     // init the dynamic form with the user parameters
-    // remove the filters which are in AppConfig.SYNTHESE.EXCLUDED_COLUMNS
+    // remove the filters which are in CONFIG.SYNTHESE.EXCLUDED_COLUMNS
     this.dynamycFormDef = DYNAMIC_FORM_DEF.filter(formDef => {
-      return AppConfig.SYNTHESE.EXCLUDED_COLUMNS.indexOf(formDef.attribut_name) === -1;
+      return (
+        this._configService
+          .getSettings('SYNTHESE.EXCLUDED_COLUMNS')
+          .indexOf(formDef.attribut_name) === -1
+      );
     });
     this.formBuilded = true;
   }
@@ -78,7 +91,10 @@ export class SyntheseFormService {
         if (Number.isInteger(parseInt(params[key], 10))) {
           updatedParams[key] = parseInt(params[key], 10);
         }
-      } else if ((key === 'date_min' && params.date_min) || (key === 'date_max' && params.date_max)) {
+      } else if (
+        (key === 'date_min' && params.date_min) ||
+        (key === 'date_max' && params.date_max)
+      ) {
         updatedParams[key] = this._dateParser.format(params[key]);
       } else if (
         (key === 'period_end' && params.period_end) ||
@@ -104,7 +120,6 @@ export class SyntheseFormService {
           updatedParams[key] = params[key];
         }
       }
-
     }
 
     if (this.selectedtaxonFromComponent.length > 0) {

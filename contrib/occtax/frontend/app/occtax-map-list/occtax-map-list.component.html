@@ -49,7 +49,7 @@
       [headerHeight]="35" 
       [limit]="mapListService.page.size" 
       [loadingIndicator]="mapListService.isLoading" 
-      [messages]="occtaxConfig.list_messages" 
+      messages="{{'OCCTAX.list_messages' |config}}" 
       [offset]="mapListService.page.pageNumber" 
       [rowClass]="mapListService.getRowClass"
       [rowHeight]="40" 
@@ -340,16 +340,15 @@
         <h5 class="modal-title" id="exampleModalLabel"> {{'DownloadData' | translate }}</h5>
       </div>
       <div class="modal-body">
-        <span [innerHTML]="occtaxConfig.export_message"> </span> <br><br>
-
-        <div *ngIf="mapListService.page.totalElements > occtaxConfig.MAX_EXPORT_NUMBER">
+        <span innerHTML="{{'OCCTAX.export_message' |config}}"> </span> <br><br>
+        <div *ngIf="mapListService.page.totalElements > MAX_EXPORT_NUMBER ">
           {{'DownloadOverflow' | translate }}
           <br><br>
         </div>
 
         <div class="export-button">
-          <button *ngFor="let format of occtaxConfig.export_available_format" (click)="downloadData(format); c()"
-            [disabled]="mapListService.page.totalElements > occtaxConfig.MAX_EXPORT_NUMBER" type="button" class="btn btn-success format-btn">
+          <button *ngFor="let format of 'OCCTAX.export_available_format' |config" (click)="downloadData(format); c()"
+            [disabled]="mapListService.page.totalElements > MAX_EXPORT_NUMBER" type="button" class="btn btn-success format-btn">
             Format {{format}}
           </button>
         </div>

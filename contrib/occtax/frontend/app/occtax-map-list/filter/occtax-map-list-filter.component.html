@@ -3,13 +3,15 @@
     <pnx-taxonomy 
       label="{{ 'Taxon.Taxon' | translate }}" 
       [parentFormControl]="dynamicFormGroup.controls.cd_nom"
-      [idList]="occtaxConfig.id_taxon_list" 
+      idList=" {{'OCCTAX.id_taxon_list' | json}}" 
       [charNumber]="3" 
       [listLength]="20">
     </pnx-taxonomy>
   </div>
-  <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 padding-sm">
-    <div *ngIf="occtaxConfig.observers_txt; else elseBlock">
+  <div 
+    class="col-xs-2 col-sm-2 col-md-2 col-lg-2 padding-sm"
+    >    
+    <div *ngIf="'OCCTAX.observers_txt' | config; else elseBlock">
       <pnx-observers-text 
         [parentFormControl]="dynamicFormGroup.controls.observers_txt">
       </pnx-observers-text>
@@ -18,7 +20,7 @@
       <pnx-observers 
         label="{{ 'Releve.Observers' | translate }}"
         [parentFormControl]="dynamicFormGroup.controls.observers" 
-        [idMenu]="occtaxConfig.id_observers_list">
+        idMenu="{{'OCCTAX.id_observers_list' | config}}">
       </pnx-observers>
     </ng-template>
   </div>

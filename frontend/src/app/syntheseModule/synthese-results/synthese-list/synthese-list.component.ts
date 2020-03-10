@@ -14,13 +14,13 @@ import { SyntheseDataService } from '@geonature_common/form/synthese-form/synthe
 import { SyntheseFormService } from '@geonature_common/form/synthese-form/synthese-form.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CommonService } from '@geonature_common/service/common.service';
-import { AppConfig } from '@geonature_config/app.config';
 import { HttpParams } from '@angular/common/http/src/params';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SyntheseModalDownloadComponent } from './modal-download/modal-download.component';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { ModalInfoObsComponent } from './modal-info-obs/modal-info-obs.component';
 import { CruvedStoreService } from '../../../services/cruved-store.service';
+import { ConfigService } from '@geonature/utils/configModule/core';
 
 @Component({
   selector: 'pnx-synthese-list',
@@ -28,7 +28,6 @@ import { CruvedStoreService } from '../../../services/cruved-store.service';
   styleUrls: ['synthese-list.component.scss']
 })
 export class SyntheseListComponent implements OnInit, OnChanges, AfterContentChecked {
-  public SYNTHESE_CONFIG = AppConfig.SYNTHESE;
   public selectedObs: any;
   public selectObsTaxonInfo: any;
   public selectedObsTaxonDetail: any;
@@ -50,7 +49,8 @@ export class SyntheseListComponent implements OnInit, OnChanges, AfterContentChe
     private _fs: SyntheseFormService,
     public sanitizer: DomSanitizer,
     public ref: ChangeDetectorRef,
-    public _cruvedStore: CruvedStoreService
+    public _cruvedStore: CruvedStoreService,
+    private _configService: ConfigService
   ) {}
 
   ngOnInit() {
@@ -127,7 +127,10 @@ export class SyntheseListComponent implements OnInit, OnChanges, AfterContentChe
     let queryString = this.getQueryString();
     // if the search form has not been touched, download the last 100 obs
     if (this._fs.searchForm.pristine) {
-      queryString = queryString.set('limit', AppConfig.SYNTHESE.NB_LAST_OBS.toString());
+      queryString = queryString.set(
+        'limit',
+        this._configService.getSettings('SYNTHESE.NB_LAST_OBS').toString()
+      );
     }
     modalRef.componentInstance.queryString = queryString;
   }

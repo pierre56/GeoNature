@@ -2,8 +2,9 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { ValidationDataService } from "../../services/data.service";
 import { SyntheseDataService } from "@geonature_common/form/synthese-form/synthese-data.service";
 import { DataFormService } from "@geonature_common/form/data-form.service";
-import { AppConfig } from "@geonature_config/app.config";
 import { MapListService } from "@geonature_common/map-list/map-list.service";
+import { ConfigService } from "@geonature/utils/configModule/core";
+
 import { ModuleConfig } from "../../module.config";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
@@ -20,8 +21,7 @@ export class ValidationModalInfoObsComponent implements OnInit {
   public selectedObs;
   public selectedObsTaxonDetail;
   public validationHistory: any;
-  public SYNTHESE_CONFIG = AppConfig.SYNTHESE;
-  public APP_CONFIG = AppConfig;
+  public APP_CONFIG;
   public filteredIds;
   public id_synthese;
   public position;
@@ -50,13 +50,15 @@ export class ValidationModalInfoObsComponent implements OnInit {
     private _syntheseDataService: SyntheseDataService,
     public activeModal: NgbActiveModal,
     private _fb: FormBuilder,
-    private _commonService: CommonService
+    private _commonService: CommonService,
+    private _configService: ConfigService
   ) {
     // form used for changing validation status
     this.statusForm = this._fb.group({
       statut: ["", Validators.required],
       comment: [""]
     });
+    this.APP_CONFIG = this._configService.getSettings();
   }
 
   ngOnInit() {
@@ -149,7 +151,7 @@ export class ValidationModalInfoObsComponent implements OnInit {
     this._gnDataService
       .getTaxonAttributsAndMedia(
         oneObsSynthese.cd_nom,
-        this.SYNTHESE_CONFIG.ID_ATTRIBUT_TAXHUB
+        this._configService.getSettings("SYNTHESE_CONFIG.ID_ATTRIBUT_TAXHUB")
       )
       .subscribe(data => {
         this.selectObsTaxonInfo = data;
@@ -221,8 +223,8 @@ export class ValidationModalInfoObsComponent implements OnInit {
     this.id_synthese = this.filteredIds[
       this.filteredIds.indexOf(this.id_synthese) + 1
     ];
-    const syntheseRow = this.mapListService.tableData[this.position]
-    
+    const syntheseRow = this.mapListService.tableData[this.position];
+
     this.loadOneSyntheseReleve(syntheseRow);
     this.loadValidationHistory(syntheseRow.unique_id_sinp);
     this.isPrevButtonValid = true;
@@ -245,7 +247,7 @@ export class ValidationModalInfoObsComponent implements OnInit {
     this.id_synthese = this.filteredIds[
       this.filteredIds.indexOf(this.id_synthese) - 1
     ];
-    const syntheseRow = this.mapListService.tableData[this.position]
+    const syntheseRow = this.mapListService.tableData[this.position];
 
     this.loadOneSyntheseReleve(syntheseRow);
     this.loadValidationHistory(syntheseRow.unique_id_sinp);

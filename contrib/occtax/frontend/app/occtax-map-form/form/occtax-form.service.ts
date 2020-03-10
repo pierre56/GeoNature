@@ -10,7 +10,7 @@ import {
 import { GeoJSON } from "leaflet";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 
-import { AppConfig } from "@geonature_config/app.config";
+import { ConfigService } from "@geonature/utils/configModule/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Router } from "@angular/router";
 import { ModuleConfig } from "../../module.config";
@@ -60,7 +60,8 @@ export class OcctaxFormService {
     private _router: Router,
     private _auth: AuthService,
     private _formService: FormService,
-    private _commonService: CommonService
+    private _commonService: CommonService,
+    private _configService: ConfigService
   ) {
     this.currentTaxon = {};
     this.indexCounting = 0;
@@ -88,7 +89,11 @@ export class OcctaxFormService {
       params = params.append("group2_inpn", group2_inpn);
     }
     return this._http.get<any>(
-      `${AppConfig.API_ENDPOINT}/occtax/defaultNomenclatures`,
+      `${this._configService.getSettings(
+        "API_ENDPOINT"
+      )}/${this._configService.getSettings(
+        "OCCTAX.MODULE_URL"
+      )}/defaultNomenclatures`,
       {
         params: params
       }
