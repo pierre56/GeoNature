@@ -1,11 +1,12 @@
-"""   
+"""
     Fichier de création des commandes geonature
     Ce module ne doit en aucun cas faire appel à des models ou au coeur de geonature
     dans les imports d'entête de fichier pour garantir un bon fonctionnement des fonctions
-    d'administration de l'application GeoNature (génération des fichiers de configuration, des 
-    fichiers de routing du frontend etc...). Ces dernières doivent pouvoir fonctionner même si 
+    d'administration de l'application GeoNature (génération des fichiers de configuration, des
+    fichiers de routing du frontend etc...). Ces dernières doivent pouvoir fonctionner même si
     un paquet PIP du requirement GeoNature n'a pas été bien installé
 """
+import os
 import sys
 import logging
 import subprocess
@@ -92,7 +93,8 @@ def frontend_routes_templating(app=None):
             # test if module have frontend
             if (location / "frontend").is_dir():
                 path = url_path.lstrip("/")
-                location = "{}/{}#GeonatureModule".format(location, GN_MODULE_FE_FILE)
+                location = "{}/{}#GeonatureModule".format(
+                    location, GN_MODULE_FE_FILE)
                 routes.append(
                     {"path": path, "location": location, "module_code": module_code}
                 )
@@ -104,7 +106,8 @@ def frontend_routes_templating(app=None):
             enable_user_management=configs_gn["ACCOUNT_MANAGEMENT"].get(
                 "ENABLE_USER_MANAGEMENT"
             ),
-            enable_sign_up=configs_gn["ACCOUNT_MANAGEMENT"].get("ENABLE_SIGN_UP"),
+            enable_sign_up=configs_gn["ACCOUNT_MANAGEMENT"].get(
+                "ENABLE_SIGN_UP"),
         )
 
         with open(
@@ -159,28 +162,68 @@ def tsconfig_app_templating(app=None):
     log.info("...%s\n", MSG_OK)
 
 
-def create_frontend_config(conf_file):
-    log.info("Generating configuration")
-    configs_gn = load_and_validate_toml(conf_file, GnGeneralSchemaConf)
-
-    path = str(ROOT_DIR / "frontend/src/assets/config/config.json")
-    with open(path, "w") as outputfile:
-        json.dump(configs_gn, outputfile, indent=True)
-
-    # Old mechanism to delete at the end
-    path = str(ROOT_DIR / "frontend/src/conf/app.config.ts")
-    with open(path, "w") as outputfile:
-        outputfile.write("export const AppConfig = ")
-        json.dump(configs_gn, outputfile, indent=True)
-
-    log.info("...%s\n", MSG_OK)
-
-
-def update_app_configuration(conf_file, build=True, prod=True):
+def update_app_configuration(conf_file, prod=True):
     log.info("Update app configuration")
     if prod:
         subprocess.call(["sudo", "supervisorctl", "reload"])
     create_frontend_config(conf_file)
-    if build:
-        subprocess.call(["npm", "run", "build"], cwd=str(ROOT_DIR / "frontend"))
     log.info("...%s\n", MSG_OK)
+
+
+def create_frontend_config(conf_file):
+    """
+    Création du fichier de général du frontend (assets/config/config.json)
+    en concatenant le fichier de conf général et tous les fichiers de conf des modules
+    """
+    configs_gn = load_and_validate_toml(conf_file, GnGeneralSchemaConf)
+    app = get_app_for_cmd(conf_file)
+
+    path = str(ROOT_DIR / "frontend/src/assets/config/config.json")
+    with open(path, "w") as outputfile:
+        for module_code, module_conf in get_modules_config(app):
+            module_conf = {module_code: module_conf}
+            configs_gn = {**configs_gn, **module_conf}
+        json.dump(configs_gn, outputfile, indent=True)
+
+
+def get_modules_config(app):
+    """
+        Create the frontend config
+    """
+    from geonature.core.gn_commons.models import TModules
+
+    with app.app_context():
+
+        for module_object in DB.session.query(TModules).filter(
+            TModules.module_code != 'GEONATURE').filter(
+                TModules.active_frontend == True).all():
+            # Import module in sys.path
+            try:
+                mod_path = os.readlink(
+                    str(GN_EXTERNAL_MODULE / module_object.module_code.lower())
+                )
+
+                module_parent_dir = str(Path(mod_path).parent)
+                module_schema_conf = "{}.config.conf_schema_toml".format(
+                    Path(mod_path).name
+                )
+                sys.path.insert(0, module_parent_dir)
+                module = __import__(module_schema_conf, globals=globals())
+                front_module_conf_file = os.path.join(
+                    mod_path, "config/conf_gn_module.toml"
+                )  # noqa
+                config_module = load_and_validate_toml(
+                    front_module_conf_file,
+                    module.config.conf_schema_toml.GnModuleSchemaConf
+                )
+
+                # Set id_module and module_code
+                config_module["ID_MODULE"] = module_object.id_module
+                config_module["MODULE_CODE"] = module_object.module_code
+                config_module["MODULE_URL"] = module_object.module_path.rstrip()
+
+                yield module_object.module_code, config_module
+            except FileNotFoundError:
+                log.info("Skip module {} as its not in external module directory".format(
+                    module_object.module_code
+                ))

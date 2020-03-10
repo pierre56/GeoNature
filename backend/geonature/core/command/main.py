@@ -88,16 +88,13 @@ def install_command(ctx):
 
 @main.command()
 @click.option("--conf-file", required=False, default=DEFAULT_CONFIG_FILE)
-@click.option("--build", type=bool, required=False, default=True)
-def generate_frontend_config(conf_file, build):
+def generate_frontend_config(conf_file):
     """
         Génération des fichiers de configurations pour javascript
         Relance le build du front par defaut
     """
     try:
         create_frontend_config(conf_file)
-        if build:
-            build_geonature_front()
         log.info("Config successfully updated")
     except FileNotFoundError:
         log.warning("file {} doesn't exists".format(conf_file))
@@ -193,28 +190,20 @@ def generate_frontend_tsconfig_app():
     default=DEFAULT_CONFIG_FILE
 )
 @click.option(
-    '--build',
-    type=bool,
-    required=False,
-    default=True
-)
-@click.option(
     '--prod',
     type=bool,
     required=False,
     default=True
 )
-def update_configuration(conf_file, build, prod):
+def update_configuration(conf_file, prod):
     """
         Regénère la configuration de l'application
 
         Example:
 
         - geonature update_configuration
-
-        - geonature update_configuration --build=false (met à jour la configuration sans recompiler le frontend)
-
+        - geonature update_configuration --prod=false (ne relance pas le supervisor)
     """
+    update_app_configuration(conf_file, prod)
     # Recréation du fichier de routing car il dépend de la conf
     frontend_routes_templating()
-    update_app_configuration(conf_file, build, prod)

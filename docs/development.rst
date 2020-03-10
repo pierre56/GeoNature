@@ -188,7 +188,7 @@ l'intégration du module est à la charge du développeur.
       configuration du module
       ``<GEONATURE_DIRECTORY>/external_modules/<nom_module>/conf_gn_module.toml``
       grâce à la commande
-      ``geonature update_module_configuration <nom_module>``.
+      ``geonature update_configuration``.
       C'est à partir de ce fichier que toutes les configuration doivent
       pointer.
     - A la racine du dossier ``frontend``, on retrouve également un fichier
@@ -302,7 +302,7 @@ Complétez l'éventuelle configuration du module
 valeurs par défaut. Puis relancez la mise à jour de la configuration
 (depuis le répertoire ``geonature/backend`` et une fois dans le venv
 (``source venv/bin/activate``) :
-``geonature update_module_configuration nom_du_module``)
+``geonature update_configuration``)
 
 
 Développement Backend

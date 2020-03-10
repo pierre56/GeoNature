@@ -32,7 +32,6 @@ from geonature.utils.gn_module_import import (
     check_codefile_validity,
     create_external_assets_symlink,
     add_application_db,
-    create_module_config,
     copy_in_external_mods,
     frontend_routes_templating,
     MSG_OK,
@@ -226,27 +225,6 @@ def deactivate_gn_module(module_code, frontend, backend):
     """
     # TODO vérifier que l'utilisateur est root ou du groupe geonature
     gn_module_deactivate(module_code.upper(), frontend, backend)
-
-
-@main.command()
-@click.argument("module_code")
-@click.option("--build", type=bool, required=False, default=True)
-@click.option("--prod", type=bool, required=False, default=True)
-def update_module_configuration(module_code, build, prod):
-    """
-        Génère la config frontend d'un module
-
-        Example:
-
-        - geonature update_module_configuration occtax
-
-        - geonature update_module_configuration --build False --prod False occtax
-
-    """
-    if prod:
-        subprocess.call(["sudo", "supervisorctl", "reload"])
-    app = get_app_for_cmd(with_external_mods=False)
-    create_module_config(app, module_code.lower(), build=build)
 
 
 @main.command()

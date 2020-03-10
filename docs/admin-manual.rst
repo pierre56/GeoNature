@@ -434,7 +434,7 @@ A chaque modification de ce fichier, lancer les commandes suivantes depuis le ba
 .. code-block:: console
 
     source venv/bin/activate
-    geonature update_module_configuration <NOM_DE_MODULE>
+    geonature update_configuration
     deactivate
 
 Exploitation
@@ -476,8 +476,7 @@ Voici la liste des commandes disponibles (aussi disponibles en tapant la command
 - install_gn_module : Installe un gn_module 
 - start_gunicorn : Lance l'API du backend avec gunicorn
 - supervisor : Exécute les commandes supervisor (``supervisor stop <service>``, ``supervisor reload``)
-- update_configuration : Met à jour la configuration du cœur de l'application. A exécuter suite à une modification du fichier ``geonature_config.toml``
-- update_module_configuration : Met à jour la configuration d'un module. A exécuter suite à une modification du fichier ``conf_gn_module.toml``.
+- update_configuration : Met à jour la configuration du cœur de l'application et des modules. A exécuter suite à une modification du fichier ``geonature_config.toml`` ou du fichier ``conf_gn_module.toml`` d'un module
 
 Effectuez ``geonature <nom_commande> --help`` pour accéder à la documentation et à des exemples d'utilisation de chaque commande.
 

@@ -300,7 +300,7 @@ Depuis le répertoire ``backend`` de GeoNature
 ::
 
     source venv/bin/activate
-    geonature update_module_configuration occtax
+    geonature update_configuration
     deactivate
 
 

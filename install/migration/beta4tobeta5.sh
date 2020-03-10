@@ -97,7 +97,7 @@ geonature update_configuration --build=false
 geonature generate_frontend_config --build=false
 geonature generate_frontend_modules_route
 geonature generate_frontend_tsconfig
-geonature update_module_configuration occtax --build=false
+geonature update_configuration
 
 
 echo "Rebuild du frontend"

@@ -44,7 +44,7 @@ cat configuration/geonature.config.toml | sudo tee -a /etc/geonature/geonature_c
 cd /home/`whoami`/geonature/backend
 source venv/bin/activate
 geonature update_configuration --build=false
-geonature update_module_configuration occtax
+geonature update_configuration
 deactivate
 
 rm -r /tmp/custom
