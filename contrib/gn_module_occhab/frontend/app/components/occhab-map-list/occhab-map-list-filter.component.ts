@@ -1,8 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from "@angular/core";
 import { OccHabMapListService } from "../../services/occhab-map-list.service";
-import { ConfigService } from "@ngx-config/core";
+import { ConfigService } from "@geonature/utils/configModule/core";
 import { NgbDateParserFormatter } from "@ng-bootstrap/ng-bootstrap";
-import { ModuleConfig } from "../../module.config";
 
 @Component({
   selector: "pnx-occhab-map-list-filter",
@@ -10,16 +9,20 @@ import { ModuleConfig } from "../../module.config";
   styleUrls: ["./occhab-map-list-filter.component.scss"]
 })
 export class OcchabMapListFilterComponent implements OnInit {
-  public moduleConfig = ModuleConfig;
-
+  public URL_AUTOCOMPLETE: string;
   constructor(
     public mapListFormService: OccHabMapListService,
     private _dateParser: NgbDateParserFormatter,
-    private readonly appConfig: ConfigService
+    private readonly _configService: ConfigService
   ) {}
 
   @Output() onSearch = new EventEmitter<any>();
-  ngOnInit() {}
+  ngOnInit() {
+    this.URL_AUTOCOMPLETE =
+      this._configService.getSettings("API_ENDPOINT") +
+      "/habref/habitats/autocomplete/list/" +
+      this._configService.getSettings("OCCHAB.ID_LIST_HABITAT");
+  }
 
   formatter(item) {
     return item.search_name;

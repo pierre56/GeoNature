@@ -13,7 +13,6 @@ import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { ConfigService } from "@geonature/utils/configModule/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Router } from "@angular/router";
-import { ModuleConfig } from "../../module.config";
 import { AuthService, User } from "@geonature/components/auth/auth.service";
 import { FormService } from "@geonature_common/form/form.service";
 import { Taxon } from "@geonature_common/form/taxonomy/taxonomy.component";
@@ -128,11 +127,15 @@ export class OcctaxFormService {
         id_nomenclature_obs_technique: [null, Validators.required],
         observers: [
           null,
-          !ModuleConfig.observers_txt ? Validators.required : null
+          !this._configService.getSettings("OCCTAX.observers_txt")
+            ? Validators.required
+            : null
         ],
         observers_txt: [
           null,
-          ModuleConfig.observers_txt ? Validators.required : null
+          this._configService.getSettings("OCCTAX.observers_txt")
+            ? Validators.required
+            : null
         ],
         id_nomenclature_grp_typ: null,
         t_occurrences_occtax: [new Array()]
@@ -258,7 +261,7 @@ export class OcctaxFormService {
         else if (
           occControl.controls.digital_proof.value !== null &&
           occControl.controls.digital_proof.value.length > 0 &&
-          ModuleConfig.digital_proof_validator
+          this._configService.getSettings("OCCTAX.digital_proof_validator")
         ) {
           let REGEX = new RegExp("^(http://|https://|ftp://){1}.+$");
           return REGEX.test(occControl.controls.digital_proof.value)

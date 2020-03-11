@@ -1,15 +1,16 @@
 import { Component, OnInit } from "@angular/core";
-import { OcchabFormService } from "../../services/form-service";
-import { OcchabStoreService } from "../../services/store.service";
-import { DataFormService } from "@geonature_common/form/data-form.service";
-import { OccHabDataService } from "../../services/data.service";
-import { leafletDrawOption } from "@geonature_common/map/leaflet-draw.options";
-import { MapService } from "@geonature_common/map/map.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs/Subscription";
-import { CommonService } from "@geonature_common/service/common.service";
-import { ModuleConfig } from "../../module.config";
+
 import { filter } from "rxjs/operators";
+
+import { OcchabFormService } from "../../services/form-service";
+import { CommonService } from "@geonature_common/service/common.service";
+import { OcchabStoreService } from "../../services/store.service";
+import { OccHabDataService } from "../../services/data.service";
+
+import { leafletDrawOption } from "@geonature_common/map/leaflet-draw.options";
+import { ConfigService } from "@geonature/utils/configModule/core";
 
 @Component({
   selector: "pnx-occhab-form",
@@ -25,7 +26,6 @@ export class OccHabFormComponent implements OnInit {
   public MAP_SMALL_HEIGHT = "50vh !important;";
   public MAP_FULL_HEIGHT = "87vh";
   public mapHeight = this.MAP_FULL_HEIGHT;
-  public moduleConfig = ModuleConfig;
   public showHabForm = false;
   public showTabHab = false;
   public showDepth = false;
@@ -36,6 +36,7 @@ export class OccHabFormComponent implements OnInit {
   public currentEditingStation: any;
   // boolean tocheck if the station has at least one hab (control the validity of the form)
   public atLeastOneHab = false;
+  public URL_AUTOCOMPLETE: string;
 
   constructor(
     public occHabForm: OcchabFormService,
@@ -44,11 +45,14 @@ export class OccHabFormComponent implements OnInit {
     private _route: ActivatedRoute,
     private _router: Router,
     private _commonService: CommonService,
-    private _gnDataService: DataFormService,
-    private _mapService: MapService
+    private _configService: ConfigService
   ) {}
 
   ngOnInit() {
+    this.URL_AUTOCOMPLETE =
+      this._configService.getSettings("API_ENDPOINT") +
+      "/habref/habitats/autocomplete/list/" +
+      this._configService.getSettings("OCCHAB.ID_LIST_HABITAT");
     this.leafletDrawOptions;
     leafletDrawOption.draw.polyline = false;
     leafletDrawOption.draw.circle = false;

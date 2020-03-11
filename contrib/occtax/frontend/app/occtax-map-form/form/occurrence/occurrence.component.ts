@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
   AfterViewInit,
   Input,
   ViewEncapsulation,
@@ -12,7 +11,6 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { OcctaxFormService } from "../occtax-form.service";
 import { CommonService } from "@geonature_common/service/common.service";
 import { NomenclatureComponent } from "@geonature_common/form/nomenclature/nomenclature.component";
-import { ModuleConfig } from "../../../module.config";
 
 @Component({
   selector: "pnx-occurrence",
@@ -20,7 +18,7 @@ import { ModuleConfig } from "../../../module.config";
   styleUrls: ["./occurrence.component.scss"],
   encapsulation: ViewEncapsulation.None
 })
-export class OccurrenceComponent implements OnInit, AfterViewInit {
+export class OccurrenceComponent implements AfterViewInit {
   public occtaxConfig: any;
   @Input() occurrenceForm: FormGroup;
   @ViewChild("taxon") taxon;
@@ -31,10 +29,6 @@ export class OccurrenceComponent implements OnInit, AfterViewInit {
     public fs: OcctaxFormService,
     private _commonService: CommonService
   ) {}
-
-  ngOnInit() {
-    this.occtaxConfig = ModuleConfig;
-  }
 
   getLabels(labels) {
     this.fs.currentExistProofLabels = labels;

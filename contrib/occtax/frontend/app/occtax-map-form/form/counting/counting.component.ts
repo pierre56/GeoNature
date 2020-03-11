@@ -7,16 +7,9 @@ import {
   ViewEncapsulation,
   ViewChild
 } from "@angular/core";
-import {
-  FormControl,
-  FormBuilder,
-  FormGroup,
-  FormArray,
-  Validators
-} from "@angular/forms";
+import { FormGroup, FormArray } from "@angular/forms";
 import { OcctaxFormService } from "../occtax-form.service";
 import { CommonService } from "@geonature_common/service/common.service";
-import { ModuleConfig } from "../../../module.config";
 
 @Component({
   selector: "pnx-counting",
@@ -25,7 +18,6 @@ import { ModuleConfig } from "../../../module.config";
   encapsulation: ViewEncapsulation.None
 })
 export class CountingComponent implements OnInit {
-  public occtaxConfig = ModuleConfig;
   @Input() index: number;
   @Input() length: number;
   @Input() formArray: FormArray;

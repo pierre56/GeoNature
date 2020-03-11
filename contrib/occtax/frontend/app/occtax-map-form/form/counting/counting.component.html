@@ -1,6 +1,6 @@
     <div class="row row-0 row-counting">
       <div 
-        *ngIf="occtaxConfig.form_fields.life_stage" 
+        *ngIf="'OCCTAX.form_fields.life_stage' |config" 
         class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-counting padding-sm"
       >
           <pnx-nomenclature
@@ -13,7 +13,7 @@
           </pnx-nomenclature>
       </div>
       <div 
-        *ngIf="occtaxConfig.form_fields.sex" 
+        *ngIf="'OCCTAX.form_fields.sex' |config" 
         class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-counting padding-sm"
       >
             <pnx-nomenclature
@@ -26,7 +26,7 @@
             </pnx-nomenclature>
       </div>
       <div 
-        *ngIf="occtaxConfig.form_fields.obj_count" 
+        *ngIf="'OCCTAX.form_fields.obj_count' |config" 
         class="col-xs-12 col-sm-12 col-md-12 col-lg-5 col-counting padding-sm"
       >
             <pnx-nomenclature 
@@ -42,7 +42,7 @@
     </div>
     <div class="form-group row row-0">
         <div 
-          *ngIf="occtaxConfig.form_fields.type_count" 
+          *ngIf="'OCCTAX.form_fields.type_count' |config" 
           class="col-xs-12 col-sm-12 col-md-12 col-lg-5 col-counting padding-sm"
         >
             <pnx-nomenclature
@@ -56,7 +56,7 @@
             </pnx-nomenclature> 
         </div>
         <div 
-          *ngIf="occtaxConfig.form_fields.count_min" 
+          *ngIf="'OCCTAX.form_fields.count_min' |config" 
           class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-counting padding-sm"
         >
           <div class="form-group" >
@@ -71,7 +71,7 @@
           </div>
         </div>
         <div 
-          *ngIf="occtaxConfig.form_fields.count_max" 
+          *ngIf="'OCCTAX.form_fields.count_max' |config" 
           class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-counting padding-sm"
         >
           <div class="form-group">

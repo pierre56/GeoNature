@@ -1,9 +1,8 @@
-import { Component } from "@angular/core";
-import { MapListService } from "@geonature_common/map-list/map-list.service";
+import { Component, OnInit } from "@angular/core";
 import { ValidationDataService } from "../../services/data.service";
 import { CommonService } from "@geonature_common/service/common.service";
 
-import { ModuleConfig } from "../../module.config";
+import { ConfigService } from "@geonature/utils/configModule/core";
 
 @Component({
   selector: "pnx-validation-definitions",
@@ -11,15 +10,19 @@ import { ModuleConfig } from "../../module.config";
   styleUrls: ["./validation-definitions.component.scss"],
   providers: []
 })
-export class ValidationDefinitionsComponent {
+export class ValidationDefinitionsComponent implements OnInit {
   public definitions;
+  public VALIDATION_CONFIG: any;
   private showDefinitions: Boolean = false;
-  public VALIDATION_CONFIG = ModuleConfig;
 
   constructor(
     public searchService: ValidationDataService,
     private _commonService: CommonService,
+    private _configService: ConfigService
   ) {}
+  ngOnInit() {
+    this.VALIDATION_CONFIG = this._configService.getSettings("VALIDATION");
+  }
 
   getDefinitions(param) {
     this.showDefinitions = !this.showDefinitions;
@@ -30,7 +33,10 @@ export class ValidationDefinitionsComponent {
       error => {
         if (error.statusText === "Unknown Error") {
           // show error message if no connexion
-          this._commonService.translateToaster("error", "ERROR: IMPOSSIBLE TO CONNECT TO SERVER");
+          this._commonService.translateToaster(
+            "error",
+            "ERROR: IMPOSSIBLE TO CONNECT TO SERVER"
+          );
         } else {
           // show error message if other server error
           this._commonService.translateToaster("error", error.error);

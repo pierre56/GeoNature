@@ -35,10 +35,10 @@
         <p>
           <b> Relevé numéro </b>: {{releve?.id}}
           <b> Observateur(s) </b>:
-          <span *ngIf="occtaxConfig.observers_txt">
+          <span *ngIf="'OCCTAX.observers_txt' |config">
             {{releve?.properties.observers_txt}}
           </span>
-          <span *ngIf="!occtaxConfig.observers_txt">
+          <span *ngIf="!'OCCTAX.observers_txt' |config">
             {{observers}}
           </span>
         </p>
@@ -81,7 +81,7 @@
             </pnx-nomenclature>
           </div>
           <div 
-            *ngIf="occtaxConfig.form_fields.group_type" 
+            *ngIf="'OCCTAX.form_fields.group_type' |config" 
             class="col-xs-3 col-sm-3 col-md-3 col-lg-3 padding-sm">
             <pnx-nomenclature 
               label="{{ 'Releve.GroupType' | translate }}" 
@@ -148,7 +148,7 @@
             <div class="tab-pane active" id="occurrence" role="tabpanel">
               <div class="row row-sm">
                 <div 
-                  *ngIf="occtaxConfig.form_fields.observation_status" 
+                  *ngIf="'OCCTAX.form_fields.observation_status' |config" 
                   class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm">
                   <pnx-nomenclature 
                     label="{{ 'Taxon.ObservationStatus' | translate }}" 
@@ -178,7 +178,7 @@
 
               <div class="row row-sm">
                 <div 
-                  *ngIf="occtaxConfig.form_fields.determination_method" 
+                  *ngIf="'OCCTAX.form_fields.determination_method' |config" 
                   class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm">
                   <pnx-nomenclature 
                     label="{{ 'Taxon.DeterminationMethod' | translate }}" 
@@ -188,7 +188,7 @@
                   </pnx-nomenclature>
                 </div>
                 <div 
-                  *ngIf="occtaxConfig.form_fields.bio_status" 
+                  *ngIf="'OCCTAX.form_fields.bio_status' |config" 
                   class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm">
                   <pnx-nomenclature 
                     label="{{ 'Taxon.BiologicalStatus' | translate }}" 
@@ -198,7 +198,7 @@
                   </pnx-nomenclature>
                 </div>
                 <div 
-                  *ngIf="occtaxConfig.form_fields.naturalness" 
+                  *ngIf="'OCCTAX.form_fields.naturalness' |config" 
                   class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm">
                   <pnx-nomenclature 
                     label="{{ 'Taxon.Naturalness' | translate }}" 
@@ -212,7 +212,7 @@
 
               <div class="row row-sm">
                 <div 
-                  *ngIf="occtaxConfig.form_fields.exist_proof" 
+                  *ngIf="'OCCTAX.form_fields.exist_proof' |config" 
                   class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm">
                   <pnx-nomenclature 
                     label="{{ 'Taxon.ExistProof' | translate }}" 
@@ -222,7 +222,7 @@
                   </pnx-nomenclature>
                 </div>
                 <div 
-                  *ngIf="occtaxConfig.form_fields.digital_proof" 
+                  *ngIf="'OCCTAX.form_fields.digital_proof' |config" 
                   class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm">
                   <small> {{ 'Taxon.DigitalProof' | translate }} </small>
                   <div class="input-group">
@@ -234,7 +234,7 @@
                   </div>
                 </div>
                 <div 
-                  *ngIf="occtaxConfig.form_fields.non_digital_proof" 
+                  *ngIf="'OCCTAX.form_fields.non_digital_proof' |config" 
                   class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm">
                   <small> {{ 'Taxon.NonDigitalProof' | translate }} </small>
                   <div class="input-group">
@@ -249,7 +249,7 @@
 
               <div class="row row-sm">
                 <div 
-                  *ngIf="occtaxConfig.form_fields.diffusion_level" 
+                  *ngIf="'OCCTAX.form_fields.diffusion_level' |config" 
                   class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm">
                   <pnx-nomenclature 
                     label="{{ 'Taxon.DiffusionLevel' | translate }}" 
@@ -259,7 +259,7 @@
                   </pnx-nomenclature>
                 </div>
                 <div 
-                  *ngIf="occtaxConfig.form_fields.blurring" 
+                  *ngIf="'OCCTAX.form_fields.blurring' |config" 
                   class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm">
                   <pnx-nomenclature 
                     label="{{ 'Taxon.Blurring' | translate }}" 
@@ -269,7 +269,7 @@
                   </pnx-nomenclature>
                 </div>
                 <div 
-                  *ngIf="occtaxConfig.form_fields.source_status" 
+                  *ngIf="'OCCTAX.form_fields.source_status' |config" 
                   class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm">
                   <pnx-nomenclature 
                     label="{{ 'Taxon.StatusSource' | translate }}" 
@@ -281,7 +281,7 @@
               </div>
               <div class="row row-0" id="row-commentaire">
                 <div 
-                  *ngIf="occtaxConfig.form_fields.comment" 
+                  *ngIf="'OCCTAX.form_fields.comment' |config" 
                   class="col-xs-12 col-sm-12 col-md-12 col-lg-6 padding-sm">
                   <div class="input-group">
                     <input 
@@ -303,7 +303,7 @@
               <div *ngFor="let counting of selectedOccurrence?.cor_counting_occtax; let index = index">
                 <div class="row row-sm">
                   <div 
-                    *ngIf="occtaxConfig.form_fields.life_stage" 
+                    *ngIf="'OCCTAX.form_fields.life_stage' |config" 
                     class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm col-counting">
                     <pnx-nomenclature 
                       label="{{ 'Counting.LifeStage' | translate }}" 
@@ -313,7 +313,7 @@
                     </pnx-nomenclature>
                   </div>
                   <div 
-                    *ngIf="occtaxConfig.form_fields.sex" 
+                    *ngIf="'OCCTAX.form_fields.sex' |config" 
                     class="col-xs-12 col-sm-12 col-md-12 col-lg-3 padding-sm col-counting">
                     <pnx-nomenclature 
                       label="{{ 'Counting.Sex' | translate }}" 
@@ -323,7 +323,7 @@
                     </pnx-nomenclature>
                   </div>
                   <div 
-                    *ngIf="occtaxConfig.form_fields.obj_count" 
+                    *ngIf="'OCCTAX.form_fields.obj_count' |config" 
                     class="col-xs-12 col-sm-12 col-md-12 col-lg-5 padding-sm col-counting">
                     <pnx-nomenclature 
                       label="{{ 'Counting.CountingObject' | translate }}" 
@@ -336,7 +336,7 @@
                 </div>
                 <div class="form-group row row-sm">
                   <div 
-                    *ngIf="occtaxConfig.form_fields.type_count" 
+                    *ngIf="'OCCTAX.form_fields.type_count' |config" 
                     class="col-xs-12 col-sm-12 col-md-12 col-lg-5 padding-sm col-counting">
                     <pnx-nomenclature 
                       #typeDenombrement 
@@ -347,7 +347,7 @@
                     </pnx-nomenclature>
                   </div>
                   <div 
-                    *ngIf="occtaxConfig.form_fields.count_min" 
+                    *ngIf="'OCCTAX.form_fields.count_min' |config" 
                     class="col-xs-12 col-sm-12 col-md-12 col-lg-3 padding-sm col-counting">
                     <div class="form-group">
                       <small> {{ 'Counting.NumberMin' | translate }} </small>
@@ -359,7 +359,7 @@
                     </div>
                   </div>
                   <div 
-                    *ngIf="occtaxConfig.form_fields.count_max" 
+                    *ngIf="'OCCTAX.form_fields.count_max' |config" 
                     class="col-xs-12 col-sm-12 col-md-12 col-lg-3 padding-sm col-counting">
                     <div class="form-group">
                       <small> {{ 'Counting.NumberMax' | translate }} </small>

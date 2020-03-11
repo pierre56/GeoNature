@@ -41,11 +41,7 @@ export class ModuleGuardService implements CanActivate {
 
 @Injectable()
 export class AuthGuard implements CanActivate, CanActivateChild {
-  constructor(
-    private _authService: AuthService,
-    private _router: Router,
-    private _moduleService: ModuleService
-  ) {}
+  constructor(private _authService: AuthService, private _router: Router) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (this._authService.getToken() === null) {
@@ -65,13 +61,14 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     }
   }
 }
+import { ConfigService } from '@geonature/utils/configModule/core';
 
 @Injectable()
 export class SignUpGuard implements CanActivate {
-  constructor(private _router: Router) {}
+  constructor(private _router: Router, private _configService: ConfigService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (AppConfig['ACCOUNT_MANAGEMENT']['ENABLE_SIGN_UP'] || false) {
+    if (this._configService.getSettings('ACCOUNT_MANAGEMENT.ENABLE_SIGN_UP')) {
       return true;
     } else {
       this._router.navigate(['/login']);
@@ -82,10 +79,10 @@ export class SignUpGuard implements CanActivate {
 
 @Injectable()
 export class UserManagementGuard implements CanActivate {
-  constructor(private _router: Router) {}
+  constructor(private _router: Router, private _configService: ConfigService) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    if (AppConfig['ACCOUNT_MANAGEMENT']['ENABLE_USER_MANAGEMENT'] || false) {
+    if (this._configService.getSettings('ACCOUNT_MANAGEMENT.ENABLE_USER_MANAGEMENT')) {
       return true;
     } else {
       this._router.navigate(['/login']);

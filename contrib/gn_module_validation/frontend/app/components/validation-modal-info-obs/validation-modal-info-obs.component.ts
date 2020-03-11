@@ -5,7 +5,6 @@ import { DataFormService } from "@geonature_common/form/data-form.service";
 import { MapListService } from "@geonature_common/map-list/map-list.service";
 import { ConfigService } from "@geonature/utils/configModule/core";
 
-import { ModuleConfig } from "../../module.config";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { CommonService } from "@geonature_common/service/common.service";
@@ -28,7 +27,7 @@ export class ValidationModalInfoObsComponent implements OnInit {
   public lastFilteredValue;
   public isNextButtonValid: any;
   public isPrevButtonValid: any;
-  public VALIDATION_CONFIG = ModuleConfig;
+  public VALIDATION_CONFIG: any;
   public statusForm: FormGroup;
   public edit;
   public validationStatus;
@@ -58,10 +57,11 @@ export class ValidationModalInfoObsComponent implements OnInit {
       statut: ["", Validators.required],
       comment: [""]
     });
-    this.APP_CONFIG = this._configService.getSettings();
   }
 
   ngOnInit() {
+    this.APP_CONFIG = this._configService.getSettings();
+    this.VALIDATION_CONFIG = this._configService.getSettings("VALIDATION");
     this.id_synthese = this.oneObsSynthese.id_synthese;
     this.loadOneSyntheseReleve(this.oneObsSynthese);
     this.loadValidationHistory(this.oneObsSynthese.unique_id_sinp);

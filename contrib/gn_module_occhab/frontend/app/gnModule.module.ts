@@ -1,10 +1,12 @@
 import { NgModule } from "@angular/core";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { Routes, RouterModule } from "@angular/router";
 
+import { ConfigModule } from "@geonature/utils/configModule/core";
 import { CommonModule } from "@angular/common";
 import { GN2CommonModule } from "@geonature_common/GN2Common.module";
-import { Routes, RouterModule } from "@angular/router";
 import { OccHabFormComponent } from "./components/occhab-map-form/occhab-form.component";
+
 import { OccHabMapListComponent } from "./components/occhab-map-list/occhab-map-list.component";
 import { OcchabMapListFilterComponent } from "./components/occhab-map-list/occhab-map-list-filter.component";
 import { OccHabDataService } from "./services/data.service";
@@ -35,6 +37,7 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
+    ConfigModule.forChild(),
     GN2CommonModule,
     RouterModule.forChild(routes),
     NgbModule.forRoot()

@@ -6,8 +6,9 @@ import { DatatableComponent } from "@swimlane/ngx-datatable/release";
 import { OccHabModalDownloadComponent } from "./modal-download.component";
 import { NgbModal, NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { CommonService } from "@geonature_common/service/common.service";
+import { ConfigService } from "@geonature/utils/configModule/core";
+
 import * as moment from "moment";
-import { ModuleConfig } from "../../../../../../external_modules/occhab/frontend/app/module.config";
 
 @Component({
   selector: "pnx-occhab-map-list",
@@ -30,7 +31,8 @@ export class OccHabMapListComponent implements OnInit {
     private _occHabDataService: OccHabDataService,
     public mapListService: MapListService,
     private _ngbModal: NgbModal,
-    private _commonService: CommonService
+    private _commonService: CommonService,
+    private _configService: ConfigService
   ) {}
   ngOnInit() {
     if (this.storeService.firstMessageMapList) {
@@ -77,7 +79,8 @@ export class OccHabMapListComponent implements OnInit {
       featuresCollection => {
         // store the idsStation in the store service
         if (
-          featuresCollection.features.length === ModuleConfig.NB_MAX_MAP_LIST
+          featuresCollection.features.length ===
+          this._configService.getSettings("OCCHAB.NB_MAX_MAP_LIST")
         ) {
           this.openModal(true);
         }

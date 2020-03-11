@@ -2,19 +2,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
-import {
-  HttpClientModule,
-  HttpClient,
-  HttpClientXsrfModule,
-  HTTP_INTERCEPTORS
-} from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // For Angular Dependencies
 import 'hammerjs';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ChartModule } from 'angular2-chartjs';
-import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { ConfigModule, ConfigLoader } from './utils/configModule/core';

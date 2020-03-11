@@ -226,6 +226,17 @@ Frontend
 
     import { GN2CommonModule } from '@geonature_common/GN2Common.module';
 
+- Le service ``ConfigService`` permet d'utiliser la configuration GeoNature et de ses modules. La configuration des modules est disponible derrière l'espace de nom correspondant au code du modude ::
+
+    import { ConfigService } from "@geonature/utils/configModule/core";
+
+    # conf du coeur
+    const myConfigVar = this._configService.getSettings('MY_CONFIG_VAR')
+    # conf du module
+    const myModuleConfigVar = this._configService.getSettings('MODULE_CODE.MY_CONFIG_VAR')
+
+    
+
 - Les librairies JS seront installées dans le dossier ``node_modules``
   de GeoNature. (Il n'est pas nécessaire de
   réinstaller toutes les librairies déjà présentes dans GeoNature
@@ -237,6 +248,8 @@ Frontend
   mère de l'application (celui de GeoNature). Un lien symbolique est créé
   à l'installation du module pour faire entre le dossier d'assets du module
   et celui de Geonature.
+
+- Le module Angular ReactiveFormsModule sera utilisé pour la gestion des formulaire (https://angular.io/guide/reactive-forms)
 
 - Utiliser node_modules présent dans GeoNature
 
@@ -256,7 +269,7 @@ Frontend
 
     <img src="external_assets/<gn_module_validation>/afb.png">
 
-- Installer le linter ``tslint`` dans son éditeur de texte
+- Installer le linter ``tslint`` et ``prettier`` dans son éditeur de texte
   (TODO: définir un style à utiliser)
 
 

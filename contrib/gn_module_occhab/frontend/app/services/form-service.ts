@@ -11,7 +11,7 @@ import { NgbDateParserFormatter } from "@ng-bootstrap/ng-bootstrap";
 import { FormService } from "@geonature_common/form/form.service";
 import { DataFormService } from "@geonature_common/form/data-form.service";
 import { OcchabStoreService } from "./store.service";
-import { ModuleConfig } from "../module.config";
+import { ConfigService } from "@geonature/utils/configModule/core";
 
 @Injectable()
 export class OcchabFormService {
@@ -24,7 +24,8 @@ export class OcchabFormService {
     private _dateParser: NgbDateParserFormatter,
     private _gn_dataSerice: DataFormService,
     private _storeService: OcchabStoreService,
-    private _formService: FormService
+    private _formService: FormService,
+    private _configService: ConfigService
   ) {
     // get selected cd_typo to filter the habref autcomplete
     this.typoHabControl.valueChanges.subscribe(data => {
@@ -41,11 +42,15 @@ export class OcchabFormService {
       date_max: [null, Validators.required],
       observers: [
         null,
-        !ModuleConfig.OBSERVER_AS_TXT ? Validators.required : null
+        !this._configService.getSettings("OCCHAB.OBSERVER_AS_TXT")
+          ? Validators.required
+          : null
       ],
       observers_txt: [
         null,
-        ModuleConfig.OBSERVER_AS_TXT ? Validators.required : null
+        this._configService.getSettings("OCCHAB.OBSERVER_AS_TXT")
+          ? Validators.required
+          : null
       ],
       is_habitat_complex: false,
       id_nomenclature_exposure: null,
@@ -91,12 +96,15 @@ export class OcchabFormService {
       unique_id_sinp_hab: null,
       nom_cite: null,
       habref: [Validators.required, this.cdHabValidator],
-      id_nomenclature_determination_type: defaultNomenclature ?
-        defaultNomenclature["DETERMINATION_TYP_HAB"] : null,
+      id_nomenclature_determination_type: defaultNomenclature
+        ? defaultNomenclature["DETERMINATION_TYP_HAB"]
+        : null,
       determiner: null,
       id_nomenclature_community_interest: null,
       id_nomenclature_collection_technique: [
-        defaultNomenclature ? defaultNomenclature["TECHNIQUE_COLLECT_HAB"] : null,
+        defaultNomenclature
+          ? defaultNomenclature["TECHNIQUE_COLLECT_HAB"]
+          : null,
         Validators.required
       ],
       recovery_percentage: null,

@@ -6,7 +6,7 @@
         #taxon 
         label="{{ 'Taxon.Taxon' | translate }}" 
         [parentFormControl]="occurrenceForm.get('cd_nom')"
-        [idList]="occtaxConfig.id_taxon_list" 
+        idList="{'occtaxConfig.id_taxon_list' | config}" 
         [charNumber]="3" 
         [listLength]="occtaxConfig.taxon_result_number" 
         (onChange)="fs.onTaxonChanged($event);" 
@@ -25,7 +25,7 @@
       </pnx-nomenclature>
     </div>
     <div 
-      *ngIf="occtaxConfig.form_fields.obs_method" 
+      *ngIf="'OCCTAX.form_fields.obs_method' |config" 
       class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm">
       <pnx-nomenclature 
         label="{{ 'Taxon.ObsMethod' | translate }}" 
@@ -36,7 +36,7 @@
       </pnx-nomenclature>
     </div>
     <div 
-      *ngIf="occtaxConfig.form_fields.bio_condition" 
+      *ngIf="'OCCTAX.form_fields.bio_condition' |config" 
       class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm">
       <pnx-nomenclature 
         label="{{ 'Taxon.BiologicalCondition' | translate }}" 
@@ -64,7 +64,7 @@
   <div class="collapse" id="collapseAvance">
     <div class="row row-0">
       <div 
-        *ngIf="occtaxConfig.form_fields.determination_method" 
+        *ngIf="'OCCTAX.form_fields.determination_method' |config" 
         class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm">
         <pnx-nomenclature 
           label="{{ 'Taxon.DeterminationMethod' | translate }}" 
@@ -75,7 +75,7 @@
         </pnx-nomenclature>
       </div>
       <div 
-        *ngIf="occtaxConfig.form_fields.bio_status" 
+        *ngIf="'OCCTAX.form_fields.bio_status' |config" 
         class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm">
         <pnx-nomenclature 
           label="{{ 'Taxon.BiologicalStatus' | translate }}" 
@@ -86,7 +86,7 @@
         </pnx-nomenclature>
       </div>
       <div 
-        *ngIf="occtaxConfig.form_fields.naturalness" 
+        *ngIf="'OCCTAX.form_fields.naturalness' |config" 
         class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm">
         <pnx-nomenclature 
           label="{{ 'Taxon.Naturalness' | translate }}" 
@@ -100,7 +100,7 @@
 
     <div class="row row-0">
       <div 
-        *ngIf="occtaxConfig.form_fields.determiner" 
+        *ngIf="'OCCTAX.form_fields.determiner' |config" 
         class="col-xs-4 col-sm-4 col-md-4 col-lg-4 padding-sm">
         <small> {{ 'Taxon.Determiner' | translate }} </small>
         <input 
@@ -112,7 +112,7 @@
 
     <div class="row row-0">
       <div 
-        *ngIf="occtaxConfig.form_fields.exist_proof" 
+        *ngIf="'OCCTAX.form_fields.exist_proof' |config" 
         class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm">
         <pnx-nomenclature 
           #existProof
@@ -125,7 +125,7 @@
         </pnx-nomenclature>
       </div>
       <div 
-        *ngIf="occtaxConfig.form_fields.digital_proof" 
+        *ngIf="'OCCTAX.form_fields.digital_proof' |config" 
         class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm">
         <div class="form-group">
           <small> {{ 'Taxon.DigitalProof' | translate }} </small>
@@ -136,13 +136,13 @@
             type="text">
         </div>
         <small 
-          *ngIf="occtaxConfig?.digital_proof_validator && occurrenceForm.errors?.invalidDigitalProof"
+          *ngIf="('OCCTAX?.digital_proof_validator' |config) && occurrenceForm.errors?.invalidDigitalProof"
           class="red">
           {{ 'Taxon.ExistProofValidation' | translate }}
         </small>
       </div>
       <div 
-        *ngIf="occtaxConfig.form_fields.non_digital_proof" 
+        *ngIf="'OCCTAX.form_fields.non_digital_proof' |config" 
         class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm">
         <div class="form-group">
           <small> {{ 'Taxon.NonDigitalProof' | translate }} </small>
@@ -169,7 +169,7 @@
     </div>
     <div class="row row-0">
       <div 
-        *ngIf="occtaxConfig.form_fields.diffusion_level" 
+        *ngIf="'OCCTAX.form_fields.diffusion_level' |config" 
         class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm">
         <pnx-nomenclature 
           label="{{ 'Taxon.DiffusionLevel' | translate }}" 
@@ -178,7 +178,7 @@
         </pnx-nomenclature>
       </div>
       <div 
-        *ngIf="occtaxConfig.form_fields.blurring" 
+        *ngIf="'OCCTAX.form_fields.blurring' |config" 
         class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm">
         <pnx-nomenclature 
           label="{{ 'Taxon.Blurring' | translate }}" 
@@ -187,7 +187,7 @@
         </pnx-nomenclature>
       </div>
       <div 
-        *ngIf="occtaxConfig.form_fields.source_status" 
+        *ngIf="'OCCTAX.form_fields.source_status' |config" 
         class="col-xs-12 col-sm-12 col-md-12 col-lg-4 padding-sm">
         <pnx-nomenclature 
           label="{{ 'Taxon.StatusSource' | translate }}" 
@@ -198,7 +198,7 @@
     </div>
     <div class="row row-0" id="row-commentaire">
       <div 
-        *ngIf="occtaxConfig.form_fields.comment_occ" 
+        *ngIf="'OCCTAX.form_fields.comment_occ' |config" 
         class="col-xs-12 col-sm-12 col-md-12 col-lg-6 padding-sm">
         <textarea 
           placeholder="{{ 'Releve.Comment' | translate }}" 

@@ -6,7 +6,7 @@ import { FormService } from "@geonature_common/form/form.service";
 import { DataFormService } from "@geonature_common/form/data-form.service";
 import { OcctaxFormService } from "../occtax-form.service";
 import { ViewEncapsulation } from "@angular/core";
-import { ModuleConfig } from "../../../module.config";
+import { ConfigService } from "@geonature/utils/configModule/core";
 import { DateStruc } from "@geonature_common/form/date/date.component";
 import { filter } from "rxjs/operators";
 
@@ -26,7 +26,6 @@ export class ReleveComponent implements OnInit, OnDestroy {
   public showTime: boolean = false;
   public today: DateStruc = null;
   public areasIntersected = new Array();
-  public occtaxConfig: any;
   private geojsonSubscription$: Subscription;
   public isEditionSub$: Subscription;
 
@@ -34,11 +33,11 @@ export class ReleveComponent implements OnInit, OnDestroy {
     private _ms: MapService,
     private _dfs: DataFormService,
     public fs: OcctaxFormService,
-    private _commonFormService: FormService
+    private _commonFormService: FormService,
+    private _configService: ConfigService
   ) {}
 
   ngOnInit() {
-    this.occtaxConfig = ModuleConfig;
     // subscription to the geojson observable
     this.geojsonSubscription$ = this._ms.gettingGeojson$.subscribe(geojson => {
       this.releveForm.patchValue({ geometry: geojson.geometry });
@@ -58,7 +57,7 @@ export class ReleveComponent implements OnInit, OnDestroy {
     });
 
     // set today for the datepicker limit
-    if (ModuleConfig.DATE_FORM_WITH_TODAY) {
+    if (this._configService.getSettings("OCCTAX.DATE_FORM_WITH_TODAY")) {
       const today = new Date();
       this.today = {
         year: today.getFullYear(),

@@ -1,23 +1,21 @@
 import {
   Component,
   OnInit,
-  Output,
   OnDestroy,
   ViewChild,
-  AfterViewInit,
-  EventEmitter
+  AfterViewInit
 } from "@angular/core";
 import { MapService } from "@geonature_common/map/map.service";
 import { leafletDrawOption } from "@geonature_common/map/leaflet-draw.options";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs/Subscription";
-import { ModuleConfig } from "../module.config";
 import { OcctaxFormService } from "./form/occtax-form.service";
 import { CommonService } from "@geonature_common/service/common.service";
 import { OcctaxDataService } from "../services/occtax-data.service";
 import { DataFormService } from "@geonature_common/form/data-form.service";
 import { MarkerComponent } from "@geonature_common/map/marker/marker.component";
 import { AuthService } from "@geonature/components/auth/auth.service";
+import { ConfigService } from "@geonature/utils/configModule/core";
 
 @Component({
   selector: "pnx-occtax-map-form",
@@ -35,7 +33,6 @@ export class OcctaxMapFormComponent
   public markerComponent: MarkerComponent;
   public firstFileLayerMessage = true;
 
-  public occtaxConfig = ModuleConfig;
   constructor(
     private _ms: MapService,
     private _route: ActivatedRoute,
@@ -43,8 +40,8 @@ export class OcctaxMapFormComponent
     private _commonService: CommonService,
     public fs: OcctaxFormService,
     private occtaxService: OcctaxDataService,
-    private _dfs: DataFormService,
-    private _authService: AuthService
+    private _authService: AuthService,
+    private _configService: ConfigService
   ) {}
 
   ngOnInit() {
@@ -157,7 +154,7 @@ export class OcctaxMapFormComponent
       } else {
         this.fs.editionMode$.next(false);
         // set digitiser as default observers only if occtaxconfig set observers_txt parameter to false
-        if (!this.occtaxConfig.observers_txt) {
+        if (!this._configService.getSettings("OCCTAX.observers_txt")) {
           const currentUser = this._authService.getCurrentUser();
           this.fs.releveForm.patchValue({
             properties: {

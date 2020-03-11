@@ -3,8 +3,8 @@ import { ValidationDataService } from "../services/data.service";
 
 import { MapListService } from "@geonature_common/map-list/map-list.service";
 import { CommonService } from "@geonature_common/service/common.service";
-import { ModuleConfig } from "../module.config";
 import { SyntheseFormService } from "@geonature_common/form/synthese-form/synthese-form.service";
+import { ConfigService } from "@geonature/utils/configModule/core";
 
 @Component({
   selector: "pnx-validation",
@@ -20,7 +20,8 @@ export class ValidationComponent implements OnInit {
     public _ds: ValidationDataService,
     private _mapListService: MapListService,
     private _commonService: CommonService,
-    private _fs: SyntheseFormService
+    private _fs: SyntheseFormService,
+    private _configService: ConfigService
   ) {}
 
   ngOnInit() {
@@ -30,8 +31,11 @@ export class ValidationComponent implements OnInit {
     this._fs.selectedTaxonFromRankInput = [];
     this._fs.selectedtaxonFromComponent = [];
     this.getStatusNames();
-    this._commonService.translateToaster("info", "Le nombre d'observations affiché sur la carte est limité à " +
-        ModuleConfig.NB_MAX_OBS_MAP);
+    this._commonService.translateToaster(
+      "info",
+      "Le nombre d'observations affiché sur la carte est limité à " +
+        this._configService.getSettings("VALIDATION.NB_MAX_OBS_MAP")
+    );
   }
 
   getStatusNames() {
@@ -49,7 +53,10 @@ export class ValidationComponent implements OnInit {
       err => {
         if (err.statusText === "Unknown Error") {
           // show error message if no connexion
-          this._commonService.translateToaster("error", "ERROR: IMPOSSIBLE TO CONNECT TO SERVER (check your connection)");
+          this._commonService.translateToaster(
+            "error",
+            "ERROR: IMPOSSIBLE TO CONNECT TO SERVER (check your connection)"
+          );
         } else {
           // show error message if other server error
           this._commonService.translateToaster("error", err.error);
@@ -78,7 +85,10 @@ export class ValidationComponent implements OnInit {
       err => {
         if (err.statusText === "Unknown Error") {
           // show error message if no connexion
-          this._commonService.translateToaster("error", "ERROR: IMPOSSIBLE TO CONNECT TO SERVER (check your connection)");
+          this._commonService.translateToaster(
+            "error",
+            "ERROR: IMPOSSIBLE TO CONNECT TO SERVER (check your connection)"
+          );
         } else {
           // show error message if other server error
           this._commonService.translateToaster("error", err.error);
@@ -96,8 +106,9 @@ export class ValidationComponent implements OnInit {
   customColumns(feature) {
     // function pass to the LoadTableData maplist service function to format date
     if (feature.properties.validation_auto === true) {
-      feature.properties.validation_auto =
-        ModuleConfig.ICON_FOR_AUTOMATIC_VALIDATION;
+      feature.properties.validation_auto = this._configService.getSettings(
+        "VALIDATION.ICON_FOR_AUTOMATIC_VALIDATION"
+      );
     }
     if (feature.properties.validation_auto === false) {
       feature.properties.validation_auto = "";

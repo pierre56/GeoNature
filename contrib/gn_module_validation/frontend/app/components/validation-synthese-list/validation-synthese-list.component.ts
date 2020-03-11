@@ -14,12 +14,12 @@ import {
 import { MapService } from "@geonature_common/map/map.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { CommonService } from "@geonature_common/service/common.service";
-import { ModuleConfig } from "../../module.config";
 import { DomSanitizer } from "@angular/platform-browser";
 import { DatatableComponent } from "@swimlane/ngx-datatable";
 import { ValidationModalInfoObsComponent } from "../validation-modal-info-obs/validation-modal-info-obs.component";
 import { SyntheseFormService } from "@geonature_common/form/synthese-form/synthese-form.service";
 import { SyntheseDataService } from "@geonature_common/form/synthese-form/synthese-data.service";
+import { ConfigService } from "@geonature/utils/configModule/core";
 
 @Component({
   selector: "pnx-validation-synthese-list",
@@ -28,7 +28,7 @@ import { SyntheseDataService } from "@geonature_common/form/synthese-form/synthe
 })
 export class ValidationSyntheseListComponent
   implements OnInit, OnChanges, AfterContentChecked {
-  public VALIDATION_CONFIG = ModuleConfig;
+  public VALIDATION_CONFIG;
   selectedObs: Array<number> = []; // list of id_synthese values for selected rows
   selectedIndex: Array<number> = [];
   selectedPages = [];
@@ -56,9 +56,11 @@ export class ValidationSyntheseListComponent
     public ref: ChangeDetectorRef,
     private _ms: MapService,
     public formService: SyntheseFormService,
+    private _configService: ConfigService
   ) {}
 
   ngOnInit() {
+    this.VALIDATION_CONFIG = this._configService.getSettings("VALIDATION");
     // get wiewport height to set the number of rows in the tabl
     const h = document.documentElement.clientHeight;
     this.rowNumber = Math.trunc(h / 37);
@@ -125,7 +127,9 @@ export class ValidationSyntheseListComponent
   setOriginStyleToAll() {
     for (let obs in this.mapListService.layerDict) {
       this.mapListService.layerDict[obs].setStyle(
-        this.VALIDATION_CONFIG.MAP_POINT_STYLE.originStyle
+        this._configService.getSettings(
+          "VALIDATION.MAP_POINT_STYLE.originStyle"
+        )
       );
     }
   }
@@ -133,7 +137,9 @@ export class ValidationSyntheseListComponent
   setSelectedSyleToSelectedRows() {
     for (let obs of this.selectedObs) {
       this.mapListService.layerDict[obs].setStyle(
-        this.VALIDATION_CONFIG.MAP_POINT_STYLE.selectedStyle
+        this._configService.getSettings(
+          "VALIDATION.MAP_POINT_STYLE.selectedStyle"
+        )
       );
     }
   }
@@ -171,7 +177,10 @@ export class ValidationSyntheseListComponent
 
   viewFitList(id_observations) {
     if (id_observations.length) {
-      this.mapListService.zoomOnSeveralSelectedLayers(this._ms.map, id_observations);
+      this.mapListService.zoomOnSeveralSelectedLayers(
+        this._ms.map,
+        id_observations
+      );
     }
   }
 

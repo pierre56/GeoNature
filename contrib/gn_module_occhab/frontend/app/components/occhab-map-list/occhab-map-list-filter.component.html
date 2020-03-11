@@ -11,8 +11,8 @@
     </div>
     <div class="col-3">
       <pnx-autocomplete 
-        apiEndPoint="{{API_ENDPOINT | config}}/habref/habitats/autocomplete/list/{{moduleConfig.ID_LIST_HABITAT}}"
-        [searchAsParameter]="false"  
+        [apiEndPoint]="URL_AUTOCOMPLETE"
+        [searchAsParameter]="false"
         [parentFormControl]="mapListFormService.searchForm.get('habitat')"
         queryParamSearch="search_name"
         [formatter]="formatter"
