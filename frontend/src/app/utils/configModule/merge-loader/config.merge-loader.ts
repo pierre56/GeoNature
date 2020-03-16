@@ -1,4 +1,4 @@
-import { ConfigLoader, ConfigStaticLoader } from '@ngx-config/core';
+import { ConfigLoader, ConfigStaticLoader } from '../core';
 import { mergeWith as _mergeWith } from 'lodash/fp';
 import { EMPTY, from as fromObservable, merge, Observable, onErrorResumeNext, throwError } from 'rxjs';
 import { filter, isEmpty, mergeMap, reduce, share } from 'rxjs/operators';

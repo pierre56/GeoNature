@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { forwardRef, Inject, resolveForwardRef } from '@angular/core';
-import { ConfigLoader } from '@ngx-config/core';
+import { ConfigLoader } from '../core';
 
 export class ConfigHttpLoader implements ConfigLoader {
   constructor(

@@ -60,6 +60,7 @@
     "primeng": "^7.1.0",
     "rxjs": "^6.4.0",
     "rxjs-compat": "^6.4.0",
+    "systemjs": "^0.21.4",
     "tether": "^1.4.5",
     "to-regex": "^3.0.2",
     "togeojson": "^0.16.0",

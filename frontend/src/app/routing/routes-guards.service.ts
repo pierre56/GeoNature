@@ -10,7 +10,6 @@ import { AuthService } from '@geonature/components/auth/auth.service';
 import { ModuleService } from '@geonature/services/module.service';
 import { CommonService } from '@geonature_common/service/common.service';
 import { GlobalSubService } from '../services/global-sub.service';
-import { AppConfig } from '@geonature_config/app.config';
 
 @Injectable()
 export class ModuleGuardService implements CanActivate {
