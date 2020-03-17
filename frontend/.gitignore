@@ -2,22 +2,18 @@
 /node_modules/
 npm-debug.log
 
-/dist/
+src/assets/config/config.json
 src/conf/app.config.ts
 src/tsconfig.app.json
 
 #routing
 src/app/routing/app-routing.module.ts
-#tsconfig
-tsconfig.json
 
 
 # custom components
-src/custom/components/footer/footer.component.ts
 src/custom/components/footer/footer.component.html
 src/custom/components/introduction/introduction.component.html
-src/custom/components/introduction/introduction.component.ts
 src/custom/images/bandeau_toolbar.jpg
-src/custom/custom.scss
+src/custom/custom.css
 
 

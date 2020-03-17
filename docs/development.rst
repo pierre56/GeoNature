@@ -56,6 +56,7 @@ Pour sortir une nouvelle version de GeoNature :
 - Mettez à jour la version de GeoNature et éventuellement des dépendances
   dans ``install/install_all/install_all.ini``, ``config/settings.ini.sample``,
   ``backend/requirements.txt``
+- Faire le build du frontend. Tous les modules contrib doivent être installés et présent dans le routing
 - Compléter le fichier ``docs/CHANGELOG.rst`` (en comparant les branches https://github.com/PnX-SI/GeoNature/compare/develop) et dater la version à sortir
 - Mettez à jour le fichier ``VERSION``
 - Remplir le tableau de compatibilité des dépendances
