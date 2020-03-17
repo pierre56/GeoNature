@@ -164,8 +164,8 @@ sed -i "s/add_sample_data=.*$/add_sample_data=$add_sample_data/g" config/setting
 sed -i "s/usershub_release=.*$/usershub_release=$usershub_release/g" config/settings.ini
 sed -i "s/taxhub_release=.*$/taxhub_release=$taxhub_release/g" config/settings.ini
 sed -i "s/taxhub_release=.*$/taxhub_release=$taxhub_release/g" config/settings.ini
-sed -i "s/install_module_validation=.*$/install_module_validation=$install_module_validation/g" config/settings.ini
-sed -i "s/install_module_occhab=.*$/install_module_occhab=$install_module_occhab/g" config/settings.ini
+sed -i "s/enable_module_validation=.*$/enable_module_validation=$enable_module_validation/g" config/settings.ini
+sed -i "s/enable_module_occhab=.*$/enable_module_occhab=$enable_module_occhab/g" config/settings.ini
 sed -i "s/proxy_http=.*$/proxy_http=$proxy_http/g" config/settings.ini
 sed -i "s/proxy_https=.*$/proxy_https=$proxy_https/g" config/settings.ini
 

@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# make nvm available 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 OS_BITS="$(getconf LONG_BIT)"
 
 # test the server architecture
@@ -144,50 +139,26 @@ sudo -s sed -i "s%APP_PATH%${BASE_DIR}%" /etc/logrotate.d/geonature
 sudo logrotate -f /etc/logrotate.conf
 
 
-# Frontend installation
-# Node and npm installation
-echo "Installation de node et npm"
-cd ../frontend  
 
-nvm install
-nvm use
-
-echo " ############"
-echo "Installation des paquets npm"
-npm ci --only=prod
-
-# lien symbolique vers le dossier static du backend (pour le backoffice)
-ln -s ${BASE_DIR}/frontend/node_modules ${BASE_DIR}/backend/static
 
 # Creation du dossier des assets externes
 mkdir src/external_assets
 
 # Copy the custom components
 echo "Création des fichiers de customisation du frontend..."
-if [ ! -f src/custom/custom.scss ]; then
-  cp src/custom/custom.scss.sample src/custom/custom.scss
+if [ ! -f src/custom/custom.css ]; then
+  cp src/custom/custom.css.sample src/custom/custom.css
 fi
 
-if [ ! -f src/custom/components/footer/footer.component.ts ]; then
-  cp src/custom/components/footer/footer.component.ts.sample src/custom/components/footer/footer.component.ts
-fi
+
 if [ ! -f src/custom/components/footer/footer.component.html ]; then
   cp src/custom/components/footer/footer.component.html.sample src/custom/components/footer/footer.component.html
 fi
-if [ ! -f src/custom/components/introduction/introduction.component.ts ]; then
-  cp src/custom/components/introduction/introduction.component.ts.sample src/custom/components/introduction/introduction.component.ts
-fi
+
 if [ ! -f src/custom/components/introduction/introduction.component.html ]; then
   cp src/custom/components/introduction/introduction.component.html.sample src/custom/components/introduction/introduction.component.html
 fi
 
-
-# Generate the tsconfig.json
-geonature generate_frontend_tsconfig
-# Generate the src/tsconfig.app.json
-geonature generate_frontend_tsconfig_app
-# Generate the modules routing file by templating
-geonature generate_frontend_modules_route
 
 # Retour à la racine de GeoNature
 cd ../
@@ -195,32 +166,20 @@ my_current_geonature_directory=$(pwd)
 
 # Installation du module Occtax et OccHab
 geonature install_gn_module $my_current_geonature_directory/contrib/occtax /occtax --build=false
+geonature install_gn_module $my_current_geonature_directory/contrib/gn_module_occhab /occhab --build=false
+geonature install_gn_module $my_current_geonature_directory/contrib/gn_module_validation /validation --build=false
 
-if [ "$install_module_occhab" = true ];
+if [ "$enable_module_occhab" = false ];
   then
-  geonature install_gn_module $my_current_geonature_directory/contrib/gn_module_occhab /occhab --build=false
+  geonature deactivate_gn_module OCCHAB
 fi
 
-if [ "$install_module_validation" = true ];
+if [ "$enable_module_validation" = true ];
   then
-    geonature install_gn_module $my_current_geonature_directory/contrib/gn_module_validation /validation --build=false
+  geonature deactivate_gn_module VALIDATION
 fi
 
 echo "Désactiver le virtual env"
 deactivate
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-
-if [[ $MODE != "dev" ]]
-then
-  cd frontend
-  echo "Build du frontend..."
-  npm rebuild node-sass --force
-  npm run build
-fi
-
 
 
