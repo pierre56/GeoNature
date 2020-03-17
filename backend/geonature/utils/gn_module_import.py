@@ -92,32 +92,6 @@ def copy_in_external_mods(module_path, module_code):
         raise GeoNatureError(e)
 
 
-def gn_module_register_config(module_code):
-    """
-        Création du fichier de configuration et
-        enregistrement des variables du module dans
-        le fichier conf_gn_module.toml du module
-
-    """
-    log.info("Register module")
-    conf_gn_module_path = str(
-        GN_EXTERNAL_MODULE / module_code / "config/conf_gn_module.toml"
-    )
-    # creation du fichier s'il n'existe pas
-    config_file = open(conf_gn_module_path, "w+")
-
-    exist_config = utilstoml.load_toml(conf_gn_module_path)
-    cmds = []
-    for cmd in cmds:
-        proc = subprocess.Popen(
-            cmd["cmd"].split(" "), stdin=subprocess.PIPE, stdout=subprocess.DEVNULL
-        )
-        proc.stdin.write(cmd["msg"])
-        proc.stdin.close()
-        proc.wait()
-
-    log.info("...%s\n", MSG_OK)
-
 
 def gn_module_import_requirements(module_path):
     req_p = Path(module_path) / "backend/requirements.txt"
