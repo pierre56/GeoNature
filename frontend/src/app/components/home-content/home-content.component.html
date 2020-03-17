@@ -1,8 +1,10 @@
 
 <div class="container-fluid">
-  <!--Welcome part-->
-    <pnx-introduction> </pnx-introduction>
-  <!--End of Welcome part-->
+
+  <div [innerHtml]="introductionComponent">
+
+  </div>
+
 
   <div *ngIf="'FRONTEND.DISPLAY_STAT_BLOC' | config" class="panel panel-container">
     <div class="row row-0">
@@ -63,5 +65,8 @@
 </div>
 
 <!-- FOOTER -->
-<pnx-footer *ngIf="'FRONTEND.DISPLAY_FOOTER' | config"></pnx-footer>
+<div
+  [innerHtml]="footerComponent" 
+  *ngIf="'FRONTEND.DISPLAY_FOOTER' | config">
+</div>
 

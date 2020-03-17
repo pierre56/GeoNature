@@ -7,6 +7,7 @@ import { GlobalSubService } from '../../services/global-sub.service';
 import { DataFormService } from '@geonature_common/form/data-form.service';
 import { ModuleService } from '../../services/module.service';
 import { ConfigService } from '@geonature/utils/configModule/core';
+import { HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'pnx-home-content',
@@ -19,7 +20,8 @@ export class HomeContentComponent implements OnInit {
   public appConfig: any;
   public lastObs: any;
   public generalStat: any;
-
+  public footerComponent: any;
+  public introductionComponent: any
   constructor(
     private _SideNavService: SideNavService,
     private _syntheseApi: DataService,
@@ -27,10 +29,12 @@ export class HomeContentComponent implements OnInit {
     private _api: DataFormService,
     private _moduleService: ModuleService,
     private _mapService: MapService,
-    private _configService: ConfigService
+    private _configService: ConfigService,
+    private _httpClient: HttpClient
   ) {}
 
   ngOnInit() {
+    this.loadCustomComponents();
     this._SideNavService.sidenav.open();
     if (this._configService.getSettings('FRONTEND.DISPLAY_MAP_LAST_OBS')) {
       this._syntheseApi.getSyntheseData({ limit: 100 }).subscribe(result => {
@@ -67,6 +71,20 @@ export class HomeContentComponent implements OnInit {
       // emit the currentModule event
       this._globalSub.currentModuleSubject.next(this._moduleService.getModule('GEONATURE'));
     }
+  }
+
+  loadCustomComponents() {
+    this._httpClient.get('custom/components/introduction/introduction.component.html', {
+      responseType: 'text'
+    }).subscribe(html => {
+      this.introductionComponent = html;
+    });
+
+    this._httpClient.get('custom/components/footer/footer.component.html', {
+      responseType: 'text'
+    }).subscribe(html => {
+      this.footerComponent = html;
+    })
   }
 
   onEachFeature(feature, layer) {
