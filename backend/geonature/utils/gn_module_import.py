@@ -102,14 +102,10 @@ def gn_module_import_requirements(module_path):
 
 
 def gn_module_activate(module_code, activ_front, activ_back):
-    from geonature.core.gn_commons.models import TModules
-
-    # TODO utiliser les commande os de python
     log.info("Activate module")
 
     app = None
-    # TODO gestion des erreurs
-    if not (GN_EXTERNAL_MODULE / module_code).is_dir():
+    if not (GN_EXTERNAL_MODULE / module_code.lower()).is_dir():
         raise GeoNatureError(
             "Module {} is not activated (Not in external_module directory)".format(
                 module_code
@@ -118,6 +114,7 @@ def gn_module_activate(module_code, activ_front, activ_back):
     else:
         app = get_app_for_cmd(DEFAULT_CONFIG_FILE)
         with app.app_context():
+            from geonature.core.gn_commons.models import TModules
             try:
                 module = (
                     DB.session.query(TModules)
@@ -144,12 +141,12 @@ def gn_module_activate(module_code, activ_front, activ_back):
 
 def gn_module_deactivate(module_code, activ_front, activ_back):
     log.info("Desactivate module")
-    from geonature.core.gn_commons.models import TModules
 
     app = None
     try:
         app = get_app_for_cmd(DEFAULT_CONFIG_FILE)
         with app.app_context():
+            from geonature.core.gn_commons.models import TModules
             module = (
                 DB.session.query(TModules)
                 .filter(TModules.module_code == module_code.upper())
@@ -164,7 +161,6 @@ def gn_module_deactivate(module_code, activ_front, activ_back):
             """The module does not exist.
             \n Check the gn_commons.t_module to get the module name"""
         )
-    log.info("Regenerate frontend routes")
     try:
         frontend_routes_templating(app)
         log.info("...%s\n", MSG_OK)

@@ -117,7 +117,7 @@ fi
 echo "Création des commandes 'geonature'..."
 python ${BASE_DIR}/geonature_cmd.py install_command
 echo "Création de la configuration du frontend depuis 'config/geonature_config.toml'..."
-geonature generate_frontend_config --conf-file ${BASE_DIR}/config/geonature_config.toml --build=false
+geonature generate_frontend_config --conf-file ${BASE_DIR}/config/geonature_config.toml
 
 # Lancement de l'application
 echo "Configuration de l'application api backend dans supervisor..."
