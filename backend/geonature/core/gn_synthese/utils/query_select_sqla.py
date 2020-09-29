@@ -298,7 +298,7 @@ class SyntheseQuery:
                 )
                 self.query = self.query.where(
                     CorAreaSynthese.id_area.in_(value))
-            elif colname.startswith("id_"):
+            elif colname.startswith("id_") or colname.startswith("unique_"):
                 col = getattr(self.model.__table__.columns, colname)
                 self.query = self.query.where(col.in_(value))
             else:
@@ -329,5 +329,4 @@ class SyntheseQuery:
 
         if self.query_joins is not None:
             self.query = self.query.select_from(self.query_joins)
-        print(self.query)
         return self.query
