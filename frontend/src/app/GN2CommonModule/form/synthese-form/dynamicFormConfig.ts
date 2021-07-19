@@ -1,5 +1,12 @@
 export const DYNAMIC_FORM_DEF = [
   {
+    attribut_name: 'has_medias',
+    type_widget: 'bool_checkbox',
+    attribut_label: "Possède des médias",
+    required: false,
+    value: true
+  },
+  {
     type_widget: 'nomenclature',
     attribut_label: "Nature de l'objet géographique",
     attribut_name: 'id_nomenclature_geo_object_nature',
@@ -187,7 +194,7 @@ export const DYNAMIC_FORM_DEF = [
   {
     type_widget: 'nomenclature',
     attribut_label: "Type d'information géographique",
-    attribut_name: 'id_nomenclature_sensitivity',
+    attribut_name: 'id_nomenclature_info_geo_type',
     code_nomenclature_type: 'TYP_INF_GEO',
     required: false,
     multi_select: true

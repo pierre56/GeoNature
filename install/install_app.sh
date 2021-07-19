@@ -153,7 +153,7 @@ echo "Installation du backend geonature..."
 pip install --editable "${BASE_DIR}"  # geonature ne support pas encore autre chose que editable
 
 echo "Création de la configuration du frontend depuis 'config/geonature_config.toml'..."
-geonature generate_frontend_config --conf-file ${BASE_DIR}/config/geonature_config.toml --build=false
+geonature generate_frontend_config --build=false
 
 
 echo "Création du fichier de log des erreurs GeoNature"
@@ -196,8 +196,8 @@ mkdir -p "src/external_assets"
 
 # Copy the custom components
 echo "Création des fichiers de customisation du frontend..."
-if [ ! -f src/custom/custom.scss ]; then
-  cp -n src/custom/custom.scss.sample src/custom/custom.scss
+if [ ! -f src/assets/custom.css ]; then
+  cp -n src/assets/custom.sample.css src/assets/custom.css
 fi
 custom_component_dir="src/custom/components/"
 for file in $(find "${custom_component_dir}" -type f -name "*.sample"); do
@@ -205,6 +205,7 @@ for file in $(find "${custom_component_dir}" -type f -name "*.sample"); do
 		cp "${file}" "${file%.sample}"
 	fi
 done
+
 
 # Generate the tsconfig.json
 geonature generate_frontend_tsconfig

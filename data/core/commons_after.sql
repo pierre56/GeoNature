@@ -1,9 +1,9 @@
 
 -- vue validation de gn_commons necessitant le schéma synthese
-
--- vue validation de gn_commons necessitant le schéma synthese
-CREATE OR REPLACE VIEW gn_commons.v_synthese_validation_forwebapp AS
-SELECT  s.id_synthese,
+CREATE OR REPLACE VIEW gn_commons.v_synthese_validation_forwebapp
+    WITH (security_barrier=false)
+    AS
+     SELECT s.id_synthese,
     s.unique_id_sinp,
     s.unique_id_sinp_grp,
     s.id_source,
@@ -23,7 +23,7 @@ SELECT  s.id_synthese,
     s.depth_min,
     s.depth_max,
     s.place_name,
-    s.precision,
+    s."precision",
     s.validator,
     s.observers,
     s.id_digitiser,
@@ -59,7 +59,6 @@ SELECT  s.id_synthese,
     s.reference_biblio,
     t.cd_nom,
     t.cd_ref,
-    COALESCE(nom_vern, lb_nom) as nom_vern_or_lb_nom,
     t.nom_valide,
     t.lb_nom,
     t.nom_vern,
@@ -68,18 +67,26 @@ SELECT  s.id_synthese,
     n.label_default,
     v.validation_auto,
     v.validation_date,
-    ST_asgeojson(s.the_geom_4326) as geojson
+    st_asgeojson(s.the_geom_4326) AS geojson,
+    COALESCE(nom_vern, lb_nom) as nom_vern_or_lb_nom
    FROM gn_synthese.synthese s
-    JOIN taxonomie.taxref t ON t.cd_nom = s.cd_nom
-    JOIN gn_meta.t_datasets d ON d.id_dataset = s.id_dataset
-    LEFT JOIN ref_nomenclatures.t_nomenclatures n ON n.id_nomenclature = s.id_nomenclature_valid_status
-    LEFT JOIN LATERAL (
-        SELECT v.validation_auto, v.validation_date
-        FROM gn_commons.t_validations v
-        WHERE v.uuid_attached_row = s.unique_id_sinp
-        ORDER BY v.validation_date DESC
-        LIMIT 1
-    ) v ON true
+     JOIN taxonomie.taxref t ON t.cd_nom = s.cd_nom
+     JOIN gn_meta.t_datasets d ON d.id_dataset = s.id_dataset
+     LEFT JOIN ref_nomenclatures.t_nomenclatures n ON n.id_nomenclature = s.id_nomenclature_valid_status
+     LEFT JOIN LATERAL ( SELECT v_1.validation_auto,
+            v_1.validation_date
+           FROM gn_commons.t_validations v_1
+          WHERE v_1.uuid_attached_row = s.unique_id_sinp
+          ORDER BY v_1.validation_date DESC
+         LIMIT 1) v ON true
   WHERE d.validable = true AND NOT s.unique_id_sinp IS NULL;
 
 COMMENT ON VIEW gn_commons.v_synthese_validation_forwebapp  IS 'Vue utilisée pour le module validation. Prend l''id_nomenclature dans la table synthese ainsi que toutes les colonnes de la synthese pour les filtres. On JOIN sur la vue latest_validation pour voir si la validation est auto';
+
+ALTER TABLE ONLY gn_commons.cor_field_dataset
+  ADD CONSTRAINT fk_cor_field_dataset FOREIGN KEY (id_dataset) 
+  REFERENCES gn_meta.t_datasets(id_dataset) ON UPDATE CASCADE ON DELETE CASCADE;
+
+ALTER TABLE ONLY gn_commons.cor_field_object
+  ADD CONSTRAINT fk_cor_field_object FOREIGN KEY (id_object) 
+  REFERENCES gn_permissions.t_objects(id_object) ON UPDATE CASCADE ON DELETE CASCADE;

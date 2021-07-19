@@ -114,17 +114,20 @@ def install_gn_module(module_path, url, conf_file, build, enable_backend):
                     # Installation du module
                     run_install_gn_module(app, module_path)
                     # Enregistrement de la config du module
-                    gn_module_register_config(module_code.lower())
+                    gn_module_register_config(module_code)
 
                     if enable_frontend:
                         install_frontend_dependencies(module_path)
                         # generation du fichier tsconfig.app.json
-                        tsconfig_app_templating(app)
+                        tsconfig_app_templating(
+                            app=app
+                        )
                         # generation du routing du frontend
-                        frontend_routes_templating(app)
+                        frontend_routes_templating(
+                            app=app
+                        )
                         # generation du fichier de configuration du frontend
-                        create_module_config(app, module_code.lower(), build=False)
-
+                        create_module_config(app, module_code, build=False)
                     if build and enable_frontend:
                         # Rebuild the frontend
                         build_geonature_front(rebuild_sass=True)
@@ -145,15 +148,16 @@ def install_gn_module(module_path, url, conf_file, build, enable_backend):
                 )  # noqa
 
     except (GNModuleInstallError, GeoNatureError) as ex:
-        # S'il y a une erreur lors de l'installation initiale du module
-        #   suppression de ce module
-        if fresh_install:
-            remove_application_db(app, module_code)
         log.critical(
             (
                 "\n\n\033[91mError while installing GN module \033[0m.The process returned:\n\t{}"
             ).format(ex)
         )
+        # S'il y a une erreur lors de l'installation initiale du module
+        #   suppression de ce module
+        if fresh_install:
+            remove_application_db(app, module_code)
+
         sys.exit(1)
 
 
@@ -257,4 +261,5 @@ def update_module_configuration(module_code, build, prod):
     if prod:
         subprocess.call(["sudo", "supervisorctl", "reload"])
     app = create_app(with_external_mods=False)
-    create_module_config(app, module_code.lower(), build=build)
+    with app.app_context():
+        create_module_config(app, module_code, build=build)
