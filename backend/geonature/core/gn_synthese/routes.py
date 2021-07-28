@@ -138,6 +138,8 @@ def get_observations_for_web(auth, permissions):
         VSyntheseForWebApp.lb_nom,
         VSyntheseForWebApp.cd_nom,
         VSyntheseForWebApp.nom_vern,
+        VSyntheseForWebApp.count_min,
+        VSyntheseForWebApp.count_max,
         VSyntheseForWebApp.st_asgeojson,
         VSyntheseForWebApp.observers,
         VSyntheseForWebApp.dataset_name,
