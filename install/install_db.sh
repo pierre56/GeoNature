@@ -199,7 +199,7 @@ if ! database_exists "${db_name}"; then
     #sed -i 's#BDC_STATUTS_TYPES_13#BDC_STATUTS_TYPES_12#g' tmp/taxhub/data_inpn_taxhub.sql
     #sed -i 's#BDC_STATUTS_13#BDC_STATUTS_12#g' tmp/taxhub/data_inpn_taxhub.sql
 
-    array=( TAXREF_INPN_v12.zip ESPECES_REGLEMENTEES_v11.zip LR_FRANCE_20160000.zip BDC_STATUTS_13.zip )
+    array=( TAXREF_v14_2020.zip ESPECES_REGLEMENTEES_v11.zip LR_FRANCE_20160000.zip BDC-Statuts-v14.zip )
     for i in "${array[@]}"
     do
       if [ ! -f 'tmp/taxhub/'$i ]
@@ -381,9 +381,6 @@ if ! database_exists "${db_name}"; then
     export PGPASSWORD=$user_pg_pass;psql -h $db_host -U $user_pg -d $db_name -f tmp/geonature/synthese.sql  &>> var/log/install_db.log
     export PGPASSWORD=$user_pg_pass;psql -h $db_host -U $user_pg -d $db_name -f data/core/synthese_default_values.sql  &>> var/log/install_db.log
 
-    write_log "Creating commons view depending of synthese"
-    export PGPASSWORD=$user_pg_pass;psql -h $db_host -U $user_pg -d $db_name -f data/core/commons_synthese.sql  &>> var/log/install_db.log
-
     write_log "Creating 'gn_exports' schema..."
     export PGPASSWORD=$user_pg_pass;psql -h $db_host -U $user_pg -d $db_name -f data/core/exports.sql  &>> var/log/install_db.log
 
@@ -412,6 +409,8 @@ if ! database_exists "${db_name}"; then
     echo "Insert 'gn_sensitivity' data... (This may take a few minutes)"
     sudo -n -u postgres -s psql -d $db_name -f tmp/geonature/sensitivity_data.sql &>> var/log/install_db.log
 
+    write_log "Creating table and FK depending of other schema"
+    export PGPASSWORD=$user_pg_pass;psql -h $db_host -U $user_pg -d $db_name -f data/core/commons_after.sql  &>> var/log/install_db.log
 
     # Installation des données exemples
     if [ "$add_sample_data" = true ];
