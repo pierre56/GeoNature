@@ -6,7 +6,7 @@ import time
 
 from collections import OrderedDict
 
-from flask import Blueprint, request, current_app, send_from_directory, render_template
+from flask import Blueprint, request, current_app, send_from_directory, render_template, jsonify
 from sqlalchemy import distinct, func, desc, select, text
 from sqlalchemy.orm import exc
 from sqlalchemy.sql.expression import delete
@@ -18,7 +18,7 @@ from utils_flask_sqla_geo.generic import GenericTableGeo
 
 
 from geonature.utils import filemanager
-from geonature.utils.env import DB, ROOT_DIR
+from geonature.utils.env import DB
 from geonature.utils.errors import GeonatureApiError
 from geonature.utils.utilsgeometrytools import export_as_geo_file
 
@@ -47,6 +47,7 @@ from geonature.core.gn_synthese.utils.blurring import DataBlurring
 
 from geonature.core.gn_permissions import decorators as permissions
 from geonature.core.gn_permissions.tools import cruved_scope_for_user_in_module
+from werkzeug.exceptions import BadRequest
 
 # debug
 # current_app.config['SQLALCHEMY_ECHO'] = True
@@ -118,7 +119,7 @@ def get_observations_for_web(auth, permissions):
     :>jsonarr int nb_total: Number of observations
     :>jsonarr bool nb_obs_limited: Is number of observations capped
     """
-    if request.json:
+    if request.is_json:
         filters = request.json
     elif request.data:
         #  decode byte to str - compat python 3.5
@@ -137,6 +138,8 @@ def get_observations_for_web(auth, permissions):
         VSyntheseForWebApp.lb_nom,
         VSyntheseForWebApp.cd_nom,
         VSyntheseForWebApp.nom_vern,
+        VSyntheseForWebApp.count_min,
+        VSyntheseForWebApp.count_max,
         VSyntheseForWebApp.st_asgeojson,
         VSyntheseForWebApp.observers,
         VSyntheseForWebApp.dataset_name,
@@ -170,6 +173,7 @@ def get_observations_for_web(auth, permissions):
             "cd_nom": r["cd_nom"],
             "nom_vern_or_lb_nom": r["nom_vern"] if r["nom_vern"] else r["lb_nom"],
             "lb_nom": r["lb_nom"],
+            "count_min_max": '{} - {}'.format(r["count_min"], r["count_max"]) if r["count_min"] != r["count_max"] else str(r["count_min"] or ''),
             "dataset_name": r["dataset_name"],
             "observers": r["observers"],
             "url_source": r["url_source"],
@@ -228,7 +232,7 @@ def get_synthese(auth, permissions):
     columns = current_app.config["SYNTHESE"]["COLUMNS_API_SYNTHESE_WEB_APP"] + MANDATORY_COLUMNS
     features = []
     for d in data:
-        feature = d.get_geofeature(columns=columns)
+        feature = d.get_geofeature(fields=columns)
         feature["properties"]["nom_vern_or_lb_nom"] = (
             d.lb_nom if d.nom_vern is None else d.nom_vern
         )
@@ -280,12 +284,15 @@ def get_one_synthese(auth, permissions, id_synthese):
     )
     try:
         data = q.one()
-        synthese_as_dict = data[0].as_dict(True)
+        synthese_as_dict = data[0].as_dict(
+            depth=2,
+        )
+
         synthese_as_dict["actors"] = data[1]
         if current_app.config["DATA_BLURRING"]["ENABLE_DATA_BLURRING"]:
             data_blurring = DataBlurring(permissions)
             synthese_as_dict = data_blurring.blurOneObsAreas(synthese_as_dict)
-        return synthese_as_dict
+        return jsonify(synthese_as_dict)
     except exc.NoResultFound:
         return None
 
@@ -392,7 +399,7 @@ def export_observations_web(auth, permissions):
     export_format = params.get("export_format", "csv")
     # Test export_format
     if not export_format in current_app.config["SYNTHESE"]["EXPORT_FORMAT"]:
-        raise GeonatureApiError("Unsupported format")
+        raise BadRequest("Unsupported format")
 
     # Set default to csv
     export_view = GenericTableGeo(
@@ -462,15 +469,23 @@ def export_observations_web(auth, permissions):
                     "compute": "asgeojson",
                     "srid": current_app.config["LOCAL_SRID"],
                 },
+                {
+                    "output_field": 'x_centroid_4326',
+                    "compute": "x",
+                },
+                {
+                    "output_field": 'y_centroid_4326',
+                    "compute": "y",
+                },
             ]
         )
         results = data_blurring.blurSeveralObs(results)
-    
+
     file_name = datetime.datetime.now().strftime("%Y_%m_%d_%Hh%Mm%S")
     file_name = filemanager.removeDisallowedFilenameChars(file_name)
 
     if export_format == "csv":
-        formated_data = [export_view.as_dict(d, columns=columns_to_serialize) for d in results]
+        formated_data = [export_view.as_dict(d, fields=columns_to_serialize) for d in results]
         return to_csv_resp(file_name, formated_data, separator=";", columns=columns_to_serialize)
 
     elif export_format == "geojson":
@@ -481,7 +496,7 @@ def export_observations_web(auth, permissions):
             )
             feature = Feature(
                 geometry=geometry,
-                properties=export_view.as_dict(r, columns=columns_to_serialize),
+                properties=export_view.as_dict(r, fields=columns_to_serialize),
             )
             features.append(feature)
         results = FeatureCollection(features)
@@ -795,18 +810,13 @@ def getDefaultsNomenclatures():
     )
     if len(types) > 0:
         q = q.filter(DefaultsNomenclaturesValue.mnemonique_type.in_(tuple(types)))
-    try:
-        data = q.all()
-    except Exception:
-        DB.session.rollback()
-        raise
+    data = q.all()
     if not data:
         return {"message": "not found"}, 404
     return {d[0]: d[1] for d in data}
 
 
 @routes.route("/color_taxon", methods=["GET"])
-@json_resp
 def get_color_taxon():
     """Get color of taxon in areas (vue synthese.v_color_taxon_area).
 
@@ -839,7 +849,7 @@ def get_color_taxon():
         q = q.filter(VColorAreaTaxon.cd_nom.in_(tuple(cd_noms)))
     data = q.limit(limit).offset(offset).all()
 
-    return [d.as_dict() for d in data]
+    return jsonify([d.as_dict() for d in data])
 
 
 @routes.route("/taxa_count", methods=["GET"])

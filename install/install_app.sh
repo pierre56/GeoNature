@@ -146,7 +146,7 @@ pip install --upgrade pip
 pip install -r requirements.txt
 if [[ $MODE == "dev" ]]
 then
-  pip install -r requirements-dev.txt
+  pip install -r requirements-dev.txt -r requirements-submodules.txt
 fi
 
 echo "Installation du backend geonature..."
@@ -188,7 +188,7 @@ sudo -s supervisorctl reload
 # Lien symbolique vers le dossier static du backend (pour le backoffice)
 ln -sf "${BASE_DIR}/frontend/node_modules" "${BASE_DIR}/backend/static"
 
-cd "${GEONATURE}/frontend"
+cd "${BASE_DIR}/frontend"
 
 # Creation du dossier des assets externes
 mkdir -p "src/external_assets"
@@ -196,8 +196,8 @@ mkdir -p "src/external_assets"
 
 # Copy the custom components
 echo "Création des fichiers de customisation du frontend..."
-if [ ! -f src/custom/custom.scss ]; then
-  cp -n src/custom/custom.scss.sample src/custom/custom.scss
+if [ ! -f src/assets/custom.css ]; then
+  cp -n src/assets/custom.sample.css src/assets/custom.css
 fi
 custom_component_dir="src/custom/components/"
 for file in $(find "${custom_component_dir}" -type f -name "*.sample"); do
@@ -205,6 +205,7 @@ for file in $(find "${custom_component_dir}" -type f -name "*.sample"); do
 		cp "${file}" "${file%.sample}"
 	fi
 done
+
 
 # Generate the tsconfig.json
 geonature generate_frontend_tsconfig

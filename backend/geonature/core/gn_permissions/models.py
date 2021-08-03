@@ -38,7 +38,7 @@ class VUsersPermissions(DB.Model):
     end_date = DB.Column(DB.DateTime)
     id_permission = DB.Column(DB.Integer)
 
-    def __repr__(self):
+    def __str__(self):
         msg = (
             "VUsersPermissions " +
             f"role='{self.id_role}', " +
@@ -102,6 +102,8 @@ class TObjects(DB.Model):
     code_object = DB.Column(DB.Unicode)
     description_object = DB.Column(DB.Unicode)
 
+    def __str__(self):
+        return f"{self.code_object} ({self.description_object})"
 
 @serializable
 class CorRoleActionFilterModuleObject(DB.Model):
@@ -243,6 +245,7 @@ class CorModuleActionObjectFilter(DB.Model):
         TModules,
         primaryjoin=(TModules.id_module == id_module),
         foreign_keys=[id_module],
+        back_populates="available_permissions",
     )
     cor_action = DB.relationship(
         TActions,
