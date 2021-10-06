@@ -36,7 +36,7 @@ class LAreas(DB.Model):
     source = DB.Column(DB.Unicode)
     geom = DB.Column(Geometry("GEOMETRY", 4326))
     area_type = DB.relationship("BibAreasTypes", lazy="select")
-
+    enable = DB.Column(DB.Boolean, nullable=False, default=True)
 
 @serializable
 class LiMunicipalities(DB.Model):
