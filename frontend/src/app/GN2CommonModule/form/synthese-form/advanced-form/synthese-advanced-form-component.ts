@@ -95,6 +95,50 @@ export class TaxonAdvancedModalComponent implements OnInit, AfterContentInit {
     this.formService.searchForm.controls.taxon_rank.reset();
   }
 
+  onStatusCheckboxChanged(event) {
+    if (event.target.checked == true) {
+      this.formService.selectedStatus.push(event.target.value);
+    } else if (event.target.checked == false) {
+      this.formService.selectedStatus.splice(
+        this.formService.selectedStatus.indexOf(event.target.value),
+        1
+      );
+    }
+  }
+
+  onStatusSelected(event) {
+    this.formService.selectedStatus.push(event);
+  }
+
+  onStatusDeleted(event) {
+    this.formService.selectedStatus.splice(
+      this.formService.selectedStatus.indexOf(event),
+      1
+    );
+  }
+
+  onRedListsSelected(event) {
+    this.formService.selectedRedLists.push(event);
+  }
+
+  onRedListsDeleted(event) {
+    this.formService.selectedRedLists.splice(
+      this.formService.selectedRedLists.indexOf(event),
+      1
+    );
+  }
+
+  onTaxRefAttributsSelected(event) {
+    this.formService.selectedTaxRefAttributs.push(event);
+  }
+
+  onTaxRefAttributsDeleted(event) {
+    this.formService.selectedTaxRefAttributs.splice(
+      this.formService.selectedTaxRefAttributs.indexOf(event),
+      1
+    );
+  }
+
   // algo recursif pour retrouver tout les cd_ref sélectionné à partir de l'arbre
   searchSelectedId(node, depth): Array<any> {
     if (node.children) {

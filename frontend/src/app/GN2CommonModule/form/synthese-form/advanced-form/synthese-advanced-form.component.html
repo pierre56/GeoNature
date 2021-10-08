@@ -140,6 +140,8 @@
         keyLabel="display"
         keyValue="code"
         [label]="status.display_name"
+        (onChange)="onStatusSelected($event)"
+        (onDelete)="onStatusDeleted($event.code)"
       >
       </pnx-multiselect>
 
@@ -154,6 +156,7 @@
             class="custom-control-input"
             [formControl]="status.control"
             [value]="status.status_types[0]"
+            (change)="onStatusCheckboxChanged($event)"
           />
           <label [for]="status.control_name" class="custom-control-label">
             <small>{{ status.display_name }}</small>
@@ -175,6 +178,8 @@
         keyLabel="display"
         keyValue="code"
         [label]="redList.display_name"
+        (onChange)="onRedListsSelected(redList.status_type + ' [' + $event + ']')"
+        (onDelete)="onRedListsDeleted(redList.status_type + ' [' + $event.code + ']')"
       >
       </pnx-multiselect>
     </div>
@@ -189,6 +194,8 @@
         keyLabel="nom_categorie_lr"
         keyValue="id_categorie_france"
         label="Liste rouge UICN"
+        (onChange)="onTaxRefAttributsSelected($event)"
+        (onDelete)="onTaxRefAttributsDeleted($event.id_categorie_france)"
       >
       </pnx-multiselect>
     </div>
@@ -200,6 +207,8 @@
         keyLabel="nom_habitat"
         keyValue="id_habitat"
         label="Habitat"
+        (onChange)="onTaxRefAttributsSelected($event)"
+        (onDelete)="onTaxRefAttributsDeleted($event.id_habitat)"
       >
       </pnx-multiselect>
     </div>
@@ -211,6 +220,8 @@
         keyLabel="value"
         keyValue="value"
         label="Groupe 2 INPN"
+        (onChange)="onTaxRefAttributsSelected($event)"
+        (onDelete)="onTaxRefAttributsDeleted($event.value)"
       >
       </pnx-multiselect>
     </div>
