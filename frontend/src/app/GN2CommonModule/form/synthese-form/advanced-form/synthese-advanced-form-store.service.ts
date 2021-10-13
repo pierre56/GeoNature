@@ -32,6 +32,7 @@ export class TaxonAdvancedStoreService {
     // Set taxon tree if needed
     if (this.cfg.SYNTHESE.DISPLAY_TAXON_TREE) {
       this.displayTaxonTree = true;
+      console.log("Taxon Tree displaying...")
       this._validationDataService.getTaxonTree().subscribe(data => {
         this.taxonTree = formatTaxonTree(data);
       });
@@ -43,7 +44,7 @@ export class TaxonAdvancedStoreService {
         .getStatusType(status.status_types)
         .subscribe(data => {
           status.values = data;
-    // get taxhub attributes
+          console.log("In store service protection status:", status);
         });
     });
 
@@ -53,6 +54,7 @@ export class TaxonAdvancedStoreService {
         .getRedListValues(redList.status_type)
         .subscribe(data => {
           redList.values = data;
+          console.log("In store service red lists values:", redList);
         });
     });
 

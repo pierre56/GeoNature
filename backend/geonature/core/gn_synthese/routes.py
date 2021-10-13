@@ -149,6 +149,12 @@ def get_observations_for_web(info_role):
     )
     synthese_query_class = SyntheseQuery(VSyntheseForWebApp, query, filters)
     synthese_query_class.filter_query_all_filters(info_role)
+            
+    # DEBUG QUERY:
+    from sqlalchemy.dialects import postgresql
+    print(synthese_query_class.query.compile(dialect=postgresql.dialect(), compile_kwargs={"literal_binds": True}))
+    # exit()
+
     result = DB.engine.execute(synthese_query_class.query.limit(result_limit))
     geojson_features = []
     for r in result:

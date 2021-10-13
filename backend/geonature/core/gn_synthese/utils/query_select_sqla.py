@@ -345,8 +345,11 @@ class SyntheseQuery:
                 self.query = self.query.where(CorAreaSynthese.id_area.in_(value))
             elif colname.endswith("_red_lists"):
                 red_list_id = colname.replace("_red_lists", "")
+                print(f"red list id: {red_list_id}")
                 all_red_lists_cfg = current_app.config["SYNTHESE"]["RED_LISTS_FILTERS"]
                 red_list_cfg = next((item for item in all_red_lists_cfg if item["id"] == red_list_id), None)
+                print(red_list_cfg)
+                print(f"Red lists => col: {colname}; val: {value}; status type: {red_list_cfg['status_type']}")
                 red_list_cte = (
                     select([TaxrefBdcStatutTaxon.cd_ref, CorAreaStatus.id_area])
                     .select_from(
@@ -383,11 +386,17 @@ class SyntheseQuery:
 
             elif colname.endswith("_status"):
                 status_id = colname.replace("_status", "")
+                print(f"Status id: {status_id}")
                 all_status_cfg = current_app.config["SYNTHESE"]["STATUS_FILTERS"]
+                print(all_status_cfg)
                 status_cfg = next((item for item in all_status_cfg if item["id"] == status_id), None)
+                print(status_cfg)
+                print(len(status_cfg['status_types']))
+                print(value)
                 # Check if a checkbox was used.
                 if (isinstance(value, list) and value[0] == True and len(status_cfg['status_types']) == 1):
                     value = status_cfg['status_types']
+                print(f"Status => col: {colname}; val: {value}; status type: {status_cfg['status_types']}")
                 status_cte = (
                     select([TaxrefBdcStatutTaxon.cd_ref, CorAreaStatus.id_area])
                     .select_from(

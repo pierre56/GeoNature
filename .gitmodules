@@ -12,7 +12,7 @@
 	url = https://github.com/PnX-SI/Utils-Flask-SQLAlchemy
 [submodule "backend/dependencies/TaxHub"]
 	path = backend/dependencies/TaxHub
-	url = https://github.com/PnX-SI/TaxHub
+	url = git@github.com:PnX-SI/TaxHub.git
 [submodule "backend/dependencies/Utils-Flask-SQLAlchemy-Geo"]
 	path = backend/dependencies/Utils-Flask-SQLAlchemy-Geo
 	url = https://github.com/PnX-SI/Utils-Flask-SQLAlchemy-Geo
