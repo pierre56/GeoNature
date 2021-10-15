@@ -131,7 +131,7 @@ export class SyntheseInfoObsComponent implements OnInit {
   ngOnInit() {
     this.loadAllInfo(this.idSynthese);
     console.log(this.CONFIG);
-    
+
   }
 
 
@@ -140,7 +140,7 @@ export class SyntheseInfoObsComponent implements OnInit {
     this.showValidation = true;
     setTimeout(() => {
       this._mapService.map.invalidateSize();
-    }, 100);    
+    }, 100);
   }
 
 
@@ -190,16 +190,17 @@ export class SyntheseInfoObsComponent implements OnInit {
           });
 
         this.loadValidationHistory(this.selectedObs['unique_id_sinp']);
-        this._gnDataService.getTaxonInfo(this.selectedObs['cd_nom']).subscribe(taxInfo => {
+        let cdNom = this.selectedObs['cd_nom'];
+        let areasStatus = this.selectedObs['areas_status'];
+        this._gnDataService.getTaxonInfo(cdNom, areasStatus).subscribe(taxInfo => {
           this.selectedObsTaxonDetail = taxInfo;
           if (this.selectedObs.cor_observers) {
             this.email = this.selectedObs.cor_observers.map(el => el.email).join();
             this.mailto = this.formatMailContent(this.email);
-            
           }
 
           this._gnDataService.getProfile(taxInfo.cd_ref).subscribe(profile => {
-            
+
             this.profile = profile;
           });
 
@@ -233,7 +234,7 @@ export class SyntheseInfoObsComponent implements OnInit {
     if (this.mailCustomSubject || this.mailCustomBody) {
 
       // Mise en forme des données
-      let d = { ...this.selectedObsTaxonDetail, ...this.selectedObs };      
+      let d = { ...this.selectedObsTaxonDetail, ...this.selectedObs };
       if (this.selectedObs.source.url_source) {
         d['data_link'] = [
           this.APP_CONFIG.URL_APPLICATION,
@@ -244,13 +245,13 @@ export class SyntheseInfoObsComponent implements OnInit {
       else {
         d['data_link'] = "";
       }
-      
+
       d["communes"] = this.selectedObs.areas.filter(
         area => area.area_type.type_code == 'COM'
       ).map(
         area => area.area_name
       ).join(', ');
-      
+
       let contentMedias = "";
       if (!this.selectedObs.medias) {
         contentMedias = "Aucun media";
@@ -271,7 +272,7 @@ export class SyntheseInfoObsComponent implements OnInit {
           contentMedias += "\n";
         })
       }
-      d["medias"] = contentMedias;      
+      d["medias"] = contentMedias;
       // Construction du mail
       if (this.mailCustomSubject !== undefined) {
         try {
@@ -287,11 +288,10 @@ export class SyntheseInfoObsComponent implements OnInit {
           console.log('ERROR : unable to eval mail body');
         }
       }
-      
+
       mailto = encodeURI(mailto);
       mailto = mailto.replace(/,/g, '%2c');
     }
-    
     return mailto;
   }
 
