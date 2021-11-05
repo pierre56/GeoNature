@@ -105,11 +105,13 @@ def get_observations_for_web(info_role):
 
     :param str info_role: Role used to get the associated filters, **TBC**
     :qparam str limit: Limit number of synthese returned. Defaults to NB_MAX_OBS_MAP.
+    :qparam str cd_ref_parent: filtre tous les taxons enfants d'un TAXREF cd_ref.
     :qparam str cd_ref: Filter by TAXREF cd_ref attribute
     :qparam str taxonomy_group2_inpn: Filter by TAXREF group2_inpn attribute
     :qparam str taxonomy_id_hab: Filter by TAXREF id_habitat attribute
-    :qparam str taxonomy_lr: Filter by TAXREF cd_ref attribute
-    :qparam str taxhub_attribut*: Generig TAXREF filter, given attribute & value
+    :qparam str taxhub_attribut*: filtre générique TAXREF en fonction de l'attribut et de la valeur.
+    :qparam str *_red_lists: filtre générique de listes rouges. Filtre sur les valeurs. Voir config.
+    :qparam str *_status: filtre générique de statuts (BdC Statuts). Filtre sur les types. Voir config.
     :qparam str observers: Filter on observer
     :qparam str id_organism: Filter on organism
     :qparam str date_min: Start date
@@ -188,8 +190,9 @@ def get_observations_for_web(info_role):
     return {
         "data": FeatureCollection(geojson_features),
         "nb_total": len(geojson_features),
-        "nb_obs_limited": len(geojson_features)
-        == current_app.config["SYNTHESE"]["NB_MAX_OBS_MAP"],
+        "nb_obs_limited": (
+            len(geojson_features) == int(current_app.config["SYNTHESE"]["NB_MAX_OBS_MAP"])
+        ),
     }
 
 
@@ -432,6 +435,7 @@ def export_observations_web(info_role):
     cruved = cruved_scope_for_user_in_module(info_role.id_role, module_code="SYNTHESE")[0]
     if cruved["R"] > cruved["E"]:
         synthese_query_class.filter_query_with_cruved(info_role)
+
     results = DB.session.execute(synthese_query_class.query.limit(
         current_app.config["SYNTHESE"]["NB_MAX_OBS_EXPORT"])
     )
