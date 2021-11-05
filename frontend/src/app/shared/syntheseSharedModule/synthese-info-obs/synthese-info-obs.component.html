@@ -190,7 +190,6 @@
         <td> {{selectedObs?.sample_number_proof}} </td>
       </tr>
       <tr>
-      <tr>
         <td> Type de regroupement </td>
         <td> {{selectedObs?.grp_typ}} </td>
       </tr>
@@ -292,15 +291,6 @@
       >
         <td> <b>{{attr.label_attribut}} </b> </td>
         <td> {{attr.valeur_attribut}} </td>
-      </tr>
-    </table>
-
-    <h5 class="underlined underlined-sm main-color">Réglementation</h5>
-    <table class="font-xs table table-striped table-sm">
-      <tr *ngFor="let arrete of selectedObsTaxonDetail?.statuts_protection">
-        <td>
-          <a [href]="arrete.url"> {{arrete.intitule}} </a>
-        </td>
       </tr>
     </table>
 

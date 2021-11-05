@@ -33,16 +33,11 @@ from geonature.core.gn_synthese.models import (
     VColorAreaTaxon,
 )
 from geonature.core.gn_synthese.synthese_config import MANDATORY_COLUMNS
-from geonature.core.taxonomie.models import (
-    TaxrefProtectionArticles,
-    TaxrefProtectionEspeces,
-)
 from geonature.core.ref_geo.models import (
     CorAreaStatus,
     BibAreasTypes,
     LAreas, 
 )
-from geonature.core.gn_synthese.utils import query as synthese_query
 from geonature.core.gn_synthese.utils.query_select_sqla import SyntheseQuery
 
 from geonature.core.gn_permissions import decorators as permissions
@@ -193,53 +188,6 @@ def get_observations_for_web(info_role):
         "nb_obs_limited": (
             len(geojson_features) == int(current_app.config["SYNTHESE"]["NB_MAX_OBS_MAP"])
         ),
-    }
-
-
-@routes.route("", methods=["GET"])
-@permissions.check_cruved_scope("R", True, module_code="SYNTHESE")
-@json_resp
-def get_synthese(info_role):
-    """Return synthese row(s) filtered by form params. NOT USED ANY MORE FOR PERFORMANCE ISSUES
-
-    .. :quickref: Synthese; Deprecated
-
-    .. deprecated:: 2?
-    Use :route: /for_web instead
-
-    Params must have same synthese fields names
-
-    :parameter str info_role: Role used to get the associated filters
-    :returns dict[dict, int, bool]: See description above
-    """
-    # change all args in a list of value
-    filters = {key: request.args.getlist(key) for key, value in request.args.items()}
-    if "limit" in filters:
-        result_limit = filters.pop("limit")[0]
-    else:
-        result_limit = current_app.config["SYNTHESE"]["NB_MAX_OBS_MAP"]
-
-    query = select([VSyntheseForWebApp]).order_by(VSyntheseForWebApp.date_min.desc())
-    synthese_query_class = SyntheseQuery(VSyntheseForWebApp, query, filters)
-    synthese_query_class.filter_query_all_filters(info_role)
-    data = DB.engine.execute(synthese_query_class.query.limit(result_limit))
-
-
-    # q = synthese_query.filter_query_all_filters(VSyntheseForWebApp, q, filters, info_role)
-
-    # data = q.limit(result_limit)
-    columns = current_app.config["SYNTHESE"]["COLUMNS_API_SYNTHESE_WEB_APP"] + MANDATORY_COLUMNS
-    features = []
-    for d in data:
-        feature = d.get_geofeature(fields=columns)
-        feature["properties"]["nom_vern_or_lb_nom"] = (
-            d.lb_nom if d.nom_vern is None else d.nom_vern
-        )
-        features.append(feature)
-    return {
-        "data": FeatureCollection(features),
-        "nb_obs_limited": len(features) == current_app.config["SYNTHESE"]["NB_MAX_OBS_MAP"],
-        "nb_total": len(features),
     }
 
 
@@ -980,54 +928,3 @@ def get_taxa_distribution():
 
     data = query.group_by(rank).all()
     return [{"count": d[0], "group": d[1]} for d in data]
-
-
-# @routes.route("/test", methods=["GET"])
-# @json_resp
-# def test():
-#     from shapely.geometry import asShape
-#     from geoalchemy2.shape import from_shape
-#     from shapely.geometry import Point
-#     import random
-
-#     s = DB.session.query(Synthese).get(2)
-
-#     s_as_dict = s.as_dict()
-#     s_as_dict.pop("unique_id_sinp")
-#     # wkt = asShape(s.the_geom_4326)
-#     # print(wkt)
-#     # releve.geom_4326 = from_shape(shape, srid=4326)
-#     import datetime
-
-#     DB.session.query()
-#     for i in range(1000):
-#         new_point = Point(random.uniform(6.1, 7.5), random.uniform(44.0, 45.2))
-#         wkb = from_shape(new_point, 4326)
-#         s_as_dict["id_synthese"] = random.randint(1500, 999999999)
-
-#         # with random cd_nom
-#         random_cd_nom = DB.engine.execute(
-#             """
-#         SELECT cd_nom FROM taxonomie.bib_noms OFFSET random() * (select count(*) from taxonomie.bib_noms) limit 1 ;"""
-#         )
-#         cd_nom = None
-#         for cd in random_cd_nom:
-#             s_as_dict["cd_nom"] = cd[0]
-#         new_synthese = Synthese(**s_as_dict)
-#         new_synthese.the_geom_4326 = wkb
-#         new_synthese.the_geom_local = func.st_transform(wkb, 2154)
-
-#         new_date = datetime.datetime.now()
-#         new_date = new_date.replace(year=random.randint(2000, 2016))
-#         new_synthese.date_min = new_date
-#         new_synthese.date_max = new_date
-#         print(new_synthese.the_geom_local)
-#         q = DB.session.add(new_synthese)
-#         # DB.session.flush()
-#         DB.session.commit()
-
-#     # s = TSources(name_source="lalala")
-
-#     # DB.session.add(s)
-#     # DB.session.commit()
-#     return "la"
