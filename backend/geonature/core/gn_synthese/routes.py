@@ -234,7 +234,7 @@ def get_one_synthese(id_synthese):
             depth=2,
         )
         geojson["properties"]["actors"] = data[1]
-        geojson["properties"]["areas_status"] = [d['cd_sig'] for d in synthese_as_dict["areas_status"]]
+        geojson["properties"]["areas_status"] = [d['cd_sig'] for d in geojson["properties"]["areas_status"]]
         return jsonify(geojson)
     except exc.NoResultFound:
         return None
