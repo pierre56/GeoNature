@@ -20,27 +20,29 @@
       {{ selectedObsTaxonDetail?.nom_valide }}
     </h3>
 
-    <a
-      *ngIf="selectedObsTaxonDetail && CONFIG.FRONTEND.ENABLE_PROFILES"
-      [routerLink]="['/synthese/taxon', selectedObsTaxonDetail?.cd_ref]"
-      target="_blank"
-      mat-stroked-button
-      color="primary"
-      class="mr-1"
-    >
-      Fiche GeoNature
-    </a>
+    <div>
+      <a
+        *ngIf="selectedObsTaxonDetail && CONFIG.FRONTEND.ENABLE_PROFILES"
+        [routerLink]="['/synthese/taxon', selectedObsTaxonDetail?.cd_ref]"
+        target="_blank"
+        mat-stroked-button
+        color="primary"
+        class="mr-1"
+      >
+        Fiche GeoNature
+      </a>
 
-    <a
-      class="btn align-self-start"
-      href="https://inpn.mnhn.fr/espece/cd_nom/{{ selectedObsTaxonDetail?.cd_nom }}"
-      target="_blank"
-      mat-stroked-button
-      color="primary"
-    >
-      Fiche INPN du taxon
-      <mat-icon aria-hidden="true">launch</mat-icon>
-    </a>
+      <a
+        class="btn align-self-start"
+        href="https://inpn.mnhn.fr/espece/cd_nom/{{ selectedObsTaxonDetail?.cd_nom }}"
+        target="_blank"
+        mat-stroked-button
+        color="primary"
+      >
+        Fiche INPN du taxon
+        <mat-icon aria-hidden="true">launch</mat-icon>
+      </a>
+    </div>
   </div>
 
   <mat-card-content>
@@ -451,11 +453,11 @@
       <div *ngIf="CONFIG.FRONTEND.ENABLE_PROFILES">
         <h3>Profil du taxon </h3>
         <div class="row row-sm">
-          <div>
-            <h5> Informations générales sur le taxon</h5>
+          <div class="col-4 padding-sm">
+            <h5> Informations générales sur le taxon </h5>
             <table class="font-xs table table-striped table-sm">
               <tr>
-                <td>Nombre de données valides</td>
+                <td> Nombre de données valides </td>
                 <td>{{profile?.properties?.count_valid_data}}</td>
               </tr>
               <tr>
@@ -478,50 +480,38 @@
                 </td>
               </tr>
             </table>
-            <h5> Cohérence de la donnée </h5>
 
-            <table class="table table-sm font-xs table-striped">
+            <h5> Cohérence de la donnée </h5>
+            <table class="font-xs table table-sm table-striped">
               <tr>
                 <td>Dans l'aire d'observation valide </td>
                 <td *ngIf='profileDataChecks?.valid_distribution'>
-                  <mat-icon
-                    class="success"
-                  > check </mat-icon>
+                  <mat-icon class="success"> check </mat-icon>
                 </td>
                 <td *ngIf='!profileDataChecks?.valid_distribution'>
-                  <mat-icon
-                    class="error"
-                  > close </mat-icon>
+                  <mat-icon class="error"> close </mat-icon>
                 </td>
               </tr>
               <tr>
                 <td>Cohérence phénologique </td>
                 <td *ngIf='profileDataChecks?.valid_phenology'>
-                  <mat-icon
-                    class="success"
-                  > check </mat-icon>
+                  <mat-icon class="success"> check </mat-icon>
                 </td>
                 <td *ngIf='!profileDataChecks?.valid_phenology'>
-                  <mat-icon
-                    class="error"
-                  > close </mat-icon>
+                  <mat-icon class="error"> close </mat-icon>
                 </td>
               </tr>
               <tr>
-                <td> Dans la fourchette altitudinale valide</td>
+                <td> Dans la fourchette altitudinale valide </td>
                 <td *ngIf='profileDataChecks?.valid_altitude'>
-                  <mat-icon
-                    class="success"
-                  > check </mat-icon>
+                  <mat-icon class="success"> check </mat-icon>
                 </td>
                 <td *ngIf='!profileDataChecks?.valid_altitude'>
-                  <mat-icon
-                    class="error"
-                  > close </mat-icon>
+                  <mat-icon class="error"> close </mat-icon>
                 </td>
               </tr>
               <tr>
-                <td> Score</td>
+                <td> Score </td>
                 <td> {{profileDataChecks?.score}} </td>
               </tr>
             </table>
@@ -530,18 +520,18 @@
       </div>
 
       <h5>Aire de répartition des observations valides</h5>
-      <pnx-map height="40vh">
-        <pnx-geojson
-          [geojson]="selectedGeom"
-          [style]="{color: 'red'}"
-          >
-        </pnx-geojson>
-        <pnx-geojson
-          [geojson]="profile"
-          [zoomOnFirstTime]="true">
-        </pnx-geojson>
-      </pnx-map>
+      <div class="mb-3 border border-secondary">
+        <pnx-map height="40vh">
+          <pnx-geojson
+            [geojson]="selectedGeom"
+            [style]="{color: 'red'}">
+          </pnx-geojson>
+          <pnx-geojson
+            [geojson]="profile"
+            [zoomOnFirstTime]="true">
+          </pnx-geojson>
+        </pnx-map>
+      </div>
     </div>
   </mat-tab>
-
-  <mat-tab-group>
+<mat-tab-group>
