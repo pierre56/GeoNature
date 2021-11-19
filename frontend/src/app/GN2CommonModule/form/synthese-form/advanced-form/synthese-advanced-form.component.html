@@ -144,7 +144,7 @@
         keyValue="code"
         [label]="status.display_name"
         (onChange)="onStatusSelected($event)"
-        (onDelete)="onStatusDeleted($event.code)"
+        (onDelete)="onStatusDeleted($event)"
       >
       </pnx-multiselect>
 
@@ -181,8 +181,8 @@
         keyLabel="display"
         keyValue="code"
         [label]="redList.display_name"
-        (onChange)="onRedListsSelected(redList.status_type + ' [' + $event + ']')"
-        (onDelete)="onRedListsDeleted(redList.status_type + ' [' + $event.code + ']')"
+        (onChange)="$event.statusType = redList.status_type ; onRedListsSelected($event)"
+        (onDelete)="$event.statusType = redList.status_type ; onRedListsDeleted($event)"
       >
       </pnx-multiselect>
     </div>
@@ -198,8 +198,8 @@
         keyLabel="nom_habitat"
         keyValue="id_habitat"
         label="Habitat"
-        (onChange)="onTaxRefAttributsSelected($event)"
-        (onDelete)="onTaxRefAttributsDeleted($event.id_habitat)"
+        (onChange)="onTaxRefAttributsSelected($event.id_habitat)"
+        (onDelete)="onTaxRefAttributsDeleted($event.value.id_habitat)"
       >
       </pnx-multiselect>
     </div>
@@ -211,8 +211,8 @@
         keyLabel="value"
         keyValue="value"
         label="Groupe 2 INPN"
-        (onChange)="onTaxRefAttributsSelected($event)"
-        (onDelete)="onTaxRefAttributsDeleted($event.value)"
+        (onChange)="onTaxRefAttributsSelected($event.value)"
+        (onDelete)="onTaxRefAttributsDeleted($event.value.value)"
       >
       </pnx-multiselect>
     </div>

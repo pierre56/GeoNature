@@ -105,31 +105,35 @@ export class TaxonAdvancedModalComponent implements OnInit, AfterContentInit {
         this.formService.selectedStatus.indexOf(event.target.value),
         1
       );
+      // Reset input checkbox Reactive From to not send "False"
+      this.formService.searchForm.controls[event.target.id].reset()
     }
   }
 
   onStatusSelected(event) {
     console.log('onStatusSelected:', event)
-    this.formService.selectedStatus.push(event);
+    this.formService.selectedStatus.push(event.code);
   }
 
   onStatusDeleted(event) {
     console.log('onStatusDeleted:', event)
     this.formService.selectedStatus.splice(
-      this.formService.selectedStatus.indexOf(event),
+      this.formService.selectedStatus.indexOf(event.value.code),
       1
     );
   }
 
   onRedListsSelected(event) {
     console.log('onRedListsSelected:', event)
-    this.formService.selectedRedLists.push(event);
+    let key = `${event.statusType} [${event.code}]`;
+    this.formService.selectedRedLists.push(key);
   }
 
   onRedListsDeleted(event) {
     console.log('onRedListsDeleted:', event)
+    let key = `${event.statusType} [${event.value.code}]`;
     this.formService.selectedRedLists.splice(
-      this.formService.selectedRedLists.indexOf(event),
+      this.formService.selectedRedLists.indexOf(key),
       1
     );
   }
