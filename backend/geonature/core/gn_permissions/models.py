@@ -42,7 +42,7 @@ class VUsersPermissions(DB.Model):
         msg = (
             "VUsersPermissions " +
             f"role='{self.id_role}', " +
-            f"module='{self.module_code}', " + 
+            f"module='{self.module_code}', " +
             f"action='{self.code_action}', " +
             f"object='{self.code_object}', " +
             f"filter_type='{self.code_filter_type}', " +
@@ -223,11 +223,11 @@ class CorModuleActionObjectFilter(DB.Model):
     __table_args__ = {"schema": "gn_permissions"}
     id_permission_available = DB.Column(DB.Integer, primary_key=True)
     id_module = DB.Column(
-        DB.Integer, 
+        DB.Integer,
         ForeignKey("gn_commons.t_modules.id_module"),
     )
     id_action = DB.Column(
-        DB.Integer, 
+        DB.Integer,
         ForeignKey("gn_permissions.t_actions.id_action"),
     )
     id_object = DB.Column(
