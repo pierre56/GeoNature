@@ -26,6 +26,7 @@ export class AuthService {
   token: string;
   loginError: boolean;
   public isLoading = false;
+  public public_access = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -33,7 +34,25 @@ export class AuthService {
     private _cookie: CookieService,
     private cruvedService: CruvedStoreService,
     private moduleService: ModuleService
-  ) {}
+  ) {
+    this.route.queryParams.subscribe((params) => {
+      var keys = Object.keys(params);
+
+      if (keys.length > 0 && keys[0] == 'open' && params.open == 'true') {
+        this.public_access = true;
+      } else {
+        this.public_access = false;
+      }
+
+      if (this.public_access && AppConfig.PUBLIC_ACCESS.ENABLE_PUBLIC_ACCESS) {
+        const userPublic = {
+          username: AppConfig.PUBLIC_ACCESS.PUBLIC_LOGIN,
+          password: AppConfig.PUBLIC_ACCESS.PUBLIC_PASSWORD,
+        };
+        this.signinUser(userPublic);
+      }
+    });
+  }
 
   setCurrentUser(user) {
     localStorage.setItem('current_user', JSON.stringify(user));
