@@ -198,15 +198,17 @@ def taxon_attribut():
 
 
 @pytest.fixture()
-def synthese_data(users, datasets):
+def synthese_data(app, users, datasets):
     with db.session.begin_nested():
         source = TSources(name_source='Fixture',
                           desc_source='Synthese data from fixture')
         db.session.add(source)
     now = datetime.datetime.now()
-    # TODO: find a way to be sure that this point is in an actual l_areas geom.
-    # Geom may have been deleted.
-    geom_4326 = from_shape(Point(3.63492965698242, 44.3999389306734), srid=4326)
+    map_center_point = Point(
+        app.config['MAPCONFIG']['CENTER'][1],
+        app.config['MAPCONFIG']['CENTER'][0],
+    )
+    geom_4326 = from_shape(map_center_point, srid=4326)
     with db.session.begin_nested():
         taxon = Taxref.query.filter_by(cd_nom=713776).one()
         s = Synthese(id_source=source.id_source,
