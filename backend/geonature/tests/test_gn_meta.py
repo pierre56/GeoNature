@@ -9,7 +9,7 @@ from geonature.core.gn_meta.models import TDatasets, TAcquisitionFramework
 
 from pypnusershub.db.tools import user_to_token
 
-from .fixtures import acquisition_frameworks, datasets, synthese_data
+from .fixtures import *
 from .utils import set_logged_user_cookie, logged_user_headers
 
 
@@ -279,18 +279,28 @@ class TestGNMeta:
         response = self.client.get(url_for("gn_meta.get_export_pdf_dataset", id_dataset=ds.id_dataset))
         assert response.status_code == 200
 
-    def test_uuid_report(self, users):
-        response = self.client.get(url_for("gn_meta.uuid_report"))
+    def test_uuid_report(self, users, datasets, synthese_data):
+        dataset_id = datasets["own_dataset"].id_dataset
+        response = self.client.get(
+            url_for("gn_meta.uuid_report", id_dataset=dataset_id)
+        )
         assert response.status_code == Unauthorized.code
 
         set_logged_user_cookie(self.client, users['user'])
-        response = self.client.get(url_for("gn_meta.uuid_report"))
+        response = self.client.get(
+            url_for("gn_meta.uuid_report", id_dataset=dataset_id)
+        )
         assert response.status_code == 200
 
-    def test_sensi_report(self, users):
-        response = self.client.get(url_for("gn_meta.uuid_report"))
+    def test_sensi_report(self, users, datasets, synthese_data):
+        dataset_id = datasets["own_dataset"].id_dataset
+        response = self.client.get(
+            url_for("gn_meta.sensi_report", id_dataset=dataset_id)
+        )
         assert response.status_code == Unauthorized.code
 
         set_logged_user_cookie(self.client, users['user'])
-        response = self.client.get(url_for("gn_meta.uuid_report"))
+        response = self.client.get(
+            url_for("gn_meta.sensi_report", id_dataset=dataset_id)
+        )
         assert response.status_code == 200
