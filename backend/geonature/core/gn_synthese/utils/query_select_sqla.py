@@ -154,9 +154,10 @@ class SyntheseQuery:
                 ors_filters.append(self.model_observers_column.ilike(user_fullname))
                 ors_filters.append(self.model_observers_column.ilike(user_fullname_alernative))
 
-                allowed_datasets = [d.id_dataset for d in TDatasets.query.filter_by_scope(int(auth.value_filter)).all()]
-                ors_filters.append(self.model_id_dataset_column.in_(allowed_datasets))
-                self.query = self.query.where(or_(*ors_filters))
+            allowed_datasets = [d.id_dataset for d in TDatasets.query.filter_by_scope(int(auth.value_filter)).all()]
+            ors_filters.append(self.model_id_dataset_column.in_(allowed_datasets))
+
+            self.query = self.query.where(or_(*ors_filters))
 
     def filter_taxonomy(self):
         """
