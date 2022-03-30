@@ -16,8 +16,8 @@ on:
 jobs:
   install_all:
     name: Instal DB, GeoNature and TaxHub
-
     runs-on: ubuntu-latest
+    strategy:
       matrix:
         include:
           - name: "Debian 11"
