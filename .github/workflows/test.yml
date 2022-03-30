@@ -1,6 +1,17 @@
 name: pytest
 
-on: push
+on:
+  push:
+    branches:
+      - master
+      - hotfixes
+      - develop
+      - Adrien-Pajot-cypress-tests
+  pull_request:
+    branches:
+      - master
+      - hotfixes
+      - develop
 
 jobs:
   test_backend:
