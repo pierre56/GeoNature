@@ -15,7 +15,6 @@ on:
 
 jobs:
   install_all:
-    name: Instal DB, GeoNature and TaxHub
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -25,7 +24,7 @@ jobs:
             postgres-version: 13
             postgis-version: 3.2
 
-    name: ${{ matrix.name }}
+    name: Install on ${{ matrix.name }}
 
     services:
       postgres:
