@@ -18,7 +18,7 @@ describe("Testing metadata", () => {
   })
 
   it('should display synthese page', () => {
-    cy.get('[data-qa="pnx-home-content"] > div.row > div.col-6.ng-star-inserted > div > div.panel-heading > button').click({force: true})
+    cy.get('[data-qa="explore-synthese"]').click({force: true})
     cy.url().should('include', 'synthese') 
   })
 
