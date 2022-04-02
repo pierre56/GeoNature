@@ -1,23 +1,32 @@
 import { throwError as observableThrowError, Observable } from 'rxjs';
 import { Injectable, Injector } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
-import { AuthService } from '@geonature/components/auth/auth.service';
+import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 
 const WHITE_LIST = ['nominatim.openstreetmap.org'];
 
 @Injectable()
 export class MyCustomInterceptor implements HttpInterceptor {
-  constructor(public inj: Injector, public router: Router) {}
+  constructor(public inj: Injector, public router: Router, public toastrService: ToastrService) {}
 
   private handleError(error: Response | any) {
     let errMsg: string;
-    if (error instanceof Response) {
-      const body = error.json() || '';
-      const err = JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-    } else {
-      errMsg = error.message ? error.message : error.toString();
+    let errName: string;
+    if (error.status !== 404 && error.status !== 401) {
+      if (error instanceof Response || error['error']) {
+        errMsg = `${error.status} - ${error.statusText || ''} ${error['error'].description}
+        id requete: ${error['error'].request_id}`;
+        errName = error['error'].name;
+      } else {
+        errMsg = error.message ? error.message : error.toString();
+        errName = 'Une erreur est survenue';
+      }
+      this.toastrService.error(errMsg, errName, {
+        disableTimeOut: true,
+        tapToDismiss: false,
+        closeButton: true
+      });
     }
   }
 
@@ -38,7 +47,7 @@ export class MyCustomInterceptor implements HttpInterceptor {
     // pass on the modified request object
     // and intercept error
     return next.handle(request).catch((err: any) => {
-      this.handleError(err);
+      //this.handleError(err);
       return observableThrowError(err);
     });
   }
