@@ -5,6 +5,7 @@ on:
       - master
       - hotfixes
       - develop
+      - Adrien-Pajot-from-dev-to-cypress-test
   pull_request:
     branches:
       - master
