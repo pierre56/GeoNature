@@ -196,6 +196,7 @@ jobs:
           geonature db upgrade geonature@head -x local-srid=2154
           geonature db autoupgrade -x local-srid=2154
           geonature db upgrade geonature-samples@head
+          geonature db upgrade taxub@head
           geonature db upgrade taxonomie_taxons_example@head
 
         env:
