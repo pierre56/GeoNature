@@ -73,7 +73,6 @@ export class LeafletDrawComponent implements OnInit, OnChanges {
     }
 
     this.map.on(this._Le.Draw.Event.DRAWSTART, e => {
-      this.mapservice.removeAllLayers(this.map, this.mapservice.fileLayerFeatureGroup);
       if (this.map.getZoom() < this.zoomLevel) {
         this._commonService.translateToaster('warning', 'Map.ZoomWarning');
       }
