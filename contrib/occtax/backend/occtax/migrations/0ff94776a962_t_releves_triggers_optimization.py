@@ -20,9 +20,7 @@ def upgrade():
     op.execute(
         """
         DROP TRIGGER IF EXISTS tri_update_synthese_t_releve_occtax ON pr_occtax.t_releves_occtax;
-
-        CREATE TRIGGER tri_update_synthese_t_releve_occtax
-        AFTER
+        CREATE TRIGGER tri_update_synthese_t_releve_occtax AFTER
         UPDATE
         OF
             id_dataset, observers_txt, id_digitiser, grp_method, id_nomenclature_grp_typ,
@@ -32,15 +30,12 @@ def upgrade():
         ON pr_occtax.t_releves_occtax
         FOR EACH ROW EXECUTE FUNCTION pr_occtax.fct_tri_synthese_update_releve();
 
-
         DROP TRIGGER IF EXISTS tri_calculate_altitude ON pr_occtax.t_releves_occtax;
-
         CREATE TRIGGER tri_calculate_altitude BEFORE
         INSERT OR  UPDATE
         OF geom_4326
         ON pr_occtax.t_releves_occtax
         FOR EACH ROW EXECUTE FUNCTION ref_geo.fct_trg_calculate_alt_minmax('geom_4326');
-
 
         DROP TRIGGER IF EXISTS tri_calculate_geom_local ON pr_occtax.t_releves_occtax;
         CREATE TRIGGER tri_calculate_geom_local BEFORE
@@ -56,20 +51,16 @@ def downgrade():
     op.execute(
         """
         DROP TRIGGER IF EXISTS tri_update_synthese_t_releve_occtax ON pr_occtax.t_releves_occtax;
-
         CREATE TRIGGER tri_update_synthese_t_releve_occtax AFTER
         UPDATE
         ON pr_occtax.t_releves_occtax
         FOR EACH ROW EXECUTE FUNCTION pr_occtax.fct_tri_synthese_update_releve();
 
-
         DROP TRIGGER IF EXISTS tri_calculate_altitude ON pr_occtax.t_releves_occtax;
-
         CREATE TRIGGER tri_calculate_altitude BEFORE
         INSERT OR UPDATE
         ON pr_occtax.t_releves_occtax
         FOR EACH ROW EXECUTE FUNCTION ref_geo.fct_trg_calculate_alt_minmax('geom_4326');
-
 
         DROP TRIGGER IF EXISTS tri_calculate_geom_local ON pr_occtax.t_releves_occtax;
         CREATE TRIGGER tri_calculate_geom_local BEFORE
