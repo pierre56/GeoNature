@@ -32,16 +32,11 @@ class ReleveRepository:
     def __init__(self, model):
         self.model = model
 
-    # Ajout de colonne dynamique
-    def input(self, row, col, val):
-        self.dat[row] = {col: val}
-        pass
-
-    def get_one(self, id_releve, info_user):
+    def get_one(self, id_releve, user, scope):
         """Get one releve model if allowed
         params:
          - id_releve: integer
-         - info_user: TRole object model
+         - user: TRole object model
 
         Return:
             Tuple(the releve model, the releve as geojson)
@@ -50,7 +45,7 @@ class ReleveRepository:
         if not releve:
             raise NotFound('The releve "{}" does not exist'.format(id_releve))
         # check if the user is autorized
-        releve = releve.get_releve_if_allowed(info_user)
+        releve = releve.get_releve_if_allowed(user, scope)
         rel_as_geojson = releve.get_geofeature()
         # add the last validation status
         for occ in rel_as_geojson.get("properties").get("t_occurrences_occtax", []):
@@ -71,32 +66,32 @@ class ReleveRepository:
         return releve, rel_as_geojson
 
     # FIXME: geom not used here?
-    def update(self, releve, info_user, geom):
+    def update(self, releve, user, scope, geom):
         """Update the current releve if allowed
         params:
         - releve: a Releve object model
-        - info_user: Trole object model
+        - user: Trole object model
         """
-        releve = releve.get_releve_if_allowed(info_user)
+        releve = releve.get_releve_if_allowed(user, scope)
         DB.session.merge(releve)
         DB.session.commit()
         return releve
 
-    def delete(self, id_releve, info_user):
+    def delete(self, id_releve, user, scope):
         """Delete a releve
         params:
          - id_releve: integer
-         - info_user: TRole object model"""
+         - user: TRole object model"""
 
         releve = DB.session.query(self.model).get(id_releve)
         if releve:
-            releve = releve.get_releve_if_allowed(info_user)
+            releve = releve.get_releve_if_allowed(user, scope)
             DB.session.delete(releve)
             DB.session.commit()
             return releve
         raise NotFound('The releve "{}" does not exist'.format(id_releve))
 
-    def filter_query_with_autorization(self, user):
+    def filter_query_with_autorization(self, user, scope):
         """
         Filter with autorized data via cruved
         and via the current_module (only datasets of this module)
@@ -106,10 +101,8 @@ class ReleveRepository:
                 tuple(map(lambda x: x.id_dataset, g.current_module.datasets))
             )
         )
-        allowed_datasets = [
-            d.id_dataset for d in TDatasets.query.filter_by_scope(int(user.value_filter)).all()
-        ]
-        if user.value_filter == "2":
+        allowed_datasets = [d.id_dataset for d in TDatasets.query.filter_by_scope(scope).all()]
+        if scope == 2:
             q = q.filter(
                 or_(
                     self.model.id_dataset.in_(tuple(allowed_datasets)),
@@ -117,7 +110,7 @@ class ReleveRepository:
                     self.model.id_digitiser == user.id_role,
                 )
             )
-        elif user.value_filter == "1":
+        elif scope == 1:
             q = q.filter(
                 or_(
                     self.model.id_dataset.in_(tuple(allowed_datasets)),
@@ -127,22 +120,20 @@ class ReleveRepository:
             )
         return q
 
-    def filter_query_generic_table(self, user):
+    def filter_query_generic_table(self, user, scope):
         """
         Return a prepared query filter with cruved authorization
         from a generic_table (a view)
         """
-        allowed_datasets = [
-            d.id_dataset for d in TDatasets.query.filter_by_scope(int(user.value_filter)).all()
-        ]
+        allowed_datasets = [d.id_dataset for d in TDatasets.query.filter_by_scope(scope).all()]
         q = DB.session.query(self.model.tableDef)
-        if user.value_filter in ("1", "2"):
+        if scope in (1, 2):
             q = q.outerjoin(
                 corRoleRelevesOccurrence,
                 self.model.tableDef.columns.id_releve_occtax
                 == corRoleRelevesOccurrence.id_releve_occtax,
             )
-            if user.value_filter == "2":
+            if scope == 2:
                 q = q.filter(
                     or_(
                         self.model.tableDef.columns.id_dataset.in_(tuple(allowed_datasets)),
@@ -150,7 +141,7 @@ class ReleveRepository:
                         self.model.tableDef.columns.id_digitiser == user.id_role,
                     )
                 )
-            elif user.value_filter == "1":
+            elif scope == 1:
                 q = q.filter(
                     or_(
                         self.model.tableDef.columns.id_dataset.in_(tuple(allowed_datasets)),
@@ -164,26 +155,26 @@ class ReleveRepository:
             )
         )
 
-    def get_all(self, info_user):
+    def get_all(self, user, scope):
         """
         Return all the data from Releve model filtered with
         the cruved authorization
         """
-        q = self.filter_query_with_autorization(info_user)
+        q = self.filter_query_with_autorization(user, scope)
         data = q.all()
         if data:
             return data
         raise NotFound("No releve found")
 
-    def get_filtered_query(self, info_user, from_generic_table=False):
+    def get_filtered_query(self, user, scope, from_generic_table=False):
         """
         Return a query object already filtered with
         the cruved authorization
         """
         if from_generic_table:
-            return self.filter_query_generic_table(info_user)
+            return self.filter_query_generic_table(user, scope)
         else:
-            return self.filter_query_with_autorization(info_user)
+            return self.filter_query_with_autorization(user, scope)
 
     def add_media_in_export(self, query, columns):
         query = query.outerjoin(TMedias, TMedias.uuid_attached_row == self.model.tableDef.c.permId)

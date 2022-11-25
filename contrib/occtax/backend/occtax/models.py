@@ -26,62 +26,57 @@ class ReleveModel(DB.Model):
 
     __abstract__ = True
 
-    def user_is_observer_or_digitiser(self, user):
+    def user_is_observer_or_digitiser(self, user=None):
+        if user is None:
+            user = g.current_user
         observers = [d.id_role for d in self.observers]
         return user.id_role == self.id_digitiser or user.id_role in observers
 
-    def user_is_in_dataset_actor(self, user):
+    def user_is_in_dataset_actor(self, scope):
         return self.id_dataset in (
-            d.id_dataset for d in TDatasets.query.filter_by_scope(int(user.value_filter)).all()
+            d.id_dataset for d in TDatasets.query.filter_by_scope(scope).all()
         )
 
-    def user_is_allowed_to(self, user, level):
+    def user_is_allowed_to(self, scope, user=None):
         """
         Fonction permettant de dire si un utilisateur
         peu ou non agir sur une donnée
         """
-        # Si l'utilisateur n'a pas de droit d'accès aux données
-        if level == "0" or level not in ("1", "2", "3"):
-            return False
+        if user is None:
+            user = g.current_user
 
         # Si l'utilisateur à le droit d'accéder à toutes les données
-        if level == "3":
+        if scope == 3:
             return True
+        elif scope in (1, 2):
+            return self.user_is_observer_or_digitiser(user) or self.user_is_in_dataset_actor(scope)
+        else:
+            return False
 
-        # Si l'utilisateur est propriétaire de la données
-        if self.user_is_observer_or_digitiser(user):
-            return True
-
-        # Si l'utilisateur appartient à un organisme
-        # qui a un droit sur la données et
-        # que son niveau d'accès est 2 ou 3
-        if self.user_is_in_dataset_actor(user) and level in ("2", "3"):
-            return True
-        return False
-
-    def get_releve_if_allowed(self, user):
+    def get_releve_if_allowed(self, user, scope):
         """
         Return the releve if the user is allowed
         params:
             user: object from TRole
         """
-        if self.user_is_allowed_to(user, user.value_filter):
+        if self.user_is_allowed_to(user, scope):
             return self
 
         raise Forbidden(
             ('User "{}" cannot "{}" this current releve').format(user.id_role, user.code_action),
         )
 
-    def get_releve_cruved(self, user, user_cruved):
+    def get_releve_cruved(self, user, scopes_by_action):
         """
         Return the user's cruved for a Releve instance.
         Use in the map-list interface to allow or not an action
         params:
             - user : a TRole object
-            - user_cruved: object return by cruved_for_user_in_app(user)
+            - scopes_by_action: object return by get_scopes_by_action
         """
         return {
-            action: self.user_is_allowed_to(user, level) for action, level in user_cruved.items()
+            action: self.user_is_allowed_to(user, scope)
+            for action, level in scopes_by_action.items()
         }
 
 
