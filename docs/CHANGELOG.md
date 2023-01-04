@@ -6,8 +6,11 @@ CHANGELOG
 
 **🚀 Nouveautés**
 
-- Synthèse : Agrégation des observations ayant la même géométrie (#1847) 
-- Synthèse : Possibilité d'afficher les données agrégées par maille (#1878)
+- [Synthèse] Agrégation des observations ayant la même géométrie (#1847) 
+- [Synthèse] Possibilité d'afficher les données agrégées par maille (#1878)
+- Optimisation du mécanisme de génération des PDF (#2195)
+- Ajout des acteurs dans les exports PDF des jeux de données (#2034)
+- Ajout du graphique de répartition des taxons dans les exports PDF des cadres d'acquisition (#2231)
 
 **💻 Développement**
 
