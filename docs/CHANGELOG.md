@@ -11,10 +11,12 @@ CHANGELOG
 - Optimisation du mécanisme de génération des PDF (#2195)
 - Ajout des acteurs dans les exports PDF des jeux de données (#2034)
 - Ajout du graphique de répartition des taxons dans les exports PDF des cadres d'acquisition (#2231)
+- Possibilité de définir des notifications actives par défaut pour tous les utilisateurs, avec ``id_role=null`` (#2267)
 
 **💻 Développement**
 
 - Suppression de l'utilisation de `get_role` dans les modules Synthese & Validation (#2162)
+- Amélioration du formatage automatique du code du Frontend (prettier, linter)
 
 
 2.11.0.post1 (unreleased)
