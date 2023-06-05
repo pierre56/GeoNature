@@ -2,23 +2,19 @@
 /* Custom de l'apparence générale */
   
 app {
-    background-color: white;
-  }
-  #logo-structure {
-    height: 50px;
-    width: 130px;
-  }
-  #login-body
-    {
-      background-size: cover !important;
-    }
-    .appnav{
-      max-height: 70vh !important;
-    }
-
-    /**********************/
-/* Optimisation Mobile */
-
+  background-color: white;
+}
+#logo-structure {
+  height: 50px;
+  width: 130px;
+}
+#login-body
+{
+  background-size: cover !important;
+}
+.appnav{
+  max-height: 70vh !important;
+}
 
 /* Memo Bootstrap  breakpoints 
 
@@ -31,150 +27,168 @@ Extra extra large 	xxl 	≥1400px
 */
 
 
-@media only screen and (max-device-width: 800px) {
+/**********************/
+/* Optimisation Mobile Globale*/
+/* Apply styles starting from medium devices and up to extra large devices */
 
-    /* Suppression des éléments facultatifs */
+@media only screen and  (max-width: 800px) {
+
+  /* Suppression des éléments facultatifs */
 #appName {
-    display: none;
+  display: none;
 }
 .navbar-footer{
-    display: none;
+  display: none;
+}
+
+/* Agrandissement de la navbar */
+#app-toolbar{
+  height: fit-content;
+  width: fit-content;
+  } 
+.appnav{
+max-height: none !important;
+}
+/* Suppression des paddings */
+.container-fluid{
+  padding-right: 0px !important;
+  padding-left: 0px !important;
 }
 /* fix du background (facultatif) */
 #login-body
 {
-  background-position-x: 70% !important;
+background-position-x: 70% !important;
 }
-/* Agrandissement de la navbar */
-#app-toolbar{
-    height: 20%
-}
-
-}
-
-/* Optimisation Mobile */
-
-  @media only screen and (max-device-width: 600px) {
-      
-     
-  /**********************/
-  /* Occtax */
-    
-    .float-btns {
-        position: relative;
-        display: contents;
-    }
-    .float-btns .btn-action {
-        width: 100%;
-        margin-bottom: 10px;
-        margin-left: 0px !important;;
-    }
-  
-    #btn-finish{
-      position: relative !important;
-      
-      right: 0px !important;
-      bottom: 0px !important;
-  
-      margin-left: 25%;
-      margin-right: 25%;
-      margin-top: 15px;
-      
-    }
-    #taxon-tab{
-      height: auto !important;
-    }
-    #left-form{
-      height: auto !important;
-    }
-    .occtax-form .bloc-button {
-      position: sticky !important;
-  
-    }
-    #add-occ{
-      position: sticky !important;
-  
-    }
-    .mat-expansion-panel-body .col-3 {
-      max-width: 100% !important;
-    }
-    .mat-expansion-panel-body .col-3 input {
-      width: 50px;
-    }
-  
-    .occtax-form-content{
-      height: auto !important;
-    }
-    .datatable-footer-inner{
-      display: block !important;
-      height: auto !important;
-    }
-    
-   #taxon-tab mat-accordion .blc-expansion-panel  input[type="text"],  .ui-select-focusser {
-      display: none;
-  }
-    
-  /**********************/  
-    /* metadata */
-  /* pas mal de sm 12 a mettre sur les groupe */
-  
-    /* Synthese */
-    .search-btn button{
-        width: 100%;
-    }
-    /* non fonctionnel */
-    #sidebar{
-        width:50% !important;;
-    }
-    
-    /* Commun */
-    #download-btn{
-        width: 100%;
-    }
-    /* Monitoring */
-  
-    .app-content .flex-container{
-        display: block !important;
-    }
-    .app-content #monitoring-map-container{
-        width: 90%;
-        margin-right: 5%;
-        margin-left: 5%;
-    }
-  
-    .app-content #monitoring-elem-container{
-        width: 100%;
-    }
-  
-    html body pnx-root pnx-nav-home.ng-star-inserted mat-sidenav-container.mat-drawer-container.mat-sidenav-container.sidenav-container mat-sidenav-content.mat-drawer-content.mat-sidenav-content div.app-content div pnx-occtax-form.ng-star-inserted div.container-fluid div.occtax-form div.occtax-form-content.ng-star-inserted div.row div.col-xl-6.col-lg-5.col-sm-12{
-    overflow-y: visible !important;   
-    height: auto !important;
-     }
-  
-      html body pnx-root pnx-nav-home.ng-star-inserted mat-sidenav-container.mat-drawer-container.mat-sidenav-container.sidenav-container mat-sidenav-content.mat-drawer-content.mat-sidenav-content div.app-content div pnx-occtax-form.ng-star-inserted div.container-fluid div.occtax-form div.tab div.tab-left a.tablinks.active
-      {
-         width: 100%;
-  
-      }
-  
-      html body pnx-root pnx-nav-home.ng-star-inserted mat-sidenav-container.mat-drawer-container.mat-sidenav-container.sidenav-container mat-sidenav-content.mat-drawer-content.mat-sidenav-content div.app-content div pnx-occtax-form.ng-star-inserted div.container-fluid div.occtax-form div#taxon-tab.occtax-form-content.ng-star-inserted div.row div#left-form.col-md-6
-      {
-  
-      }
-  
-      html body pnx-root pnx-nav-home.ng-star-inserted mat-sidenav-container.mat-drawer-container.mat-sidenav-container.sidenav-container mat-sidenav-content.mat-drawer-content.mat-sidenav-content div.app-content div pnx-occtax-form.ng-star-inserted div.container-fluid div.occtax-form div#taxon-tab.occtax-form-content.ng-star-inserted div.row div#left-form.col-md-6 pnx-occtax-form-occurrence.ng-tns-c289-3.ng-star-inserted div.row.ng-tns-c289-3
-      {
-        height: auto !important;
-      }
-  
-}
-
+/**********************/
 /* Optimisation Mobile orientation: portrait */
 
-@media only screen and (orientation: portrait) and (max-width: 600px) {
+@media only screen and (orientation: portrait) and (max-width: 600px) {      
+   
+/* Optimisation Occtax */
+  
+.float-btns {
+  position: relative;
+  display: contents;
+}
+.float-btns .btn-action {
+  width: 100%;
+  margin-bottom: 10px;
+  margin-left: 0px !important;;
+}
+
+#btn-finish{
+    position: relative !important;      
+    right: 0px !important;
+    bottom: 0px !important;
+
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 15px;
+    
+}
+#taxon-tab{
+  height: auto !important;
+}
+#left-form{
+  height: auto !important;
+}
+.occtax-form .bloc-button {
+    position: sticky !important;
+
+}
+#add-occ{
+    position: sticky !important;  
+}
+.mat-expansion-panel-body .col-3 {
+  max-width: 100% !important;
+}
+.mat-expansion-panel-body .col-3 input {
+  width: 50px;
+}  
+.occtax-form-content{
+  height: auto !important;
+}
+.datatable-footer-inner{
+  display: block !important;
+  height: auto !important;
+}
+  
+#taxon-tab mat-accordion .blc-expansion-panel  input[type="text"],  .ui-select-focusser {
+  display: none;
+}
+  
+/* Optimisation metadata */
+
+
+/*  Optimisation Synthese */
+.map-container{
+    margin-right: 5%;
+}
+.search-wrapper{
+  max-height: none !important;
+}
+.search-btn{
+  width: 100%;
+}
+.search-btn button{
+  width: 100%;
+  align-content: center;
+}
+
+#sidebar{
+  width:90% !important;
+}
+  
+#sidebarCollapse{
+  margin-top: 100%;
+  width: 10% ;
+  height: 10% ;
+  background-color: #ebc83e;
+}   
+  
+  /* Commun */
+#download-btn{
+  width: 100%;
+}
+/* Optimisation Monitoring */
+
+.app-content .flex-container{
+  display: block !important;
+}
+.app-content #monitoring-map-container{
+  width: 90%;
+  margin-right: 5%;
+  margin-left: 5%;
+}
+
+.app-content #monitoring-elem-container{
+  width: 100%;
+}
+
+  html body pnx-root pnx-nav-home.ng-star-inserted mat-sidenav-container.mat-drawer-container.mat-sidenav-container.sidenav-container mat-sidenav-content.mat-drawer-content.mat-sidenav-content div.app-content div pnx-occtax-form.ng-star-inserted div.container-fluid div.occtax-form div.occtax-form-content.ng-star-inserted div.row div.col-xl-6.col-lg-5.col-sm-12{
+  overflow-y: visible !important;   
+  height: auto !important;
+   }
+
+    html body pnx-root pnx-nav-home.ng-star-inserted mat-sidenav-container.mat-drawer-container.mat-sidenav-container.sidenav-container mat-sidenav-content.mat-drawer-content.mat-sidenav-content div.app-content div pnx-occtax-form.ng-star-inserted div.container-fluid div.occtax-form div.tab div.tab-left a.tablinks.active
+    {
+       width: 100%;
+      
+    }
+
+    html body pnx-root pnx-nav-home.ng-star-inserted mat-sidenav-container.mat-drawer-container.mat-sidenav-container.sidenav-container mat-sidenav-content.mat-drawer-content.mat-sidenav-content div.app-content div pnx-occtax-form.ng-star-inserted div.container-fluid div.occtax-form div#taxon-tab.occtax-form-content.ng-star-inserted div.row div#left-form.col-md-6
+    {
+
+    }
+
+    html body pnx-root pnx-nav-home.ng-star-inserted mat-sidenav-container.mat-drawer-container.mat-sidenav-container.sidenav-container mat-sidenav-content.mat-drawer-content.mat-sidenav-content div.app-content div pnx-occtax-form.ng-star-inserted div.container-fluid div.occtax-form div#taxon-tab.occtax-form-content.ng-star-inserted div.row div#left-form.col-md-6 pnx-occtax-form-occurrence.ng-tns-c289-3.ng-star-inserted div.row.ng-tns-c289-3
+    {
+      height: auto !important;
+    }
 
 }
 
+/**********************/
 /* Optimisation Mobile orientation: landscape */
 
 @media only screen and (orientation: landscape) and (max-width: 800px) {
@@ -182,4 +196,4 @@ Extra extra large 	xxl 	≥1400px
 }
 
 
-  
+}
