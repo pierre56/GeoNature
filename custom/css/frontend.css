@@ -45,9 +45,14 @@ Extra extra large 	xxl 	≥1400px
 #app-toolbar{
   height: fit-content;
   width: fit-content;
-  } 
+  padding-bottom: 5px;
+} 
+#app-toolbar  .mat-mdc-button-base{
+  margin-bottom:  5px;
+}
+
 .appnav{
-max-height: none !important;
+  max-height: none !important;
 }
 /* Suppression des paddings */
 .container-fluid{
@@ -62,7 +67,7 @@ background-position-x: 70% !important;
 /**********************/
 /* Optimisation Mobile orientation: portrait */
 
-@media only screen and (orientation: portrait) and (max-width: 600px) {      
+@media only screen and (orientation: portrait) and (max-width: 700px) {      
    
 /* Optimisation Occtax */
   
@@ -124,6 +129,9 @@ background-position-x: 70% !important;
 .map-container{
     margin-right: 5%;
 }
+  .wrapper{
+    display: block !important;
+  }
 .search-wrapper{
   max-height: none !important;
 }
@@ -136,7 +144,7 @@ background-position-x: 70% !important;
 }
 
 #sidebar{
-  width:90% !important;
+  /*! width:90% !important; */
 }
   
 #sidebarCollapse{
@@ -165,26 +173,21 @@ background-position-x: 70% !important;
   width: 100%;
 }
 
-  html body pnx-root pnx-nav-home.ng-star-inserted mat-sidenav-container.mat-drawer-container.mat-sidenav-container.sidenav-container mat-sidenav-content.mat-drawer-content.mat-sidenav-content div.app-content div pnx-occtax-form.ng-star-inserted div.container-fluid div.occtax-form div.occtax-form-content.ng-star-inserted div.row div.col-xl-6.col-lg-5.col-sm-12{
+html body pnx-root pnx-nav-home.ng-star-inserted mat-sidenav-container.mat-drawer-container.mat-sidenav-container.sidenav-container mat-sidenav-content.mat-drawer-content.mat-sidenav-content div.app-content div pnx-occtax-form.ng-star-inserted div.container-fluid div.occtax-form div.occtax-form-content.ng-star-inserted div.row div.col-xl-6.col-lg-5.col-sm-12{
   overflow-y: visible !important;   
   height: auto !important;
-   }
+}
 
-    html body pnx-root pnx-nav-home.ng-star-inserted mat-sidenav-container.mat-drawer-container.mat-sidenav-container.sidenav-container mat-sidenav-content.mat-drawer-content.mat-sidenav-content div.app-content div pnx-occtax-form.ng-star-inserted div.container-fluid div.occtax-form div.tab div.tab-left a.tablinks.active
-    {
-       width: 100%;
-      
-    }
+html body pnx-root pnx-nav-home.ng-star-inserted mat-sidenav-container.mat-drawer-container.mat-sidenav-container.sidenav-container mat-sidenav-content.mat-drawer-content.mat-sidenav-content div.app-content div pnx-occtax-form.ng-star-inserted div.container-fluid div.occtax-form div.tab div.tab-left a.tablinks.active
+{
+  width: 100%;
+}
 
-    html body pnx-root pnx-nav-home.ng-star-inserted mat-sidenav-container.mat-drawer-container.mat-sidenav-container.sidenav-container mat-sidenav-content.mat-drawer-content.mat-sidenav-content div.app-content div pnx-occtax-form.ng-star-inserted div.container-fluid div.occtax-form div#taxon-tab.occtax-form-content.ng-star-inserted div.row div#left-form.col-md-6
-    {
 
-    }
-
-    html body pnx-root pnx-nav-home.ng-star-inserted mat-sidenav-container.mat-drawer-container.mat-sidenav-container.sidenav-container mat-sidenav-content.mat-drawer-content.mat-sidenav-content div.app-content div pnx-occtax-form.ng-star-inserted div.container-fluid div.occtax-form div#taxon-tab.occtax-form-content.ng-star-inserted div.row div#left-form.col-md-6 pnx-occtax-form-occurrence.ng-tns-c289-3.ng-star-inserted div.row.ng-tns-c289-3
-    {
-      height: auto !important;
-    }
+html body pnx-root pnx-nav-home.ng-star-inserted mat-sidenav-container.mat-drawer-container.mat-sidenav-container.sidenav-container mat-sidenav-content.mat-drawer-content.mat-sidenav-content div.app-content div pnx-occtax-form.ng-star-inserted div.container-fluid div.occtax-form div#taxon-tab.occtax-form-content.ng-star-inserted div.row div#left-form.col-md-6 pnx-occtax-form-occurrence.ng-tns-c289-3.ng-star-inserted div.row.ng-tns-c289-3
+{
+  height: auto !important;
+}
 
 }
 
