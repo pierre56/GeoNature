@@ -85,3 +85,30 @@ a[data-toggle='collapse'] {
   right: 20px;
   transform: translateY(-50%);
 }
+
+@media only screen and (orientation: portrait) and (max-width: 800px) {      
+
+  .map-container{
+    margin-right: 5%;
+}
+  .wrapper{
+    display: block !important;
+  }
+.search-wrapper{
+  max-height: none !important;
+}
+.search-btn{
+  width: 100%;
+}
+.search-btn button{
+  width: 100%;
+  align-content: center;
+}
+  
+#sidebarCollapse{
+  margin-top: 100%;
+  width: 10% ;
+  height: 10% ;
+}   
+
+}
