@@ -1,130 +1,471 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="fr" >
-<head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<!doctype html>
+<html class="no-js" lang="fr" data-content_root="./">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Recherche" href="search.html" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HTTPS &mdash; Documentation GeoNature 2.0</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+    <!-- Generated with Sphinx 7.4.7 and Furo 2024.08.06 -->
+        <title>HTTPS - Documentation GeoNature 2.16.2</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?v=302659d7" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/translations.js"></script>
-    <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Recherche" href="search.html" /> 
-</head>
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search"  style="background: white" >
-            <a href="index.html" class="icon icon-home"> GeoNature
-            <img src="_static/LogoGeonature.jpg" class="logo" alt="Logo"/>
-          </a>
-              <div class="version">
-                2.0
-              </div>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Rechercher docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-<li class="toctree-l1"><a class="reference internal" href="installation.html">INSTALLATION</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user-manual.html">MANUEL UTILISATEUR</a></li>
-<li class="toctree-l1"><a class="reference internal" href="admin-manual.html">MANUEL ADMINISTRATEUR</a></li>
-<li class="toctree-l1"><a class="reference internal" href="development.html">DEVELOPPEMENT</a></li>
-<li class="toctree-l1"><a class="reference internal" href="FAQ.html">FAQ</a></li>
-<li class="toctree-l1"><a class="reference internal" href="authors.html">AUTEURS</a></li>
-<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">CHANGELOG</a></li>
-</ul>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
 
-        </div>
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="index.html"><div class="brand">Documentation GeoNature 2.16.2</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
       </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: white" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">GeoNature</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>HTTPS</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="_sources/https.rst.txt" rel="nofollow"> Afficher la source de la page</a>
-      </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="https">
-<h1>HTTPS<a class="headerlink" href="#https" title="Lien permanent vers cette rubrique"></a></h1>
-<p>La procédure décrit une méthode de certification HTTPS de votre domaine, grâce au service <a class="reference external" href="https://letsencrypt.org/">Let’s Encrypt</a>. Les manipulations ont été effectuées sur un serveur Debian 9 avec Apache2 installé, et un utilisateur bénéficiant des droits sudo.</p>
-<p>Ressources :</p>
-<ul class="simple">
-<li><p><a class="reference external" href="https://www.memoinfo.fr/tutoriels-linux/configurer-lets-encrypt-apache/">https://www.memoinfo.fr/tutoriels-linux/configurer-lets-encrypt-apache/</a></p></li>
-<li><p><a class="reference external" href="https://korben.info/securiser-facilement-gratuitement-site-https.html">https://korben.info/securiser-facilement-gratuitement-site-https.html</a></p></li>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="_static/LogoGeonature.jpg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Documentation GeoNature 2.16.2</span>
+  
+</a><form class="sidebar-search-container" method="get" action="search.html" role="search">
+  <input class="sidebar-search" placeholder="Recherche" name="q" aria-label="Recherche">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user-manual.html">Manuel utilisateur</a></li>
+<li class="toctree-l1"><a class="reference internal" href="admin-manual.html">Manuel administrateur</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development.html">Développement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="FAQ.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Auteurs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="CHANGELOG.html">CHANGELOG</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="api-references.html">API REFERENCES</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API REFERENCES</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="autoapi/geonature/index.html">geonature</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of geonature</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="autoapi/geonature/app/index.html">geonature.app</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="autoapi/geonature/core/index.html">geonature.core</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of geonature.core</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="autoapi/geonature/core/admin/index.html">geonature.core.admin</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of geonature.core.admin</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/admin/admin/index.html">geonature.core.admin.admin</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/admin/utils/index.html">geonature.core.admin.utils</a></li>
 </ul>
-<section id="installer-certbot">
-<h2>Installer certbot<a class="headerlink" href="#installer-certbot" title="Lien permanent vers cette rubrique"></a></h2>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="autoapi/geonature/core/command/index.html">geonature.core.command</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of geonature.core.command</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/command/__main__/index.html">geonature.core.command.__main__</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/command/create_gn_module/index.html">geonature.core.command.create_gn_module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/command/main/index.html">geonature.core.command.main</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/geonature/core/errors/index.html">geonature.core.errors</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="autoapi/geonature/core/gn_commons/index.html">geonature.core.gn_commons</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of geonature.core.gn_commons</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_commons/admin/index.html">geonature.core.gn_commons.admin</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="autoapi/geonature/core/gn_commons/medias/index.html">geonature.core.gn_commons.medias</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of geonature.core.gn_commons.medias</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/gn_commons/medias/routes/index.html">geonature.core.gn_commons.medias.routes</a></li>
+</ul>
+</li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="autoapi/geonature/core/gn_commons/models/index.html">geonature.core.gn_commons.models</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of geonature.core.gn_commons.models</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/gn_commons/models/additional_fields/index.html">geonature.core.gn_commons.models.additional_fields</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/gn_commons/models/base/index.html">geonature.core.gn_commons.models.base</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_commons/repositories/index.html">geonature.core.gn_commons.repositories</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_commons/routes/index.html">geonature.core.gn_commons.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_commons/schemas/index.html">geonature.core.gn_commons.schemas</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_commons/tasks/index.html">geonature.core.gn_commons.tasks</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="autoapi/geonature/core/gn_commons/validation/index.html">geonature.core.gn_commons.validation</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of geonature.core.gn_commons.validation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/gn_commons/validation/routes/index.html">geonature.core.gn_commons.validation.routes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="autoapi/geonature/core/gn_meta/index.html">geonature.core.gn_meta</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of geonature.core.gn_meta</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="autoapi/geonature/core/gn_meta/models/index.html">geonature.core.gn_meta.models</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of geonature.core.gn_meta.models</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/gn_meta/models/aframework/index.html">geonature.core.gn_meta.models.aframework</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/gn_meta/models/commons/index.html">geonature.core.gn_meta.models.commons</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/gn_meta/models/datasets/index.html">geonature.core.gn_meta.models.datasets</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_meta/repositories/index.html">geonature.core.gn_meta.repositories</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_meta/routes/index.html">geonature.core.gn_meta.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_meta/schemas/index.html">geonature.core.gn_meta.schemas</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="autoapi/geonature/core/gn_monitoring/index.html">geonature.core.gn_monitoring</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of geonature.core.gn_monitoring</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_monitoring/models/index.html">geonature.core.gn_monitoring.models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_monitoring/routes/index.html">geonature.core.gn_monitoring.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_monitoring/schema/index.html">geonature.core.gn_monitoring.schema</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="autoapi/geonature/core/gn_permissions/index.html">geonature.core.gn_permissions</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle navigation of geonature.core.gn_permissions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_permissions/admin/index.html">geonature.core.gn_permissions.admin</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_permissions/commands/index.html">geonature.core.gn_permissions.commands</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_permissions/decorators/index.html">geonature.core.gn_permissions.decorators</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_permissions/models/index.html">geonature.core.gn_permissions.models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_permissions/routes/index.html">geonature.core.gn_permissions.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_permissions/schemas/index.html">geonature.core.gn_permissions.schemas</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_permissions/tools/index.html">geonature.core.gn_permissions.tools</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="autoapi/geonature/core/gn_profiles/index.html">geonature.core.gn_profiles</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of geonature.core.gn_profiles</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_profiles/models/index.html">geonature.core.gn_profiles.models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_profiles/routes/index.html">geonature.core.gn_profiles.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_profiles/tasks/index.html">geonature.core.gn_profiles.tasks</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/index.html">geonature.core.gn_synthese</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of geonature.core.gn_synthese</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/blueprints/index.html">geonature.core.gn_synthese.blueprints</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of geonature.core.gn_synthese.blueprints</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/blueprints/exports/index.html">geonature.core.gn_synthese.blueprints.exports</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/blueprints/others/index.html">geonature.core.gn_synthese.blueprints.others</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/blueprints/reports/index.html">geonature.core.gn_synthese.blueprints.reports</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/blueprints/statistics/index.html">geonature.core.gn_synthese.blueprints.statistics</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/blueprints/synthese/index.html">geonature.core.gn_synthese.blueprints.synthese</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/blueprints/taxon_info/index.html">geonature.core.gn_synthese.blueprints.taxon_info</a></li>
+</ul>
+</li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/imports/index.html">geonature.core.gn_synthese.imports</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle navigation of geonature.core.gn_synthese.imports</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/imports/actions/index.html">geonature.core.gn_synthese.imports.actions</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/imports/geo/index.html">geonature.core.gn_synthese.imports.geo</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/imports/plot/index.html">geonature.core.gn_synthese.imports.plot</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/models/index.html">geonature.core.gn_synthese.models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/module/index.html">geonature.core.gn_synthese.module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/routes/index.html">geonature.core.gn_synthese.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/schemas/index.html">geonature.core.gn_synthese.schemas</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/synthese_config/index.html">geonature.core.gn_synthese.synthese_config</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/utils/index.html">geonature.core.gn_synthese.utils</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of geonature.core.gn_synthese.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/utils/blurring/index.html">geonature.core.gn_synthese.utils.blurring</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/utils/orm/index.html">geonature.core.gn_synthese.utils.orm</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/utils/process/index.html">geonature.core.gn_synthese.utils.process</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html">geonature.core.gn_synthese.utils.query_select_sqla</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/gn_synthese/utils/taxon_sheet/index.html">geonature.core.gn_synthese.utils.taxon_sheet</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="autoapi/geonature/core/health/index.html">geonature.core.health</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of geonature.core.health</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/health/routes/index.html">geonature.core.health.routes</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="autoapi/geonature/core/imports/index.html">geonature.core.imports</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of geonature.core.imports</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/imports/actions/index.html">geonature.core.imports.actions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/imports/admin/index.html">geonature.core.imports.admin</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/imports/blueprint/index.html">geonature.core.imports.blueprint</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="autoapi/geonature/core/imports/checks/index.html">geonature.core.imports.checks</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of geonature.core.imports.checks</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6 has-children"><a class="reference internal" href="autoapi/geonature/core/imports/checks/dataframe/index.html">geonature.core.imports.checks.dataframe</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of geonature.core.imports.checks.dataframe</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l7"><a class="reference internal" href="autoapi/geonature/core/imports/checks/dataframe/cast/index.html">geonature.core.imports.checks.dataframe.cast</a></li>
+<li class="toctree-l7"><a class="reference internal" href="autoapi/geonature/core/imports/checks/dataframe/core/index.html">geonature.core.imports.checks.dataframe.core</a></li>
+<li class="toctree-l7"><a class="reference internal" href="autoapi/geonature/core/imports/checks/dataframe/dates/index.html">geonature.core.imports.checks.dataframe.dates</a></li>
+<li class="toctree-l7"><a class="reference internal" href="autoapi/geonature/core/imports/checks/dataframe/geometry/index.html">geonature.core.imports.checks.dataframe.geometry</a></li>
+<li class="toctree-l7"><a class="reference internal" href="autoapi/geonature/core/imports/checks/dataframe/utils/index.html">geonature.core.imports.checks.dataframe.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/imports/checks/errors/index.html">geonature.core.imports.checks.errors</a></li>
+<li class="toctree-l6 has-children"><a class="reference internal" href="autoapi/geonature/core/imports/checks/sql/index.html">geonature.core.imports.checks.sql</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of geonature.core.imports.checks.sql</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l7"><a class="reference internal" href="autoapi/geonature/core/imports/checks/sql/core/index.html">geonature.core.imports.checks.sql.core</a></li>
+<li class="toctree-l7"><a class="reference internal" href="autoapi/geonature/core/imports/checks/sql/extra/index.html">geonature.core.imports.checks.sql.extra</a></li>
+<li class="toctree-l7"><a class="reference internal" href="autoapi/geonature/core/imports/checks/sql/geo/index.html">geonature.core.imports.checks.sql.geo</a></li>
+<li class="toctree-l7"><a class="reference internal" href="autoapi/geonature/core/imports/checks/sql/nomenclature/index.html">geonature.core.imports.checks.sql.nomenclature</a></li>
+<li class="toctree-l7"><a class="reference internal" href="autoapi/geonature/core/imports/checks/sql/parent/index.html">geonature.core.imports.checks.sql.parent</a></li>
+<li class="toctree-l7"><a class="reference internal" href="autoapi/geonature/core/imports/checks/sql/utils/index.html">geonature.core.imports.checks.sql.utils</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/imports/commands/index.html">geonature.core.imports.commands</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/imports/config_schema/index.html">geonature.core.imports.config_schema</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/imports/logs/index.html">geonature.core.imports.logs</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/imports/models/index.html">geonature.core.imports.models</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="autoapi/geonature/core/imports/routes/index.html">geonature.core.imports.routes</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of geonature.core.imports.routes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/imports/routes/fields/index.html">geonature.core.imports.routes.fields</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/imports/routes/imports/index.html">geonature.core.imports.routes.imports</a></li>
+<li class="toctree-l6"><a class="reference internal" href="autoapi/geonature/core/imports/routes/mappings/index.html">geonature.core.imports.routes.mappings</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/imports/schemas/index.html">geonature.core.imports.schemas</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/imports/tasks/index.html">geonature.core.imports.tasks</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/imports/templates/index.html">geonature.core.imports.templates</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/imports/utils/index.html">geonature.core.imports.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="autoapi/geonature/core/notifications/index.html">geonature.core.notifications</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of geonature.core.notifications</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/notifications/admin/index.html">geonature.core.notifications.admin</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/notifications/models/index.html">geonature.core.notifications.models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/notifications/routes/index.html">geonature.core.notifications.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/notifications/tasks/index.html">geonature.core.notifications.tasks</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/notifications/utils/index.html">geonature.core.notifications.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="autoapi/geonature/core/sensitivity/index.html">geonature.core.sensitivity</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of geonature.core.sensitivity</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/sensitivity/models/index.html">geonature.core.sensitivity.models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/sensitivity/routes/index.html">geonature.core.sensitivity.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/sensitivity/utils/index.html">geonature.core.sensitivity.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="autoapi/geonature/core/taxonomie/index.html">geonature.core.taxonomie</a><input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" role="switch" type="checkbox"/><label for="toctree-checkbox-27"><div class="visually-hidden">Toggle navigation of geonature.core.taxonomie</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/taxonomie/admin/index.html">geonature.core.taxonomie.admin</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/taxonomie/schemas/index.html">geonature.core.taxonomie.schemas</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="autoapi/geonature/core/users/index.html">geonature.core.users</a><input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" role="switch" type="checkbox"/><label for="toctree-checkbox-28"><div class="visually-hidden">Toggle navigation of geonature.core.users</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/users/models/index.html">geonature.core.users.models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/users/register_post_actions/index.html">geonature.core.users.register_post_actions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="autoapi/geonature/core/users/routes/index.html">geonature.core.users.routes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="autoapi/geonature/middlewares/index.html">geonature.middlewares</a></li>
+<li class="toctree-l3"><a class="reference internal" href="autoapi/geonature/tasks/index.html">geonature.tasks</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="autoapi/geonature/utils/index.html">geonature.utils</a><input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" role="switch" type="checkbox"/><label for="toctree-checkbox-29"><div class="visually-hidden">Toggle navigation of geonature.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/geonature/utils/celery/index.html">geonature.utils.celery</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/geonature/utils/command/index.html">geonature.utils.command</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/geonature/utils/config/index.html">geonature.utils.config</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/geonature/utils/config_schema/index.html">geonature.utils.config_schema</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/geonature/utils/env/index.html">geonature.utils.env</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/geonature/utils/errors/index.html">geonature.utils.errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/geonature/utils/filemanager/index.html">geonature.utils.filemanager</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/geonature/utils/json/index.html">geonature.utils.json</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/geonature/utils/logs/index.html">geonature.utils.logs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/geonature/utils/metaclass_utils/index.html">geonature.utils.metaclass_utils</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/geonature/utils/module/index.html">geonature.utils.module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/geonature/utils/schema/index.html">geonature.utils.schema</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/geonature/utils/sentry/index.html">geonature.utils.sentry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/geonature/utils/utilsgeometrytools/index.html">geonature.utils.utilsgeometrytools</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/geonature/utils/utilsmails/index.html">geonature.utils.utilsmails</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/geonature/utils/utilsrequests/index.html">geonature.utils.utilsrequests</a></li>
+<li class="toctree-l4"><a class="reference internal" href="autoapi/geonature/utils/utilstoml/index.html">geonature.utils.utilstoml</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="_sources/https.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="https">
+<h1>HTTPS<a class="headerlink" href="#https" title="Lien vers cette rubrique">¶</a></h1>
+<p>Cette documentation est indicative car non-spécifique à GeoNature. Elle donne des indications sur la mise en place d’un certificat SSL pour une application web servie par Apache.</p>
+<section id="utilisation-de-cerbot">
+<h2>Utilisation de Cerbot<a class="headerlink" href="#utilisation-de-cerbot" title="Lien vers cette rubrique">¶</a></h2>
+<p><strong>Source.</strong> <a class="reference external" href="https://korben.info/securiser-facilement-gratuitement-site-https.html">Sécuriser facilement et gratuitement un site avec HTTPS</a></p>
+<p>La procédure décrit une méthode de certification HTTPS de votre domaine, grâce au service <a class="reference external" href="https://letsencrypt.org/">Let’s Encrypt</a>. Les manipulations ont été effectuées sur un serveur Debian 9 avec Apache2 installé, et un utilisateur bénéficiant des droits sudo.</p>
+<p>Cerbot ne peut pas être utilisé pour la création d’un certificat sur une adresse IP (Exemple d’instances de test sans nom de domaine). Pour celà utiliser OpenSSL présenté rapidement ci-dessous.
+Installation :</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">python3</span><span class="o">-</span><span class="n">certbot</span><span class="o">-</span><span class="n">apache</span>
 </pre></div>
 </div>
-</section>
-<section id="lancer-la-commande-cerbot">
-<h2>Lancer la commande cerbot<a class="headerlink" href="#lancer-la-commande-cerbot" title="Lien permanent vers cette rubrique"></a></h2>
-<p>Lancer la commande suivant pour générer des certificats et des clés pour le nom de domaine que vous souhaitez mettre en HTTPS.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">certbot</span> <span class="n">certonly</span> <span class="o">--</span><span class="n">webroot</span> <span class="o">--</span><span class="n">webroot</span><span class="o">-</span><span class="n">path</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span> <span class="o">--</span><span class="n">domain</span> <span class="n">mondomaine</span><span class="o">.</span><span class="n">fr</span> <span class="o">--</span><span class="n">email</span> <span class="n">monemail</span><span class="nd">@mondomaine</span><span class="o">.</span><span class="n">fr</span>
+<p>Lancer la commande suivante pour générer des certificats et des clés pour le nom de domaine que vous souhaitez mettre en HTTPS.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">certbot</span> <span class="o">--</span><span class="n">apache</span> <span class="o">--</span><span class="n">email</span> <span class="n">monemail</span><span class="nd">@mondomaine</span><span class="o">.</span><span class="n">fr</span>
 </pre></div>
 </div>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">certonly</span></code> : demander la création du certificat uniquement.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--webroot</span></code> : utiliser le plugin webroot qui se contente d’ajouter des fichiers dans le dossier défini via <code class="docutils literal notranslate"><span class="pre">--webroot-path</span></code>.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--webroot-path</span></code> : le chemin de votre « DocumentRoot » Apache. Certbot placera ses fichiers dans <code class="docutils literal notranslate"><span class="pre">$DocumentRoot/.well-known/</span></code> pour les tests et vérifications</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--domain</span></code> : le nom de domaine à certifier. Mettre tous les sous-domaines à certifier</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">--email</span></code> : l’adresse qui recevra les notifications de Let’s Encrypt. Principalement pour rappeler de renouveler le certificat le moment venu.</p></li>
-</ul>
-</section>
-<section id="les-certificats-obtenus">
-<h2>Les certificats obtenus<a class="headerlink" href="#les-certificats-obtenus" title="Lien permanent vers cette rubrique"></a></h2>
-<p>Le certificat se trouve dans le répertoire <code class="docutils literal notranslate"><span class="pre">/etc/letsencrypt/live/mondomaine.fr/</span></code>.</p>
-<p>Il est constitué de 4 fichiers :</p>
-<ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">privkey.pem</span></code> : La clé privée de votre certificat. A garder confidentielle en toutes circonstances et à ne communiquer à personne quel que soit le prétexte. Vous êtes prévenus !</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">cert.pem</span></code> : Le certificat serveur est à préciser pour les versions d’Apache &lt; 2.4.8. Ce qui est notre cas ici.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">chain.pem</span></code> : Les autres certificats, SAUF le certificat serveur. Par exemple les certificats intermédiaires. Là encore pour les versions d’Apache &lt; 2.4.8.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">fullchain.pem</span></code> : Logiquement, l’ensemble des certificats. La concaténation du <code class="docutils literal notranslate"><span class="pre">cert.pem</span></code> et du <code class="docutils literal notranslate"><span class="pre">chain.pem</span></code>. A utiliser cette fois-ci pour les versions d’Apache &gt;= 2.4.8.</p></li>
-</ul>
-</section>
-<section id="automatiser-le-renouvellement-du-certificat">
-<h2>Automatiser le renouvellement du certificat<a class="headerlink" href="#automatiser-le-renouvellement-du-certificat" title="Lien permanent vers cette rubrique"></a></h2>
-<p>Le certificat fourni par Let’s Encrypt n’est valable que 3 mois. Il faut donc mettre en place un renouvellement automatique.
-Ajouter une tache automatique (Cron) pour renouveler une fois par semaine le certificat :</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">crontab</span> <span class="o">-</span><span class="n">e</span>
-<span class="mi">1</span> <span class="mi">8</span> <span class="o">*</span> <span class="o">*</span> <span class="n">Sat</span> <span class="n">certbot</span> <span class="n">renew</span> <span class="o">--</span><span class="n">renew</span><span class="o">-</span><span class="n">hook</span> <span class="s2">&quot;service apache2 reload&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">certbot</span><span class="o">.</span><span class="n">log</span>
-</pre></div>
-</div>
-</section>
-<section id="prise-en-compte-des-nouvelles-configurations-apache">
-<h2>Prise en compte des nouvelles configurations Apache<a class="headerlink" href="#prise-en-compte-des-nouvelles-configurations-apache" title="Lien permanent vers cette rubrique"></a></h2>
 <p>Activer les modules <code class="docutils literal notranslate"><span class="pre">ssl</span></code>, <code class="docutils literal notranslate"><span class="pre">headers</span></code> et <code class="docutils literal notranslate"><span class="pre">rewrite</span></code> puis redémarrer Apache :</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">a2enmod</span> <span class="n">ssl</span>
 <span class="n">sudo</span> <span class="n">a2enmod</span> <span class="n">rewrite</span>
@@ -132,19 +473,48 @@ Ajouter une tache automatique (Cron) pour renouveler une fois par semaine le cer
 <span class="n">sudo</span> <span class="n">apachectl</span> <span class="n">restart</span>
 </pre></div>
 </div>
-<p>Les fichiers de configuration des sites TaxHub et UsersHub ne sont pas à modifier, ils seront automatiquement associés à la configuration HTTPS. En revanche, la configuration de GeoNature doit être mise à jour.</p>
+<p>Les fichiers de configuration du site UsersHub n’est pas à modifier, il sera automatiquement associé à la configuration HTTPS. En revanche, la configuration de GeoNature doit être mise à jour.</p>
+</section>
+<section id="utilisation-de-openssl-sur-un-environnement-de-test">
+<h2>Utilisation de OpenSSL sur un environnement de test<a class="headerlink" href="#utilisation-de-openssl-sur-un-environnement-de-test" title="Lien vers cette rubrique">¶</a></h2>
+<p>Cette procédure a été testée sur Debian 12 et Apache2 avec l’utilisation d’un certificat auto-signé. Cela signifie qu’une alerte sera envoyée aux navigateurs indiquant un manque de sécurisation du serveur.
+Cette méthode fonctionne avec un serveur sans nom de domaine.</p>
+<p>Création d’un nouveau certificat de 365 jours (30 jours par défaut), de type X509 avec l’emplacement des fichiers de certificat et de clé privé.</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>openssl<span class="w"> </span>req<span class="w"> </span>-new<span class="w"> </span>-x509<span class="w"> </span>-days<span class="w"> </span><span class="m">365</span><span class="w"> </span>-nodes<span class="w"> </span>-out<span class="w"> </span>/etc/ssl/certs/mailserver.crt<span class="w"> </span>-keyout<span class="w"> </span>/etc/ssl/private/mailserver.key
+</pre></div>
+</div>
+<p>Sécurisation de la clé</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>chmod<span class="w"> </span><span class="m">440</span><span class="w"> </span>/etc/ssl/private/mailserver.key
+</pre></div>
+</div>
+<p>Chargement du module ssl dans Apache</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo<span class="w"> </span>a2enmod<span class="w"> </span>ssl
+</pre></div>
+</div>
+<p>Modification de la configuration du VirtualHost en éditant le fichier <code class="docutils literal notranslate"><span class="pre">/etc/apache2/sites-available/geonature.conf</span></code></p>
+<div class="highlight-apache notranslate"><div class="highlight"><pre><span></span><span class="nt">&lt;VirtualHost</span><span class="w"> </span><span class="s">*:443</span><span class="nt">&gt;</span>
+<span class="w">    </span><span class="nb">ServerName</span><span class="w"> </span>x.x.x.x
+<span class="w">    </span><span class="err">[…]</span>
+<span class="w">    </span><span class="nb">SSLEngine</span><span class="w"> </span><span class="k">on</span>
+<span class="w">    </span><span class="nb">SSLCertificateFile</span><span class="w"> </span><span class="sx">/etc/ssl/certs/mailserver.crt</span>
+<span class="w">    </span><span class="nb">SSLCertificateKeyFile</span><span class="w"> </span><span class="sx">/etc/ssl/private/mailserver.key</span>
+<span class="nt">&lt;/VirtualHost&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">apachectl</span> <span class="n">restart</span>
+</pre></div>
+</div>
 </section>
 <section id="configuration-de-l-application-geonature">
-<h2>Configuration de l’application GeoNature<a class="headerlink" href="#configuration-de-l-application-geonature" title="Lien permanent vers cette rubrique"></a></h2>
+<h2>Configuration de l’application GeoNature<a class="headerlink" href="#configuration-de-l-application-geonature" title="Lien vers cette rubrique">¶</a></h2>
 <p>Il est nécessaire de mettre à jour le fichier de configuration <code class="docutils literal notranslate"><span class="pre">geonature_config.toml</span></code> situé dans le répertoire <code class="docutils literal notranslate"><span class="pre">geonature/config</span></code> :</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">geonature</span><span class="o">/</span><span class="n">config</span>
 <span class="n">nano</span> <span class="n">geonature_config</span><span class="o">.</span><span class="n">toml</span>
 </pre></div>
 </div>
 <p>Modifier les éléments suivants :</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">URL_APPLICATION</span> <span class="o">=</span> <span class="s1">&#39;https://mondomaine.fr/geonature&#39;</span>
-<span class="n">API_ENDPOINT</span> <span class="o">=</span> <span class="s1">&#39;https://mondomaine.fr/geonature/api&#39;</span>
-<span class="n">API_TAXHUB</span> <span class="o">=</span> <span class="s1">&#39;https://mondomaine.fr/taxhub/api&#39;</span>
+<div class="highlight-toml notranslate"><div class="highlight"><pre><span></span><span class="n">URL_APPLICATION</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;https://mondomaine.fr/geonature&#39;</span>
+<span class="n">API_ENDPOINT</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;https://mondomaine.fr/geonature/api&#39;</span>
 </pre></div>
 </div>
 <p>Pour que ces modifications soient prises en compte, exécuter les <a class="reference internal" href="admin-manual.html#post-config-change"><span class="std std-ref">actions à effecture après modification de la configuration</span></a>.</p>
@@ -152,32 +522,62 @@ Ajouter une tache automatique (Cron) pour renouveler une fois par semaine le cer
 </section>
 </section>
 
-
-           </div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2018-2024, Parc National des Écrins, Parc National des Cévennes
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
           </div>
-          <footer>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">HTTPS</a><ul>
+<li><a class="reference internal" href="#utilisation-de-cerbot">Utilisation de Cerbot</a></li>
+<li><a class="reference internal" href="#utilisation-de-openssl-sur-un-environnement-de-test">Utilisation de OpenSSL sur un environnement de test</a></li>
+<li><a class="reference internal" href="#configuration-de-l-application-geonature">Configuration de l’application GeoNature</a></li>
+</ul>
+</li>
+</ul>
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2018-2019, PnE, PnC.</p>
-  </div>
-
-  Compilé avec <a href="https://www.sphinx-doc.org/">Sphinx</a> en utilisant un
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">thème</a>
-    fourni par <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
+          </div>
         </div>
       </div>
-    </section>
+      
+      
+    </aside>
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+</div><script src="_static/documentation_options.js?v=831053d0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="_static/translations.js?v=041d0952"></script>
+    </body>
 </html>

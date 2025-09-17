@@ -1,0 +1,954 @@
+<!doctype html>
+<html class="no-js" lang="fr" data-content_root="../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Recherche" href="../search.html" />
+
+    <!-- Generated with Sphinx 7.4.7 and Furo 2024.08.06 -->
+        <title>Module Import - Documentation GeoNature 2.16.2</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=302659d7" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">Documentation GeoNature 2.16.2</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../_static/LogoGeonature.jpg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Documentation GeoNature 2.16.2</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="Recherche" name="q" aria-label="Recherche">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user-manual.html">Manuel utilisateur</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../admin-manual.html">Manuel administrateur</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../development.html">Développement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../FAQ.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../authors.html">Auteurs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../CHANGELOG.html">CHANGELOG</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../api-references.html">API REFERENCES</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API REFERENCES</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../autoapi/geonature/index.html">geonature</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of geonature</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../autoapi/geonature/app/index.html">geonature.app</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../autoapi/geonature/core/index.html">geonature.core</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of geonature.core</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../autoapi/geonature/core/admin/index.html">geonature.core.admin</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of geonature.core.admin</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/admin/admin/index.html">geonature.core.admin.admin</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/admin/utils/index.html">geonature.core.admin.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../autoapi/geonature/core/command/index.html">geonature.core.command</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of geonature.core.command</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/command/__main__/index.html">geonature.core.command.__main__</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/command/create_gn_module/index.html">geonature.core.command.create_gn_module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/command/main/index.html">geonature.core.command.main</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/geonature/core/errors/index.html">geonature.core.errors</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../autoapi/geonature/core/gn_commons/index.html">geonature.core.gn_commons</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of geonature.core.gn_commons</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_commons/admin/index.html">geonature.core.gn_commons.admin</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../autoapi/geonature/core/gn_commons/medias/index.html">geonature.core.gn_commons.medias</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of geonature.core.gn_commons.medias</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/gn_commons/medias/routes/index.html">geonature.core.gn_commons.medias.routes</a></li>
+</ul>
+</li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../autoapi/geonature/core/gn_commons/models/index.html">geonature.core.gn_commons.models</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of geonature.core.gn_commons.models</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/gn_commons/models/additional_fields/index.html">geonature.core.gn_commons.models.additional_fields</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/gn_commons/models/base/index.html">geonature.core.gn_commons.models.base</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_commons/repositories/index.html">geonature.core.gn_commons.repositories</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_commons/routes/index.html">geonature.core.gn_commons.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_commons/schemas/index.html">geonature.core.gn_commons.schemas</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_commons/tasks/index.html">geonature.core.gn_commons.tasks</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../autoapi/geonature/core/gn_commons/validation/index.html">geonature.core.gn_commons.validation</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of geonature.core.gn_commons.validation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/gn_commons/validation/routes/index.html">geonature.core.gn_commons.validation.routes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../autoapi/geonature/core/gn_meta/index.html">geonature.core.gn_meta</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of geonature.core.gn_meta</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../autoapi/geonature/core/gn_meta/models/index.html">geonature.core.gn_meta.models</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of geonature.core.gn_meta.models</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/gn_meta/models/aframework/index.html">geonature.core.gn_meta.models.aframework</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/gn_meta/models/commons/index.html">geonature.core.gn_meta.models.commons</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/gn_meta/models/datasets/index.html">geonature.core.gn_meta.models.datasets</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_meta/repositories/index.html">geonature.core.gn_meta.repositories</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_meta/routes/index.html">geonature.core.gn_meta.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_meta/schemas/index.html">geonature.core.gn_meta.schemas</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../autoapi/geonature/core/gn_monitoring/index.html">geonature.core.gn_monitoring</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of geonature.core.gn_monitoring</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_monitoring/models/index.html">geonature.core.gn_monitoring.models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_monitoring/routes/index.html">geonature.core.gn_monitoring.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_monitoring/schema/index.html">geonature.core.gn_monitoring.schema</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../autoapi/geonature/core/gn_permissions/index.html">geonature.core.gn_permissions</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle navigation of geonature.core.gn_permissions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_permissions/admin/index.html">geonature.core.gn_permissions.admin</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_permissions/commands/index.html">geonature.core.gn_permissions.commands</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_permissions/decorators/index.html">geonature.core.gn_permissions.decorators</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_permissions/models/index.html">geonature.core.gn_permissions.models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_permissions/routes/index.html">geonature.core.gn_permissions.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_permissions/schemas/index.html">geonature.core.gn_permissions.schemas</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_permissions/tools/index.html">geonature.core.gn_permissions.tools</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../autoapi/geonature/core/gn_profiles/index.html">geonature.core.gn_profiles</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of geonature.core.gn_profiles</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_profiles/models/index.html">geonature.core.gn_profiles.models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_profiles/routes/index.html">geonature.core.gn_profiles.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_profiles/tasks/index.html">geonature.core.gn_profiles.tasks</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/index.html">geonature.core.gn_synthese</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of geonature.core.gn_synthese</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/blueprints/index.html">geonature.core.gn_synthese.blueprints</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of geonature.core.gn_synthese.blueprints</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/blueprints/exports/index.html">geonature.core.gn_synthese.blueprints.exports</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/blueprints/others/index.html">geonature.core.gn_synthese.blueprints.others</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/blueprints/reports/index.html">geonature.core.gn_synthese.blueprints.reports</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/blueprints/statistics/index.html">geonature.core.gn_synthese.blueprints.statistics</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/blueprints/synthese/index.html">geonature.core.gn_synthese.blueprints.synthese</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/blueprints/taxon_info/index.html">geonature.core.gn_synthese.blueprints.taxon_info</a></li>
+</ul>
+</li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/imports/index.html">geonature.core.gn_synthese.imports</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle navigation of geonature.core.gn_synthese.imports</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/imports/actions/index.html">geonature.core.gn_synthese.imports.actions</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/imports/geo/index.html">geonature.core.gn_synthese.imports.geo</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/imports/plot/index.html">geonature.core.gn_synthese.imports.plot</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/models/index.html">geonature.core.gn_synthese.models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/module/index.html">geonature.core.gn_synthese.module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/routes/index.html">geonature.core.gn_synthese.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/schemas/index.html">geonature.core.gn_synthese.schemas</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/synthese_config/index.html">geonature.core.gn_synthese.synthese_config</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/utils/index.html">geonature.core.gn_synthese.utils</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of geonature.core.gn_synthese.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/utils/blurring/index.html">geonature.core.gn_synthese.utils.blurring</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/utils/orm/index.html">geonature.core.gn_synthese.utils.orm</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/utils/process/index.html">geonature.core.gn_synthese.utils.process</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html">geonature.core.gn_synthese.utils.query_select_sqla</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/gn_synthese/utils/taxon_sheet/index.html">geonature.core.gn_synthese.utils.taxon_sheet</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../autoapi/geonature/core/health/index.html">geonature.core.health</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of geonature.core.health</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/health/routes/index.html">geonature.core.health.routes</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../autoapi/geonature/core/imports/index.html">geonature.core.imports</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of geonature.core.imports</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/imports/actions/index.html">geonature.core.imports.actions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/imports/admin/index.html">geonature.core.imports.admin</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/imports/blueprint/index.html">geonature.core.imports.blueprint</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../autoapi/geonature/core/imports/checks/index.html">geonature.core.imports.checks</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of geonature.core.imports.checks</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6 has-children"><a class="reference internal" href="../autoapi/geonature/core/imports/checks/dataframe/index.html">geonature.core.imports.checks.dataframe</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of geonature.core.imports.checks.dataframe</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l7"><a class="reference internal" href="../autoapi/geonature/core/imports/checks/dataframe/cast/index.html">geonature.core.imports.checks.dataframe.cast</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../autoapi/geonature/core/imports/checks/dataframe/core/index.html">geonature.core.imports.checks.dataframe.core</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../autoapi/geonature/core/imports/checks/dataframe/dates/index.html">geonature.core.imports.checks.dataframe.dates</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../autoapi/geonature/core/imports/checks/dataframe/geometry/index.html">geonature.core.imports.checks.dataframe.geometry</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../autoapi/geonature/core/imports/checks/dataframe/utils/index.html">geonature.core.imports.checks.dataframe.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/imports/checks/errors/index.html">geonature.core.imports.checks.errors</a></li>
+<li class="toctree-l6 has-children"><a class="reference internal" href="../autoapi/geonature/core/imports/checks/sql/index.html">geonature.core.imports.checks.sql</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of geonature.core.imports.checks.sql</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l7"><a class="reference internal" href="../autoapi/geonature/core/imports/checks/sql/core/index.html">geonature.core.imports.checks.sql.core</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../autoapi/geonature/core/imports/checks/sql/extra/index.html">geonature.core.imports.checks.sql.extra</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../autoapi/geonature/core/imports/checks/sql/geo/index.html">geonature.core.imports.checks.sql.geo</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../autoapi/geonature/core/imports/checks/sql/nomenclature/index.html">geonature.core.imports.checks.sql.nomenclature</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../autoapi/geonature/core/imports/checks/sql/parent/index.html">geonature.core.imports.checks.sql.parent</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../autoapi/geonature/core/imports/checks/sql/utils/index.html">geonature.core.imports.checks.sql.utils</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/imports/commands/index.html">geonature.core.imports.commands</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/imports/config_schema/index.html">geonature.core.imports.config_schema</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/imports/logs/index.html">geonature.core.imports.logs</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/imports/models/index.html">geonature.core.imports.models</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../autoapi/geonature/core/imports/routes/index.html">geonature.core.imports.routes</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of geonature.core.imports.routes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/imports/routes/fields/index.html">geonature.core.imports.routes.fields</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/imports/routes/imports/index.html">geonature.core.imports.routes.imports</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../autoapi/geonature/core/imports/routes/mappings/index.html">geonature.core.imports.routes.mappings</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/imports/schemas/index.html">geonature.core.imports.schemas</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/imports/tasks/index.html">geonature.core.imports.tasks</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/imports/templates/index.html">geonature.core.imports.templates</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/imports/utils/index.html">geonature.core.imports.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../autoapi/geonature/core/notifications/index.html">geonature.core.notifications</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of geonature.core.notifications</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/notifications/admin/index.html">geonature.core.notifications.admin</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/notifications/models/index.html">geonature.core.notifications.models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/notifications/routes/index.html">geonature.core.notifications.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/notifications/tasks/index.html">geonature.core.notifications.tasks</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/notifications/utils/index.html">geonature.core.notifications.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../autoapi/geonature/core/sensitivity/index.html">geonature.core.sensitivity</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of geonature.core.sensitivity</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/sensitivity/models/index.html">geonature.core.sensitivity.models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/sensitivity/routes/index.html">geonature.core.sensitivity.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/sensitivity/utils/index.html">geonature.core.sensitivity.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../autoapi/geonature/core/taxonomie/index.html">geonature.core.taxonomie</a><input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" role="switch" type="checkbox"/><label for="toctree-checkbox-27"><div class="visually-hidden">Toggle navigation of geonature.core.taxonomie</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/taxonomie/admin/index.html">geonature.core.taxonomie.admin</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/taxonomie/schemas/index.html">geonature.core.taxonomie.schemas</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../autoapi/geonature/core/users/index.html">geonature.core.users</a><input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" role="switch" type="checkbox"/><label for="toctree-checkbox-28"><div class="visually-hidden">Toggle navigation of geonature.core.users</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/users/models/index.html">geonature.core.users.models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/users/register_post_actions/index.html">geonature.core.users.register_post_actions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../autoapi/geonature/core/users/routes/index.html">geonature.core.users.routes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../autoapi/geonature/middlewares/index.html">geonature.middlewares</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../autoapi/geonature/tasks/index.html">geonature.tasks</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../autoapi/geonature/utils/index.html">geonature.utils</a><input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" role="switch" type="checkbox"/><label for="toctree-checkbox-29"><div class="visually-hidden">Toggle navigation of geonature.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/geonature/utils/celery/index.html">geonature.utils.celery</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/geonature/utils/command/index.html">geonature.utils.command</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/geonature/utils/config/index.html">geonature.utils.config</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/geonature/utils/config_schema/index.html">geonature.utils.config_schema</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/geonature/utils/env/index.html">geonature.utils.env</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/geonature/utils/errors/index.html">geonature.utils.errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/geonature/utils/filemanager/index.html">geonature.utils.filemanager</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/geonature/utils/json/index.html">geonature.utils.json</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/geonature/utils/logs/index.html">geonature.utils.logs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/geonature/utils/metaclass_utils/index.html">geonature.utils.metaclass_utils</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/geonature/utils/module/index.html">geonature.utils.module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/geonature/utils/schema/index.html">geonature.utils.schema</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/geonature/utils/sentry/index.html">geonature.utils.sentry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/geonature/utils/utilsgeometrytools/index.html">geonature.utils.utilsgeometrytools</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/geonature/utils/utilsmails/index.html">geonature.utils.utilsmails</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/geonature/utils/utilsrequests/index.html">geonature.utils.utilsrequests</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../autoapi/geonature/utils/utilstoml/index.html">geonature.utils.utilstoml</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/admin/import-admin.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="module-import">
+<h1>Module Import<a class="headerlink" href="#module-import" title="Lien vers cette rubrique">¶</a></h1>
+<p>Ce module permet d’importer des données depuis un fichier CSV dans GeoNature.</p>
+<section id="concepts">
+<h2>Concepts<a class="headerlink" href="#concepts" title="Lien vers cette rubrique">¶</a></h2>
+<p><strong>Destination.</strong> Une destination est déterminée par le module dans lequel on souhaite importer des données (e.g. Occhab, Synthèse, etc.).</p>
+<p><strong>Entités.</strong> Une entité correspond à un objet dans une destination (e.g. <em>station</em> est une entité de la destination <em>Occhab</em>)</p>
+</section>
+<section id="faire-un-import-le-minimum-requis">
+<h2>Faire un import, le minimum requis<a class="headerlink" href="#faire-un-import-le-minimum-requis" title="Lien vers cette rubrique">¶</a></h2>
+<p>Pour qu’un utilisateur puisse mener au bout un import, il doit posséder à minima les permissions suivantes :</p>
+<ul class="simple">
+<li><p>Création d’un import (C)</p></li>
+<li><p>Voir les imports (R)</p></li>
+<li><p>Voir des mappings (R)</p></li>
+<li><p>Droit de créer/saisir dans le module de destination (C dans OccHab par ex.)</p></li>
+<li><p>Voir les méta-données (R)</p></li>
+</ul>
+<p><strong>Jeu de données.</strong> Un import s’effectue dans un jeu de données, par conséquent, ce dernier doit :</p>
+<ul class="simple">
+<li><p>être associé aux modules de destination de l’import (Voir champ dans l’édition/création d’un JDD : Module(s) GeoNature associé(s) au jeu de données)</p></li>
+<li><p>être actif.</p></li>
+</ul>
+</section>
+<section id="deroulement-dun-import">
+<h2>Déroulement d’un import<a class="headerlink" href="#deroulement-dun-import" title="Lien vers cette rubrique">¶</a></h2>
+<p>Dans le module d’import, trois actions sont possibles : la création d’un import, la modification de ce dernier et la suppression d’un import.
+Lors du lancement de la création d’un import, il faut sélectionner la destination. Une fois la destination choisie, la phase de préparation de l’import se déroule de la manière suivante :</p>
+<ol class="arabic simple">
+<li><p>Téléverser le fichier contenant les données et sélection du jeu de données. Le format de fichier accepté est le CSV.</p></li>
+<li><p>Définir les paramètres de lecture du fichier téléversé. Les données du fichier source sont stockées en binaire dans la table des imports (<code class="docutils literal notranslate"><span class="pre">gn_imports.t_imports.source_file</span></code>).</p></li>
+<li><p>Faire correspondre les colonnes de votre fichier avec les champs du modèle de données défini dans le module de destination. Pour aider l’utilisateur dans le remplissage du formulaire, il est possible de sauvegarder et réutiliser des  _mappings_. Plusieurs mappings sont disponibles avec l’installation de GeoNature. Ces mappings permettent notamment de faire la correspondance des  colonnes d’un fichier produit par un export GeoNature (Occhab et Synthèse). Les correspondances de champs sont stockées dans un champs JSON dans <code class="docutils literal notranslate"><span class="pre">gn_imports.t_imports.fieldmapping</span></code>.</p></li>
+<li><p>Si des champs correspondant à des types de nomenclatures sont indiqués dans l’étape 3, une mise en correspondance des valeurs du fichier source avec les nomenclatures dans la base doit être faite. Si le fichier source comprend des lignes vides, on propose en plus de mapper le cas « Pas de valeur ». Tout comme la correspondance des champs, la correspondance des valeurs de nomenclature est sauvegardée dans un champs JSONB <code class="docutils literal notranslate"><span class="pre">gn_imports.t_imports.valuemapping</span></code>.</p></li>
+<li><p>Contrôles des données du fichier source sélectionnées (<a class="reference internal" href="#controle-donnees"><span class="std std-ref">c.f. Contrôles de données</span></a>:).</p></li>
+</ol>
+<p>Une fois, cette phase de préparation terminée, l’utilisateur se voit présenter les données jugées comme valides (resp. les données invalides). A cette étape, l’utilisateur a la choix de modifier les données invalides dans son fichier source et recommencer le processus de préparation de l’import OU lancer l’import des données dans la destination.
+Une fois l’import de données terminé, l’utilisateur est redirigé vers un rapport récapitulant les paramètres de l’import et un affichage de quelques statistiques spécifiques au type de données importées.
+Une fois les données importées, les données sont supprimées de la table temporaire (<code class="docutils literal notranslate"><span class="pre">gn_imports.t_imports_synthese</span></code> pour la Synthèse, <code class="docutils literal notranslate"><span class="pre">gn_imports.t_imports_occhab</span></code> pour Occhab).</p>
+<img alt="admin/images/import/import_etapes.png" src="admin/images/import/import_etapes.png" />
+</section>
+<section id="configuration-du-module-dimport">
+<h2>Configuration du module d’import<a class="headerlink" href="#configuration-du-module-dimport" title="Lien vers cette rubrique">¶</a></h2>
+<p>Vous pouvez surcoucher ces différents paramètres en les ajoutant directement dans le fichier de configuration principal de GeoNature (<code class="docutils literal notranslate"><span class="pre">geonature_config.toml</span></code>).</p>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Variable</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>ENCODAGE</p></td>
+<td><p>Liste des encodages</p></td>
+</tr>
+<tr class="row-odd"><td><p>acceptés</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>MAX_FILE_SIZE</p></td>
+<td><p>Taille maximale du fichier chargé (en Mo)</p></td>
+</tr>
+<tr class="row-odd"><td><p>SRID</p></td>
+<td><p>SRID autorisés pour les fichiers en entrée</p></td>
+</tr>
+<tr class="row-even"><td><p>ALLOWED_EXTENSIONS</p></td>
+<td><p>Extensions autorisées (seul le format CSV est accepté actuellement)</p></td>
+</tr>
+<tr class="row-odd"><td><p>ALLOW_VALUE_MAPPING</p></td>
+<td><p>Activer ou non l’étape du mapping des valeurs</p></td>
+</tr>
+<tr class="row-even"><td><p>DEFAULT_VALUE_MAPPING_ID</p></td>
+<td><p>Si le mapping des valeurs est désactivé, specifier l’identifiant du mapping qui doit être utilisé</p></td>
+</tr>
+<tr class="row-odd"><td><p>FILL_MISSING_NOMENCLATURE_WITH_DEFAULT_VALUE</p></td>
+<td><p>Rempli les valeurs de nomenclature erronées par la valeur par défaut</p></td>
+</tr>
+<tr class="row-even"><td><p>CHECK_PRIVATE_JDD_BLURING</p></td>
+<td><p>Active la vérification de l’existence du champs « floutage » si le JDD est privé</p></td>
+</tr>
+<tr class="row-odd"><td><p>CHECK_REF_BIBLIO_LITTERATURE</p></td>
+<td><p>Active la vérification de la référence bibliographique fournie si la valeur du champs source = « litterature »</p></td>
+</tr>
+<tr class="row-even"><td><p>CHECK_EXIST_PROOF</p></td>
+<td><p>Active la vérification qu’une preuve d’existence est fournie si preuve existence = « oui »</p></td>
+</tr>
+<tr class="row-odd"><td><p>EXPORT_REPORT_PDF_FILENAME</p></td>
+<td><p>Customiser le nom du fichier de rapport de l’import</p></td>
+</tr>
+<tr class="row-even"><td><p>DEFAULT_RANK</p></td>
+<td><p>Paramètre pour définir le rang utilisé pour le diagramme camembert du rapport d’import.</p></td>
+</tr>
+<tr class="row-odd"><td><p>DEFAULT_GENERATE_MISSING_UUID</p></td>
+<td><p>L’UUID d’une entité importée sera généré s’il n’est pas indiqué dans le fichier source</p></td>
+</tr>
+<tr class="row-even"><td><p>ID_AREA_RESTRICTION</p></td>
+<td><p>Identifiant d’un zonage dans lequel doivent se trouver les observations/stations importées. La valeur de cette identifiant est à récupérer dans la table <cite>ref_geo.l_areas</cite>.                                                                                                  identifiant doit correspondre à une valeur contenue dans <cite>ref_geo.l_areas.id_area</cite>.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ID_LIST_TAXA_RESTRICTION</p></td>
+<td><p>Identifiant d’une liste de taxons permettant de restreindre l’import d’observations dont les taxons appartiennent à cette dernière</p></td>
+</tr>
+<tr class="row-even"><td><p>MODULE_URL</p></td>
+<td><p>URL d’accès au module d’import</p></td>
+</tr>
+<tr class="row-odd"><td><p>DATAFRAME_BATCH_SIZE</p></td>
+<td><p>Taille des <cite>batch</cite> de données importées en même temps</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="permissions-de-limport">
+<h2>Permissions de l’import<a class="headerlink" href="#permissions-de-limport" title="Lien vers cette rubrique">¶</a></h2>
+<p>Dans le module Import, il existe le jeu de permissions suivant :</p>
+<ul class="simple">
+<li><p>Création d’un import – C</p></li>
+<li><p>Voir les imports – R</p></li>
+<li><p>Modifier des imports – U (nécessaire d’avoir le C)</p></li>
+<li><p>Supprimer des imports – D</p></li>
+<li><p>Créer des mappings - C</p></li>
+<li><p>Voir des mappings - R</p></li>
+<li><p>Modifier des mappings - U</p></li>
+<li><p>Supprimer des mappings - D</p></li>
+</ul>
+<p><strong>Scope.</strong> Similaire à d’autres permissions dans GeoNature, il est possible de limiter l’accès à l’utilisateur sur les données sur lesquelles il peut agir. L’ ajout de scope sur une permission de l’import limite  la visibilité des imports dans l’interface « Liste des Imports » ainsi que la possibilité (resp. impossbilité) de modifier ou supprimer un import. Par exemple,  un R2 sur « IMPORT » permet uniquement de voir les imports effectués par soi-même ou un utilisateur de son organisme.
+A noter! La liste des jeux de données disponibles s’appuie bien sur les permissions de l’utilisateur dans ce dernier !</p>
+<p><strong>Mapping.</strong> Certains mappings sont définis comme « public » et sont accessibles à tout le monde. Seuls les administrateurs (U=3) et les propriétaires de ces mappings peuvent les modifier. Si vous modifiez un mapping sur lequel vous n’avez pas les droits, il vous sera proposé de créer un nouveau mapping vous appartenant avec les modifications que vous avez faites, mais sans modifier le mapping initial.</p>
+<p><strong>Jeu de données accessibles à l’import.</strong> Les jeux de données selectionnables par un utilisateur lors de la création d’un import sont eux controlés par les permissions sur le C de l’objet « import » (combiné au R du module « Métadonnées). Les mappings constituent un « objet » du module d’import disposant de droits paramétrables pour les différents utilisateurs, indépendamment des permissions sur les imports. Le réglage des permissions se fait dans le module « Admin » de GeoNature (« Admin » -&gt; « Permissions »).</p>
+</section>
+<section id="modification-et-suppression-d-un-import">
+<h2>Modification et Suppression d’un import<a class="headerlink" href="#modification-et-suppression-d-un-import" title="Lien vers cette rubrique">¶</a></h2>
+<p><strong>Comment sait-on qu’un import est terminé ?</strong> Si une date apparait dans la colonne « Fin import » de la liste des imports, alors l’import est terminé.</p>
+<p><strong>Suppression d’un import</strong> La suppression d’un import implique : la supression de l’import (l’objet) et <strong>les données importées dans la table transitoire</strong>. Si l’import est terminé, les données importées dans la destination sont supprimées. Dans le cas d’une destination avec plusieurs entités, si l’entité mère est associée à des entités filles ajoutées en dehors de l’import (un habitat est rajouté sur un station importée par exemple), la supression est bloquée.</p>
+<p><strong>Modification d’un import</strong> Lors de la modification d’un import, vous serez redirigez vers l’étape de « Correspondances de champs ». Si vous modifiez la correspondance des champs en cliquant sur « Suivant », cela entrainera la suppression des données dans la table transitoire et dans la destination si l’import est terminé.</p>
+</section>
+<section id="controles-de-donnees">
+<h2>Contrôles de données<a class="headerlink" href="#controles-de-donnees" title="Lien vers cette rubrique">¶</a></h2>
+<p><strong>Erreurs</strong></p>
+<p>Le tableau ci-dessous liste les codes d’erreur et leur description.</p>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Code Erreur</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>DATASET_NOT_FOUND</p></td>
+<td><p>L’identifiant ne correspond à aucun jeu de données existant.</p></td>
+</tr>
+<tr class="row-odd"><td><p>DATASET_NOT_AUTHORIZED</p></td>
+<td><p>L’utilisateur ne peut pas importer de nouvelles entités dans le jeu de données.</p></td>
+</tr>
+<tr class="row-even"><td><p>DATASET_NOT_ACTIVE</p></td>
+<td><p>Aucune donnée ne peut être importée dans le JDD indiqué car il n’est pas actif.</p></td>
+</tr>
+<tr class="row-odd"><td><p>MULTIPLE_ATTACHMENT_TYPE_CODE</p></td>
+<td><p>Plusieurs géoréférencements sont indiqués dans les colonnes : codeCommune, codeMaille, codeDépartement (Erreur Synthèse)</p></td>
+</tr>
+<tr class="row-even"><td><p>MULTIPLE_CODE_ATTACHMENT</p></td>
+<td><p>Plusieurs codes de rattachement fournis pour une même ligne. Une ligne doit avoir un seul code rattachement (code commune OU code maille OU code département)</p></td>
+</tr>
+<tr class="row-odd"><td><p>INVALID_DATE</p></td>
+<td><p>Format de date invalide (Voir formats de date autorisés)</p></td>
+</tr>
+<tr class="row-even"><td><p>INVALID_UUID</p></td>
+<td><p>Format de l’identifiant donné ne respecte pas le format UUID (<a class="reference external" href="https://fr.wikipedia.org/wiki/Universally_unique_identifier">https://fr.wikipedia.org/wiki/Universally_unique_identifier</a>)</p></td>
+</tr>
+<tr class="row-odd"><td><p>INVALID_INTEGER</p></td>
+<td><p>La donnée indiquée ne correspond pas un nombre entier.</p></td>
+</tr>
+<tr class="row-even"><td><p>INVALID_NUMERIC</p></td>
+<td><p>La donnée indiquée ne correspond pas à un nombre réel (float)</p></td>
+</tr>
+<tr class="row-odd"><td><p>INVALID_WKT</p></td>
+<td><p>La donnée indiquée ne respecte pas le format WKT <a class="reference external" href="https://fr.wikipedia.org/wiki/Well-known_text">https://fr.wikipedia.org/wiki/Well-known_text</a></p></td>
+</tr>
+<tr class="row-even"><td><p>INVALID_GEOMETRY</p></td>
+<td><p>La géométrie de la donnée renseignée est invalide (c.f  ST_VALID)</p></td>
+</tr>
+<tr class="row-odd"><td><p>INVALID_BOOL</p></td>
+<td><p>La donnée fournie n’est pas un booléen</p></td>
+</tr>
+<tr class="row-even"><td><p>INVALID_ATTACHMENT_CODE</p></td>
+<td><p>Le code commune/maille/département indiqué ne fait pas partie du référentiel des géographique.</p></td>
+</tr>
+<tr class="row-odd"><td><p>INVALID_CHAR_LENGTH</p></td>
+<td><p>La chaine de caractère de la donnée est trop longue</p></td>
+</tr>
+<tr class="row-even"><td><p>DATE_MIN_TOO_HIGH</p></td>
+<td><p>La date de début est dans le futur</p></td>
+</tr>
+<tr class="row-odd"><td><p>DATE_MAX_TOO_LOW</p></td>
+<td><p>La date de fin est inférieure à 1900</p></td>
+</tr>
+<tr class="row-even"><td><p>DATE_MAX_TOO_HIGH</p></td>
+<td><p>La date de fin est dans le futur</p></td>
+</tr>
+<tr class="row-odd"><td><p>DATE_MIN_TOO_LOW</p></td>
+<td><p>La date de début est inférieure à 1900</p></td>
+</tr>
+<tr class="row-even"><td><p>DATE_MIN_SUP_DATE_MAX</p></td>
+<td><p>La date de début est supérieure à la date de fin</p></td>
+</tr>
+<tr class="row-odd"><td><p>DEPTH_MIN_SUP_ALTI_MAX</p></td>
+<td><p>La profondeur minimum est supérieure à la profondeur maximale</p></td>
+</tr>
+<tr class="row-even"><td><p>ALTI_MIN_SUP_ALTI_MAX</p></td>
+<td><p>L’altitude minimum est supérieure à l’altitude maximale</p></td>
+</tr>
+<tr class="row-odd"><td><p>ORPHAN_ROW</p></td>
+<td><p>La ligne du fichier n’a pû être rattachée à aucune entité.</p></td>
+</tr>
+<tr class="row-even"><td><p>DUPLICATE_ROWS</p></td>
+<td><p>Deux lignes du fichier sont identiques ; les lignes ne peuvent pas être dupliquées.</p></td>
+</tr>
+<tr class="row-odd"><td><p>DUPLICATE_UUID</p></td>
+<td><p>L’identifiant UUID d’une entité n’est pas unique dans le fichier fournis</p></td>
+</tr>
+<tr class="row-even"><td><p>EXISTING_UUID</p></td>
+<td><p>L’identifiant UUID d’une entité fournie existe déjà dans la base de données. Il faut en fournir un autre ou laisser la valeur vide pour une attribution automatique.</p></td>
+</tr>
+<tr class="row-odd"><td><p>SKIP_EXISTING_UUID</p></td>
+<td><p>Les entités existantes selon UUID sont ignorées.</p></td>
+</tr>
+<tr class="row-even"><td><p>MISSING_VALUE</p></td>
+<td><p>Valeur manquante dans un champs obligatoire</p></td>
+</tr>
+<tr class="row-odd"><td><p>MISSING_GEOM</p></td>
+<td><p>Géoréférencement manquant ; un géoréférencement doit être fourni, c’est à dire qu’il faut livrer : soit une géométrie, soit une ou plusieurs commune(s), ou département(s), ou maille(s), dont le champ “typeInfoGeo” est indiqué à 1.</p></td>
+</tr>
+<tr class="row-even"><td><p>GEOMETRY_OUTSIDE</p></td>
+<td><p>La géométrie se trouve à l’extérieur du territoire renseigné</p></td>
+</tr>
+<tr class="row-odd"><td><p>NO-GEOM</p></td>
+<td><p>Aucune géometrie fournie (ni X/Y, WKT ou code)</p></td>
+</tr>
+<tr class="row-even"><td><p>GEOMETRY_OUT_OF_BOX</p></td>
+<td><p>Coordonnées géographiques en dehors du périmètre géographique de l’instance</p></td>
+</tr>
+<tr class="row-odd"><td><p>ERRONEOUS_PARENT_ENTITY</p></td>
+<td><p>L’entité parente est en erreur.</p></td>
+</tr>
+<tr class="row-even"><td><p>NO_PARENT_ENTITY</p></td>
+<td><p>Aucune entité parente identifiée.</p></td>
+</tr>
+<tr class="row-odd"><td><p>DUPLICATE_ENTITY_SOURCE_PK</p></td>
+<td><p>Deux lignes du fichier ont la même clé primaire d’origine ; les clés primaires du fichier source ne peuvent pas être dupliquées.</p></td>
+</tr>
+<tr class="row-even"><td><p>COUNT_MIN_SUP_COUNT_MAX</p></td>
+<td><p>Incohérence entre les champs dénombrement. La valeur de denombrement_min est supérieure à celle de denombrement_max ou la valeur de denombrement_max est inférieure à denombrement_min.</p></td>
+</tr>
+<tr class="row-odd"><td><p>INVALID_NOMENCLATURE</p></td>
+<td><p>Code nomenclature erroné ; La valeur du champ n’est pas dans la liste des codes attendus pour ce champ. Pour connaître la liste des codes autorisés, reportez-vous au Standard en cours.</p></td>
+</tr>
+<tr class="row-even"><td><p>INVALID_EXISTING_PROOF_VALUE</p></td>
+<td><p>Incohérence entre les champs de preuve ; si le champ “preuveExistante” vaut oui, alors l’un des deux champs “preuveNumérique” ou “preuveNonNumérique” doit être rempli. A l’inverse, si l’un de ces deux champs est rempli, alors “preuveExistante” ne doit pas prendre une autre valeur que « oui » (code 1).</p></td>
+</tr>
+<tr class="row-odd"><td><p>INVALID_NOMENCLATURE_WARNING</p></td>
+<td><p>(Non bloquant) Code nomenclature erroné et remplacé par sa valeur par défaut ; La valeur du champ n’est pas dans la liste des codes attendus pour ce champ. Pour connaître la liste des codes autorisés, reportez-vous au Standard en cours.</p></td>
+</tr>
+<tr class="row-even"><td><p>CONDITIONAL_MANDATORY_FIELD_ERROR</p></td>
+<td><p>Champs obligatoires conditionnels manquants. Il existe des ensembles de champs liés à un concept qui sont “obligatoires conditionnels”, c’est à dire que si l’un des champs du concept est utilisé, alors d’autres champs du concept deviennent obligatoires.</p></td>
+</tr>
+<tr class="row-odd"><td><p>UNKNOWN_ERROR</p></td>
+<td><p>Erreur inconnue</p></td>
+</tr>
+<tr class="row-even"><td><p>INVALID_STATUT_SOURCE_VALUE</p></td>
+<td><p>Référence bibliographique manquante ; si le champ “statutSource” a la valeur “Li” (Littérature), alors une référence bibliographique doit être indiquée.</p></td>
+</tr>
+<tr class="row-odd"><td><p>CONDITIONAL_INVALID_DATA</p></td>
+<td><p>Erreur de valeur</p></td>
+</tr>
+<tr class="row-even"><td><p>INVALID_URL_PROOF</p></td>
+<td><p>PreuveNumerique n’est pas une url ; le champ “preuveNumérique” indique l’adresse web à laquelle on pourra trouver la preuve numérique ou l’archive contenant toutes les preuves numériques. Il doit commencer par “<a class="reference external" href="http://">http://</a>”, “<a class="reference external" href="https://">https://</a>”, ou “<a class="reference external" href="ftp://">ftp://</a>”.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ROW_HAVE_TOO_MUCH_COLUMN</p></td>
+<td><p>Une ligne du fichier source a plus de colonnes que l’en-tête.</p></td>
+</tr>
+<tr class="row-even"><td><p>ROW_HAVE_LESS_COLUMN</p></td>
+<td><p>Une ligne du fichier source a moins de colonnes que l’en-tête.</p></td>
+</tr>
+<tr class="row-odd"><td><p>EMPTY_ROW</p></td>
+<td><p>Une ligne dans le fichier source est vide</p></td>
+</tr>
+<tr class="row-even"><td><p>HEADER_SAME_COLUMN_NAME</p></td>
+<td><p>Au moins deux colonnes du fichier source possèdent des noms identiques</p></td>
+</tr>
+<tr class="row-odd"><td><p>EMPTY_FILE</p></td>
+<td><p>Le fichier source est vide</p></td>
+</tr>
+<tr class="row-even"><td><p>NO_FILE_SENDED</p></td>
+<td><p>Aucun fichier source n’a été téléversé.</p></td>
+</tr>
+<tr class="row-odd"><td><p>ERROR_WHILE_LOADING_FILE</p></td>
+<td><p>Une erreur s’est produite lors du chargement du fichier.</p></td>
+</tr>
+<tr class="row-even"><td><p>FILE_FORMAT_ERROR</p></td>
+<td><p>Le format du fichier est incorrect.</p></td>
+</tr>
+<tr class="row-odd"><td><p>FILE_EXTENSION_ERROR</p></td>
+<td><p>L’extension de fichier source est incorrect</p></td>
+</tr>
+<tr class="row-even"><td><p>FILE_OVERSIZE</p></td>
+<td><p>Volume du fichier source est trop important</p></td>
+</tr>
+<tr class="row-odd"><td><p>FILE_NAME_TOO_LONG</p></td>
+<td><p>Nom du fichier de données trop long</p></td>
+</tr>
+<tr class="row-even"><td><p>FILE_WITH_NO_DATA</p></td>
+<td><p>Pas de données dans le fichier source</p></td>
+</tr>
+<tr class="row-odd"><td><p>INCOHERENT_DATA</p></td>
+<td><p>Une même entité est déclaré avec différents attributs dans le fichier source</p></td>
+</tr>
+<tr class="row-even"><td><p>CD_HAB_NOT_FOUND</p></td>
+<td><p>CdHab n’existe pas dans le référentiel Habref installé</p></td>
+</tr>
+<tr class="row-odd"><td><p>CD_NOM_NOT_FOUND</p></td>
+<td><p>CdNom n’existe pas dans le référentiel TaxRef installé</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Format de dates autorisées</strong></p>
+<p>Date :</p>
+<ul class="simple">
+<li><p>YYYY-MM-DD</p></li>
+<li><p>DD-MM-YYYY</p></li>
+<li><p>YYYY/MM/DD</p></li>
+<li><p>DD/MM/YYYY</p></li>
+</ul>
+<p>Heure :</p>
+<ul class="simple">
+<li><p>H</p></li>
+<li><p>H-M</p></li>
+<li><p>H-M-S</p></li>
+<li><p>H-M-S</p></li>
+<li><p>H:M</p></li>
+<li><p>H:M:S</p></li>
+<li><p>H:M:S</p></li>
+<li><p>Hh</p></li>
+<li><p>HhM</p></li>
+<li><p>HhMm</p></li>
+<li><p>HhMmSs</p></li>
+</ul>
+</section>
+<section id="configuration-avancee">
+<h2>Configuration avancée<a class="headerlink" href="#configuration-avancee" title="Lien vers cette rubrique">¶</a></h2>
+<p>Une autre partie de la configuration se fait directement dans la base de données, dans les tables <code class="docutils literal notranslate"><span class="pre">bib_fields</span></code>, <code class="docutils literal notranslate"><span class="pre">bib_themes</span></code> et <code class="docutils literal notranslate"><span class="pre">cor_entity_field</span></code>.</p>
+<p>Dans <code class="docutils literal notranslate"><span class="pre">bib_fields</span></code>, il est possible de :</p>
+<ul class="simple">
+<li><p>Ajouter de nouveau(x) champ(s) pour une entité (e.g. Station) dans une destination (e.g. Occhab).</p></li>
+<li><p>Masquer des champs existants. Pour cela, modifier la valeur de l’attribut <code class="docutils literal notranslate"><span class="pre">display</span></code> d’un champ.</p></li>
+<li><p>Rendre obligatoire un champ. Pour cela, modifier la valeur de l’attribut <code class="docutils literal notranslate"><span class="pre">mandatory</span></code> d’un champ.</p></li>
+<li><p>Rendre obligatoire/optionnel un champ si d’autres champs sont remplis. Voir les champs <code class="docutils literal notranslate"><span class="pre">optional_conditions</span></code> et <code class="docutils literal notranslate"><span class="pre">mandatory_conditions</span></code>.</p></li>
+</ul>
+<p>Dans la table <code class="docutils literal notranslate"><span class="pre">cor_entity_field</span></code> :</p>
+<ul class="simple">
+<li><p>Paramètrer l’ordre des champs dans l’interface du mapping de champs. Voir le champ <code class="docutils literal notranslate"><span class="pre">order_field</span></code>.</p></li>
+<li><p>Changer le _tooltip_ d’un champ. Voir le champ <code class="docutils literal notranslate"><span class="pre">comment</span></code>.</p></li>
+<li><p>Regrouper des champs dans <strong>thèmes</strong> (voir <code class="docutils literal notranslate"><span class="pre">bib_themes</span></code>) à l’aide du champs <code class="docutils literal notranslate"><span class="pre">id_theme</span></code>.</p></li>
+</ul>
+</section>
+<section id="controle-de-donnees-dans-les-destinations-venant-avec-geonature">
+<span id="controle-donnees"></span><h2>Contrôle de données dans les destinations venant avec GeoNature<a class="headerlink" href="#controle-de-donnees-dans-les-destinations-venant-avec-geonature" title="Lien vers cette rubrique">¶</a></h2>
+<p>Dans cette section, nous présentons les contrôles de données effectuées pour les destinations intégrées dans GeoNature : Synthèse, Occhab.
+L’ordre des contrôles dans ces listes correspond bien à celui du processus défini dans le code de GeoNature.
+De manière générale, nous séparons les contrôles de données en deux catégories, ceux effectués en BDD avec PostgreSQL et ceux effectuée en Python à l’aide des DataFrame (donnée tableau)</p>
+<p><strong>Listes des contrôles pour Occhab</strong></p>
+<ol class="arabic simple">
+<li><p>[SQL][Station]</p>
+<ol class="arabic simple">
+<li><p>Vérification de la cohérence des données des stations déclarées</p></li>
+</ol>
+</li>
+<li><p>[DataFrame][Station]</p>
+<ol class="arabic simple">
+<li><p>Vérification de l’existence de données pour les champs obligatoires</p></li>
+<li><p>Vérification de la concordance entre le type d’un champ et la données</p></li>
+<li><p>Vérification du jeu de données</p></li>
+<li><p>Vérification des géométries présentes dans les données (WKT ou latitude/longitude)</p></li>
+</ol>
+</li>
+<li><p>[DataFrame][Habitat]</p>
+<ol class="arabic simple">
+<li><p>Vérification de l’existence de données pour les champs obligatoires</p></li>
+<li><p>Vérification de la concordance entre le type d’un champ et la données</p></li>
+</ol>
+</li>
+<li><p>[SQL][Station]</p>
+<ol class="arabic simple">
+<li><p>Mapping des valeurs de nomenclatures</p></li>
+<li><p>Conversion des données de géométrie dans le SRID de la BDD</p></li>
+<li><p>Vérification de la cohérence des données altitudinale, de profondeur et les dates</p></li>
+<li><p>Vérification de la validité des géométries</p></li>
+</ol>
+</li>
+<li><p>[SQL][Habitat]</p>
+<ol class="arabic simple">
+<li><p>Mapping des valeurs de nomenclatures</p></li>
+<li><p>Vérification des cdHab</p></li>
+<li><p>Vérification des UUID (doublons dans le fichier, existence dans la destination)</p></li>
+<li><p>Générer les UUID si manquante</p></li>
+<li><p>Dans le cas d’habitats importés sur une station existante, vérifier les droits de l’utilisateur sur cette dernière.</p></li>
+</ol>
+</li>
+</ol>
+<p><strong>Listes des contrôles pour la Synthèse</strong></p>
+<ol class="arabic simple">
+<li><p>[DataFrame]</p>
+<ol class="arabic simple">
+<li><p>Vérification de l’existence de données pour les champs obligatoires</p></li>
+<li><p>Vérification de la concordance entre le type d’un champ et la donnée</p></li>
+</ol>
+</li>
+<li><p>[SQL]</p>
+<ol class="arabic simple">
+<li><p>Vérification du jeu de données</p></li>
+<li><p>Vérification des géométries présentes dans les données (WKT ou latitude/longitude)</p></li>
+<li><p>Vérification des données de dénombrement</p></li>
+<li><p>Mapping des nomenclatures</p></li>
+<li><p>Vérification de l’existence des identifiants cdNom dans Taxref local</p></li>
+<li><p>Vérification de l’existence des identifiants cdHab dans Habref local</p></li>
+<li><p>Vérification de la cohérence des données altitudinale, de profondeur et les dates</p></li>
+<li><p>Vérification des preuves numériques</p></li>
+<li><p>Vérification de l’intersection entre chaque géométrie et la géométrie de la zone autorisée.</p></li>
+</ol>
+</li>
+</ol>
+</section>
+<section id="modele-de-donnees">
+<h2>Modèle de données<a class="headerlink" href="#modele-de-donnees" title="Lien vers cette rubrique">¶</a></h2>
+<p>Le diagramme ci-dessous présente le schéma de la base de données du module Import.</p>
+<img alt="admin/images/import/import_modele.png" src="admin/images/import/import_modele.png" />
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2018-2024, Parc National des Écrins, Parc National des Cévennes
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Module Import</a><ul>
+<li><a class="reference internal" href="#concepts">Concepts</a></li>
+<li><a class="reference internal" href="#faire-un-import-le-minimum-requis">Faire un import, le minimum requis</a></li>
+<li><a class="reference internal" href="#deroulement-dun-import">Déroulement d’un import</a></li>
+<li><a class="reference internal" href="#configuration-du-module-dimport">Configuration du module d’import</a></li>
+<li><a class="reference internal" href="#permissions-de-limport">Permissions de l’import</a></li>
+<li><a class="reference internal" href="#modification-et-suppression-d-un-import">Modification et Suppression d’un import</a></li>
+<li><a class="reference internal" href="#controles-de-donnees">Contrôles de données</a></li>
+<li><a class="reference internal" href="#configuration-avancee">Configuration avancée</a></li>
+<li><a class="reference internal" href="#controle-de-donnees-dans-les-destinations-venant-avec-geonature">Contrôle de données dans les destinations venant avec GeoNature</a></li>
+<li><a class="reference internal" href="#modele-de-donnees">Modèle de données</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=831053d0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="../_static/translations.js?v=041d0952"></script>
+    </body>
+</html>

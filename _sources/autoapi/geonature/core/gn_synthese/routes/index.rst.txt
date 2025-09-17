@@ -1,0 +1,40 @@
+geonature.core.gn_synthese.routes
+=================================
+
+.. py:module:: geonature.core.gn_synthese.routes
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   geonature.core.gn_synthese.routes.routes
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   geonature.core.gn_synthese.routes.list_synthese_log_entries
+
+
+Module Contents
+---------------
+
+.. py:data:: routes
+
+.. py:function:: list_synthese_log_entries() -> dict
+
+   Get log history from synthese
+
+   Parameters
+   ----------
+
+   Returns
+   -------
+   dict
+       log action list
+
+

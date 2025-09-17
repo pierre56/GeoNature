@@ -1,0 +1,1260 @@
+<!doctype html>
+<html class="no-js" lang="fr" data-content_root="../../../../../">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../../../../../genindex.html" /><link rel="search" title="Recherche" href="../../../../../search.html" />
+
+    <!-- Generated with Sphinx 7.4.7 and Furo 2024.08.06 -->
+        <title>geonature.core.gn_synthese.utils.query_select_sqla - Documentation GeoNature 2.16.2</title>
+      <link rel="stylesheet" type="text/css" href="../../../../../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo.css?v=354aac6f" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/graphviz.css?v=fd3f3429" />
+    <link rel="stylesheet" type="text/css" href="../../../../../_static/styles/furo-extensions.css?v=302659d7" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #eeffcc;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../../../../index.html"><div class="brand">Documentation GeoNature 2.16.2</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../../../../index.html">
+  
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="../../../../../_static/LogoGeonature.jpg" alt="Logo"/>
+  </div>
+  
+  <span class="sidebar-brand-text">Documentation GeoNature 2.16.2</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../../../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Recherche" name="q" aria-label="Recherche">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../user-manual.html">Manuel utilisateur</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../admin-manual.html">Manuel administrateur</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../development.html">Développement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../FAQ.html">FAQ</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../authors.html">Auteurs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../CHANGELOG.html">CHANGELOG</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../../api-references.html">API REFERENCES</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle navigation of API REFERENCES</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/index.html">geonature</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle navigation of geonature</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../autoapi/geonature/app/index.html">geonature.app</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/index.html">geonature.core</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle navigation of geonature.core</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/admin/index.html">geonature.core.admin</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle navigation of geonature.core.admin</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/admin/admin/index.html">geonature.core.admin.admin</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/admin/utils/index.html">geonature.core.admin.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/command/index.html">geonature.core.command</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle navigation of geonature.core.command</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/command/__main__/index.html">geonature.core.command.__main__</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/command/create_gn_module/index.html">geonature.core.command.create_gn_module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/command/main/index.html">geonature.core.command.main</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/geonature/core/errors/index.html">geonature.core.errors</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_commons/index.html">geonature.core.gn_commons</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle navigation of geonature.core.gn_commons</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_commons/admin/index.html">geonature.core.gn_commons.admin</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_commons/medias/index.html">geonature.core.gn_commons.medias</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle navigation of geonature.core.gn_commons.medias</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_commons/medias/routes/index.html">geonature.core.gn_commons.medias.routes</a></li>
+</ul>
+</li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_commons/models/index.html">geonature.core.gn_commons.models</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><div class="visually-hidden">Toggle navigation of geonature.core.gn_commons.models</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_commons/models/additional_fields/index.html">geonature.core.gn_commons.models.additional_fields</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_commons/models/base/index.html">geonature.core.gn_commons.models.base</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_commons/repositories/index.html">geonature.core.gn_commons.repositories</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_commons/routes/index.html">geonature.core.gn_commons.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_commons/schemas/index.html">geonature.core.gn_commons.schemas</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_commons/tasks/index.html">geonature.core.gn_commons.tasks</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_commons/validation/index.html">geonature.core.gn_commons.validation</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><div class="visually-hidden">Toggle navigation of geonature.core.gn_commons.validation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_commons/validation/routes/index.html">geonature.core.gn_commons.validation.routes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_meta/index.html">geonature.core.gn_meta</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" role="switch" type="checkbox"/><label for="toctree-checkbox-10"><div class="visually-hidden">Toggle navigation of geonature.core.gn_meta</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_meta/models/index.html">geonature.core.gn_meta.models</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" role="switch" type="checkbox"/><label for="toctree-checkbox-11"><div class="visually-hidden">Toggle navigation of geonature.core.gn_meta.models</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_meta/models/aframework/index.html">geonature.core.gn_meta.models.aframework</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_meta/models/commons/index.html">geonature.core.gn_meta.models.commons</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_meta/models/datasets/index.html">geonature.core.gn_meta.models.datasets</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_meta/repositories/index.html">geonature.core.gn_meta.repositories</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_meta/routes/index.html">geonature.core.gn_meta.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_meta/schemas/index.html">geonature.core.gn_meta.schemas</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_monitoring/index.html">geonature.core.gn_monitoring</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" role="switch" type="checkbox"/><label for="toctree-checkbox-12"><div class="visually-hidden">Toggle navigation of geonature.core.gn_monitoring</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_monitoring/models/index.html">geonature.core.gn_monitoring.models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_monitoring/routes/index.html">geonature.core.gn_monitoring.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_monitoring/schema/index.html">geonature.core.gn_monitoring.schema</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_permissions/index.html">geonature.core.gn_permissions</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" role="switch" type="checkbox"/><label for="toctree-checkbox-13"><div class="visually-hidden">Toggle navigation of geonature.core.gn_permissions</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_permissions/admin/index.html">geonature.core.gn_permissions.admin</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_permissions/commands/index.html">geonature.core.gn_permissions.commands</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_permissions/decorators/index.html">geonature.core.gn_permissions.decorators</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_permissions/models/index.html">geonature.core.gn_permissions.models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_permissions/routes/index.html">geonature.core.gn_permissions.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_permissions/schemas/index.html">geonature.core.gn_permissions.schemas</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_permissions/tools/index.html">geonature.core.gn_permissions.tools</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_profiles/index.html">geonature.core.gn_profiles</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" role="switch" type="checkbox"/><label for="toctree-checkbox-14"><div class="visually-hidden">Toggle navigation of geonature.core.gn_profiles</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_profiles/models/index.html">geonature.core.gn_profiles.models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_profiles/routes/index.html">geonature.core.gn_profiles.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_profiles/tasks/index.html">geonature.core.gn_profiles.tasks</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/index.html">geonature.core.gn_synthese</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" role="switch" type="checkbox"/><label for="toctree-checkbox-15"><div class="visually-hidden">Toggle navigation of geonature.core.gn_synthese</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/blueprints/index.html">geonature.core.gn_synthese.blueprints</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" role="switch" type="checkbox"/><label for="toctree-checkbox-16"><div class="visually-hidden">Toggle navigation of geonature.core.gn_synthese.blueprints</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/blueprints/exports/index.html">geonature.core.gn_synthese.blueprints.exports</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/blueprints/others/index.html">geonature.core.gn_synthese.blueprints.others</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/blueprints/reports/index.html">geonature.core.gn_synthese.blueprints.reports</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/blueprints/statistics/index.html">geonature.core.gn_synthese.blueprints.statistics</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/blueprints/synthese/index.html">geonature.core.gn_synthese.blueprints.synthese</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/blueprints/taxon_info/index.html">geonature.core.gn_synthese.blueprints.taxon_info</a></li>
+</ul>
+</li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/imports/index.html">geonature.core.gn_synthese.imports</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" role="switch" type="checkbox"/><label for="toctree-checkbox-17"><div class="visually-hidden">Toggle navigation of geonature.core.gn_synthese.imports</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/imports/actions/index.html">geonature.core.gn_synthese.imports.actions</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/imports/geo/index.html">geonature.core.gn_synthese.imports.geo</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/imports/plot/index.html">geonature.core.gn_synthese.imports.plot</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/models/index.html">geonature.core.gn_synthese.models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/module/index.html">geonature.core.gn_synthese.module</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/routes/index.html">geonature.core.gn_synthese.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/schemas/index.html">geonature.core.gn_synthese.schemas</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/synthese_config/index.html">geonature.core.gn_synthese.synthese_config</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/utils/index.html">geonature.core.gn_synthese.utils</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" role="switch" type="checkbox"/><label for="toctree-checkbox-18"><div class="visually-hidden">Toggle navigation of geonature.core.gn_synthese.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/utils/blurring/index.html">geonature.core.gn_synthese.utils.blurring</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/utils/orm/index.html">geonature.core.gn_synthese.utils.orm</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/utils/process/index.html">geonature.core.gn_synthese.utils.process</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html">geonature.core.gn_synthese.utils.query_select_sqla</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/gn_synthese/utils/taxon_sheet/index.html">geonature.core.gn_synthese.utils.taxon_sheet</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/health/index.html">geonature.core.health</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" role="switch" type="checkbox"/><label for="toctree-checkbox-19"><div class="visually-hidden">Toggle navigation of geonature.core.health</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/health/routes/index.html">geonature.core.health.routes</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/index.html">geonature.core.imports</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" role="switch" type="checkbox"/><label for="toctree-checkbox-20"><div class="visually-hidden">Toggle navigation of geonature.core.imports</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/actions/index.html">geonature.core.imports.actions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/admin/index.html">geonature.core.imports.admin</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/blueprint/index.html">geonature.core.imports.blueprint</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/checks/index.html">geonature.core.imports.checks</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" role="switch" type="checkbox"/><label for="toctree-checkbox-21"><div class="visually-hidden">Toggle navigation of geonature.core.imports.checks</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/checks/dataframe/index.html">geonature.core.imports.checks.dataframe</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" role="switch" type="checkbox"/><label for="toctree-checkbox-22"><div class="visually-hidden">Toggle navigation of geonature.core.imports.checks.dataframe</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/checks/dataframe/cast/index.html">geonature.core.imports.checks.dataframe.cast</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/checks/dataframe/core/index.html">geonature.core.imports.checks.dataframe.core</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/checks/dataframe/dates/index.html">geonature.core.imports.checks.dataframe.dates</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/checks/dataframe/geometry/index.html">geonature.core.imports.checks.dataframe.geometry</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/checks/dataframe/utils/index.html">geonature.core.imports.checks.dataframe.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/checks/errors/index.html">geonature.core.imports.checks.errors</a></li>
+<li class="toctree-l6 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/checks/sql/index.html">geonature.core.imports.checks.sql</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" role="switch" type="checkbox"/><label for="toctree-checkbox-23"><div class="visually-hidden">Toggle navigation of geonature.core.imports.checks.sql</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l7"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/checks/sql/core/index.html">geonature.core.imports.checks.sql.core</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/checks/sql/extra/index.html">geonature.core.imports.checks.sql.extra</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/checks/sql/geo/index.html">geonature.core.imports.checks.sql.geo</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/checks/sql/nomenclature/index.html">geonature.core.imports.checks.sql.nomenclature</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/checks/sql/parent/index.html">geonature.core.imports.checks.sql.parent</a></li>
+<li class="toctree-l7"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/checks/sql/utils/index.html">geonature.core.imports.checks.sql.utils</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/commands/index.html">geonature.core.imports.commands</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/config_schema/index.html">geonature.core.imports.config_schema</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/logs/index.html">geonature.core.imports.logs</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/models/index.html">geonature.core.imports.models</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/routes/index.html">geonature.core.imports.routes</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" role="switch" type="checkbox"/><label for="toctree-checkbox-24"><div class="visually-hidden">Toggle navigation of geonature.core.imports.routes</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/routes/fields/index.html">geonature.core.imports.routes.fields</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/routes/imports/index.html">geonature.core.imports.routes.imports</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/routes/mappings/index.html">geonature.core.imports.routes.mappings</a></li>
+</ul>
+</li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/schemas/index.html">geonature.core.imports.schemas</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/tasks/index.html">geonature.core.imports.tasks</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/templates/index.html">geonature.core.imports.templates</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/imports/utils/index.html">geonature.core.imports.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/notifications/index.html">geonature.core.notifications</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" role="switch" type="checkbox"/><label for="toctree-checkbox-25"><div class="visually-hidden">Toggle navigation of geonature.core.notifications</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/notifications/admin/index.html">geonature.core.notifications.admin</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/notifications/models/index.html">geonature.core.notifications.models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/notifications/routes/index.html">geonature.core.notifications.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/notifications/tasks/index.html">geonature.core.notifications.tasks</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/notifications/utils/index.html">geonature.core.notifications.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/sensitivity/index.html">geonature.core.sensitivity</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" role="switch" type="checkbox"/><label for="toctree-checkbox-26"><div class="visually-hidden">Toggle navigation of geonature.core.sensitivity</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/sensitivity/models/index.html">geonature.core.sensitivity.models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/sensitivity/routes/index.html">geonature.core.sensitivity.routes</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/sensitivity/utils/index.html">geonature.core.sensitivity.utils</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/taxonomie/index.html">geonature.core.taxonomie</a><input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" role="switch" type="checkbox"/><label for="toctree-checkbox-27"><div class="visually-hidden">Toggle navigation of geonature.core.taxonomie</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/taxonomie/admin/index.html">geonature.core.taxonomie.admin</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/taxonomie/schemas/index.html">geonature.core.taxonomie.schemas</a></li>
+</ul>
+</li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/core/users/index.html">geonature.core.users</a><input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" role="switch" type="checkbox"/><label for="toctree-checkbox-28"><div class="visually-hidden">Toggle navigation of geonature.core.users</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/users/models/index.html">geonature.core.users.models</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/users/register_post_actions/index.html">geonature.core.users.register_post_actions</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../../autoapi/geonature/core/users/routes/index.html">geonature.core.users.routes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../autoapi/geonature/middlewares/index.html">geonature.middlewares</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../../autoapi/geonature/tasks/index.html">geonature.tasks</a></li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../../autoapi/geonature/utils/index.html">geonature.utils</a><input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" role="switch" type="checkbox"/><label for="toctree-checkbox-29"><div class="visually-hidden">Toggle navigation of geonature.utils</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/geonature/utils/celery/index.html">geonature.utils.celery</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/geonature/utils/command/index.html">geonature.utils.command</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/geonature/utils/config/index.html">geonature.utils.config</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/geonature/utils/config_schema/index.html">geonature.utils.config_schema</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/geonature/utils/env/index.html">geonature.utils.env</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/geonature/utils/errors/index.html">geonature.utils.errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/geonature/utils/filemanager/index.html">geonature.utils.filemanager</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/geonature/utils/json/index.html">geonature.utils.json</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/geonature/utils/logs/index.html">geonature.utils.logs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/geonature/utils/metaclass_utils/index.html">geonature.utils.metaclass_utils</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/geonature/utils/module/index.html">geonature.utils.module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/geonature/utils/schema/index.html">geonature.utils.schema</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/geonature/utils/sentry/index.html">geonature.utils.sentry</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/geonature/utils/utilsgeometrytools/index.html">geonature.utils.utilsgeometrytools</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/geonature/utils/utilsmails/index.html">geonature.utils.utilsmails</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/geonature/utils/utilsrequests/index.html">geonature.utils.utilsrequests</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../../autoapi/geonature/utils/utilstoml/index.html">geonature.utils.utilstoml</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <h1>Code source de geonature.core.gn_synthese.utils.query_select_sqla</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Utility function to manage permissions and all filter of Synthese</span>
+<span class="sd">Use these functions rather than query.py</span>
+<span class="sd">Filter the query of synthese using SQLA expression language and &#39;select&#39; object</span>
+<span class="sd">https://docs.sqlalchemy.org/en/latest/core/tutorial.html#selecting</span>
+<span class="sd">much more efficient</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">unicodedata</span>
+<span class="kn">import</span> <span class="nn">uuid</span>
+
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">current_app</span>
+
+<span class="kn">import</span> <span class="nn">sqlalchemy</span> <span class="k">as</span> <span class="nn">sa</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">func</span><span class="p">,</span> <span class="n">or_</span><span class="p">,</span> <span class="n">and_</span><span class="p">,</span> <span class="n">select</span><span class="p">,</span> <span class="n">distinct</span><span class="p">,</span> <span class="n">inspect</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.sql</span> <span class="kn">import</span> <span class="n">text</span>
+<span class="kn">from</span> <span class="nn">sqlalchemy.orm</span> <span class="kn">import</span> <span class="n">aliased</span>
+<span class="kn">from</span> <span class="nn">werkzeug.exceptions</span> <span class="kn">import</span> <span class="n">BadRequest</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">shape</span>
+<span class="kn">from</span> <span class="nn">geoalchemy2.shape</span> <span class="kn">import</span> <span class="n">from_shape</span>
+<span class="kn">from</span> <span class="nn">geoalchemy2.types</span> <span class="kn">import</span> <span class="n">Geography</span><span class="p">,</span> <span class="n">Geometry</span>
+
+<span class="kn">from</span> <span class="nn">geonature.utils.env</span> <span class="kn">import</span> <span class="n">DB</span>
+
+<span class="kn">from</span> <span class="nn">geonature.core.gn_commons.models</span> <span class="kn">import</span> <span class="n">TModules</span>
+<span class="kn">from</span> <span class="nn">geonature.core.gn_synthese.models</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CorObserverSynthese</span><span class="p">,</span>
+    <span class="n">CorAreaSynthese</span><span class="p">,</span>
+    <span class="n">BibReportsTypes</span><span class="p">,</span>
+    <span class="n">TReport</span><span class="p">,</span>
+    <span class="n">TSources</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">geonature.core.gn_meta.models</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">CorDatasetActor</span><span class="p">,</span>
+    <span class="n">TDatasets</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">geonature.utils.errors</span> <span class="kn">import</span> <span class="n">GeonatureApiError</span>
+<span class="kn">from</span> <span class="nn">apptax.taxonomie.models</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Taxref</span><span class="p">,</span>
+    <span class="n">TaxrefTree</span><span class="p">,</span>
+    <span class="n">CorTaxonAttribut</span><span class="p">,</span>
+    <span class="n">TaxrefBdcStatutTaxon</span><span class="p">,</span>
+    <span class="n">bdc_statut_cor_text_area</span><span class="p">,</span>
+    <span class="n">TaxrefBdcStatutCorTextValues</span><span class="p">,</span>
+    <span class="n">TaxrefBdcStatutText</span><span class="p">,</span>
+    <span class="n">TaxrefBdcStatutValues</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">ref_geo.models</span> <span class="kn">import</span> <span class="n">LAreas</span><span class="p">,</span> <span class="n">BibAreasTypes</span>
+<span class="kn">from</span> <span class="nn">utils_flask_sqla_geo.schema</span> <span class="kn">import</span> <span class="n">FeatureSchema</span><span class="p">,</span> <span class="n">FeatureCollectionSchema</span>
+<span class="kn">from</span> <span class="nn">pypnnomenclature.models</span> <span class="kn">import</span> <span class="n">TNomenclatures</span><span class="p">,</span> <span class="n">BibNomenclaturesTypes</span>
+
+
+<div class="viewcode-block" id="SyntheseQuery">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.SyntheseQuery">[docs]</a>
+<span class="k">class</span> <span class="nc">SyntheseQuery</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    class for building synthese query and manage join</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        query: SQLA select object</span>
+<span class="sd">        filters: dict of query string filters</span>
+<span class="sd">        model: a SQLA model</span>
+<span class="sd">        _already_joined_table: (private) a list of already joined table. Auto build with &#39;add_join&#39; method</span>
+<span class="sd">        query_joins = SQLA Join object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">model</span><span class="p">,</span>
+        <span class="n">query</span><span class="p">,</span>
+        <span class="n">filters</span><span class="p">,</span>
+        <span class="n">id_synthese_column</span><span class="o">=</span><span class="s2">&quot;id_synthese&quot;</span><span class="p">,</span>
+        <span class="n">id_dataset_column</span><span class="o">=</span><span class="s2">&quot;id_dataset&quot;</span><span class="p">,</span>
+        <span class="n">observers_column</span><span class="o">=</span><span class="s2">&quot;observers&quot;</span><span class="p">,</span>
+        <span class="n">id_digitiser_column</span><span class="o">=</span><span class="s2">&quot;id_digitiser&quot;</span><span class="p">,</span>
+        <span class="n">with_generic_table</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">query_joins</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">geom_column</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<div class="viewcode-block" id="SyntheseQuery.query">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.SyntheseQuery.query">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="n">query</span></div>
+
+
+<div class="viewcode-block" id="SyntheseQuery.filters">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.SyntheseQuery.filters">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filters</span> <span class="o">=</span> <span class="n">filters</span></div>
+
+<div class="viewcode-block" id="SyntheseQuery.first">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.SyntheseQuery.first">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="n">query_joins</span> <span class="ow">is</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="SyntheseQuery.model">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.SyntheseQuery.model">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span></div>
+
+<div class="viewcode-block" id="SyntheseQuery._already_joined_table">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.SyntheseQuery._already_joined_table">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_already_joined_table</span> <span class="o">=</span> <span class="p">[]</span></div>
+
+<div class="viewcode-block" id="SyntheseQuery.query_joins">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.SyntheseQuery.query_joins">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query_joins</span> <span class="o">=</span> <span class="n">query_joins</span></div>
+
+<div class="viewcode-block" id="SyntheseQuery.geom_column">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.SyntheseQuery.geom_column">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">geom_column</span> <span class="o">=</span> <span class="n">geom_column</span> <span class="k">if</span> <span class="n">geom_column</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">model</span><span class="o">.</span><span class="n">the_geom_4326</span></div>
+
+
+        <span class="k">if</span> <span class="n">with_generic_table</span><span class="p">:</span>
+            <span class="n">model_temp</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">columns</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">model_temp</span> <span class="o">=</span> <span class="n">model</span>
+
+        <span class="c1"># get the mandatory column</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model_id_syn_col</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model_temp</span><span class="p">,</span> <span class="n">id_synthese_column</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model_id_dataset_column</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model_temp</span><span class="p">,</span> <span class="n">id_dataset_column</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model_observers_column</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model_temp</span><span class="p">,</span> <span class="n">observers_column</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">model_id_digitiser_column</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model_temp</span><span class="p">,</span> <span class="n">id_digitiser_column</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">AttributeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">GeonatureApiError</span><span class="p">(</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;the {model} table     does not have a column {e}</span>
+<span class="sd">                If you change the {model} table, please edit your synthese config (cf EXPORT_***_COL)</span>
+<span class="sd">                &quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">e</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># For aliased models, we need to use inspect() and the class_ attribute</span>
+        <span class="c1"># to get the real table</span>
+        <span class="n">geom_table</span> <span class="o">=</span> <span class="n">inspect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">geom_column</span><span class="o">.</span><span class="n">class_</span><span class="p">)</span><span class="o">.</span><span class="n">mapper</span><span class="o">.</span><span class="n">local_table</span>
+<div class="viewcode-block" id="SyntheseQuery.srid">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.SyntheseQuery.srid">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">srid</span> <span class="o">=</span> <span class="n">DB</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span>
+            <span class="n">select</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">Find_SRID</span><span class="p">(</span><span class="n">geom_table</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="n">geom_table</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">geom_column</span><span class="o">.</span><span class="n">key</span><span class="p">))</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="SyntheseQuery.srid_l_areas">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.SyntheseQuery.srid_l_areas">[docs]</a>
+        <span class="bp">self</span><span class="o">.</span><span class="n">srid_l_areas</span> <span class="o">=</span> <span class="n">DB</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">scalar</span><span class="p">(</span>
+            <span class="n">select</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">Find_SRID</span><span class="p">(</span><span class="n">LAreas</span><span class="o">.</span><span class="n">__table__</span><span class="o">.</span><span class="n">schema</span><span class="p">,</span> <span class="n">LAreas</span><span class="o">.</span><span class="n">__table__</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;geom&quot;</span><span class="p">))</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SyntheseQuery.add_join">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.SyntheseQuery.add_join">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_join</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">right_table</span><span class="p">,</span> <span class="n">right_column</span><span class="p">,</span> <span class="n">left_column</span><span class="p">,</span> <span class="n">join_type</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">first</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">join_type</span> <span class="o">==</span> <span class="s2">&quot;right&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">query_joins</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">__table__</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="n">right_table</span><span class="p">,</span> <span class="n">left_column</span> <span class="o">==</span> <span class="n">right_column</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">query_joins</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">__table__</span><span class="o">.</span><span class="n">outerjoin</span><span class="p">(</span>
+                    <span class="n">right_table</span><span class="p">,</span> <span class="n">left_column</span> <span class="o">==</span> <span class="n">right_column</span>
+                <span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_already_joined_table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">right_table</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># check if the table not already joined</span>
+            <span class="k">if</span> <span class="n">right_table</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_already_joined_table</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">query_joins</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query_joins</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">right_table</span><span class="p">,</span> <span class="n">left_column</span> <span class="o">==</span> <span class="n">right_column</span><span class="p">)</span>
+                <span class="c1"># push the joined table in _already_joined_table list</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_already_joined_table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">right_table</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SyntheseQuery.add_join_multiple_cond">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.SyntheseQuery.add_join_multiple_cond">[docs]</a>
+    <span class="k">def</span> <span class="nf">add_join_multiple_cond</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">right_table</span><span class="p">,</span> <span class="n">conditions</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">first</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query_joins</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">__table__</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">right_table</span><span class="p">,</span> <span class="n">and_</span><span class="p">(</span><span class="o">*</span><span class="n">conditions</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">first</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># check if the table not already joined</span>
+            <span class="k">if</span> <span class="n">right_table</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_already_joined_table</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">query_joins</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query_joins</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">right_table</span><span class="p">,</span> <span class="n">and_</span><span class="p">(</span><span class="o">*</span><span class="n">conditions</span><span class="p">))</span>
+                <span class="c1"># push the joined table in _already_joined_table list</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_already_joined_table</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">right_table</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SyntheseQuery.build_permissions_filter">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.SyntheseQuery.build_permissions_filter">[docs]</a>
+    <span class="k">def</span> <span class="nf">build_permissions_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">permissions</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a where clause for the given permissions set</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">blur_sensitive_observations</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;SYNTHESE&quot;</span><span class="p">][</span><span class="s2">&quot;BLUR_SENSITIVE_OBSERVATIONS&quot;</span><span class="p">]</span>
+        <span class="n">subquery_observers</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">select</span><span class="p">(</span><span class="n">CorObserverSynthese</span><span class="o">.</span><span class="n">id_synthese</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">select_from</span><span class="p">(</span><span class="n">CorObserverSynthese</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">CorObserverSynthese</span><span class="o">.</span><span class="n">id_role</span> <span class="o">==</span> <span class="n">user</span><span class="o">.</span><span class="n">id_role</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">datasets_by_scope</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># to avoid fetching datasets several time for same scope</span>
+        <span class="n">permissions_filters</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">excluded_sensitivity</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">perm</span> <span class="ow">in</span> <span class="n">permissions</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">perm</span><span class="o">.</span><span class="n">has_other_filters_than</span><span class="p">(</span><span class="s2">&quot;SCOPE&quot;</span><span class="p">,</span> <span class="s2">&quot;SENSITIVITY&quot;</span><span class="p">,</span> <span class="s2">&quot;GEOGRAPHIC&quot;</span><span class="p">,</span> <span class="s2">&quot;TAXONOMIC&quot;</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="n">perm_filters</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="n">perm</span><span class="o">.</span><span class="n">sensitivity_filter</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">excluded_sensitivity</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">excluded_sensitivity</span> <span class="o">=</span> <span class="n">TNomenclatures</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                        <span class="n">TNomenclatures</span><span class="o">.</span><span class="n">nomenclature_type</span><span class="o">.</span><span class="n">has</span><span class="p">(</span>
+                            <span class="n">BibNomenclaturesTypes</span><span class="o">.</span><span class="n">mnemonique</span> <span class="o">==</span> <span class="s2">&quot;SENSIBILITE&quot;</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">blur_sensitive_observations</span><span class="p">:</span>
+                        <span class="n">excluded_sensitivity</span> <span class="o">=</span> <span class="n">excluded_sensitivity</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                            <span class="n">TNomenclatures</span><span class="o">.</span><span class="n">cd_nomenclature</span> <span class="o">&gt;</span> <span class="s2">&quot;0&quot;</span>
+                        <span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">excluded_sensitivity</span> <span class="o">=</span> <span class="n">excluded_sensitivity</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                            <span class="n">TNomenclatures</span><span class="o">.</span><span class="n">cd_nomenclature</span> <span class="o">==</span> <span class="s2">&quot;4&quot;</span>
+                        <span class="p">)</span>
+                    <span class="n">excluded_sensitivity</span> <span class="o">=</span> <span class="n">excluded_sensitivity</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+                <span class="n">perm_filters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">id_nomenclature_sensitivity</span><span class="o">.</span><span class="n">notin_</span><span class="p">(</span>
+                        <span class="p">(</span><span class="n">nomenclature</span><span class="o">.</span><span class="n">id_nomenclature</span> <span class="k">for</span> <span class="n">nomenclature</span> <span class="ow">in</span> <span class="n">excluded_sensitivity</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">if</span> <span class="n">perm</span><span class="o">.</span><span class="n">scope_value</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">perm</span><span class="o">.</span><span class="n">scope_value</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">datasets_by_scope</span><span class="p">:</span>
+                    <span class="n">datasets_t</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">DB</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">TDatasets</span><span class="o">.</span><span class="n">filter_by_scope</span><span class="p">(</span><span class="n">perm</span><span class="o">.</span><span class="n">scope_value</span><span class="p">))</span>
+                        <span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+                        <span class="o">.</span><span class="n">all</span><span class="p">()</span>
+                    <span class="p">)</span>
+                    <span class="n">datasets_by_scope</span><span class="p">[</span><span class="n">perm</span><span class="o">.</span><span class="n">scope_value</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">id_dataset</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">datasets_t</span><span class="p">]</span>
+                <span class="n">datasets</span> <span class="o">=</span> <span class="n">datasets_by_scope</span><span class="p">[</span><span class="n">perm</span><span class="o">.</span><span class="n">scope_value</span><span class="p">]</span>
+                <span class="n">scope_filters</span> <span class="o">=</span> <span class="p">[</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">model_id_syn_col</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">subquery_observers</span><span class="p">),</span>  <span class="c1"># user is observer</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">model_id_digitiser_column</span> <span class="o">==</span> <span class="n">user</span><span class="o">.</span><span class="n">id_role</span><span class="p">,</span>  <span class="c1"># user id digitizer</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">model_id_dataset_column</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span>
+                        <span class="n">datasets</span>
+                    <span class="p">),</span>  <span class="c1"># user is dataset (or parent af) actor</span>
+                <span class="p">]</span>
+                <span class="n">perm_filters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">or_</span><span class="p">(</span><span class="o">*</span><span class="n">scope_filters</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">perm</span><span class="o">.</span><span class="n">areas_filter</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_join</span><span class="p">(</span>
+                    <span class="n">CorAreaSynthese</span><span class="p">,</span>
+                    <span class="n">CorAreaSynthese</span><span class="o">.</span><span class="n">id_synthese</span><span class="p">,</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">id_synthese</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">where_clause</span> <span class="o">=</span> <span class="n">CorAreaSynthese</span><span class="o">.</span><span class="n">id_area</span><span class="o">.</span><span class="n">in_</span><span class="p">([</span><span class="n">a</span><span class="o">.</span><span class="n">id_area</span> <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">perm</span><span class="o">.</span><span class="n">areas_filter</span><span class="p">])</span>
+
+                <span class="n">perm_filters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">where_clause</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">perm</span><span class="o">.</span><span class="n">taxons_filter</span><span class="p">:</span>
+                <span class="c1"># Does obs taxon path is an descendant of any path of taxons_filter?</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_join</span><span class="p">(</span><span class="n">TaxrefTree</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">cd_nom</span><span class="p">,</span> <span class="n">TaxrefTree</span><span class="o">.</span><span class="n">cd_nom</span><span class="p">,</span> <span class="n">join_type</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
+
+                <span class="n">where_clause</span> <span class="o">=</span> <span class="n">TaxrefTree</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">op</span><span class="p">(</span><span class="s2">&quot;&lt;@&quot;</span><span class="p">)(</span>
+                    <span class="n">sa</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">sa</span><span class="o">.</span><span class="n">func</span><span class="o">.</span><span class="n">array_agg</span><span class="p">(</span><span class="n">TaxrefTree</span><span class="o">.</span><span class="n">path</span><span class="p">))</span>
+                    <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">TaxrefTree</span><span class="o">.</span><span class="n">cd_nom</span><span class="o">.</span><span class="n">in_</span><span class="p">([</span><span class="n">t</span><span class="o">.</span><span class="n">cd_nom</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">perm</span><span class="o">.</span><span class="n">taxons_filter</span><span class="p">]))</span>
+                    <span class="o">.</span><span class="n">scalar_subquery</span><span class="p">()</span>
+                <span class="p">)</span>
+                <span class="n">perm_filters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">where_clause</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">perm_filters</span><span class="p">:</span>
+                <span class="n">permissions_filters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">and_</span><span class="p">(</span><span class="o">*</span><span class="n">perm_filters</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">permissions_filters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sa</span><span class="o">.</span><span class="n">true</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">permissions_filters</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">or_</span><span class="p">(</span><span class="o">*</span><span class="n">permissions_filters</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sa</span><span class="o">.</span><span class="n">false</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SyntheseQuery.filter_query_with_permissions">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.SyntheseQuery.filter_query_with_permissions">[docs]</a>
+    <span class="k">def</span> <span class="nf">filter_query_with_permissions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">permissions</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Filter the query with the permissions of a user</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">where_clause</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_permissions_filter</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">permissions</span><span class="o">=</span><span class="n">permissions</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">where_clause</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SyntheseQuery.filter_query_with_cruved">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.SyntheseQuery.filter_query_with_cruved">[docs]</a>
+    <span class="k">def</span> <span class="nf">filter_query_with_cruved</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">scope</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Filter the query with the cruved authorization of a user</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scope</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">scope</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+            <span class="c1"># get id synthese where user is observer</span>
+            <span class="n">subquery_observers</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">select</span><span class="p">(</span><span class="n">CorObserverSynthese</span><span class="o">.</span><span class="n">id_synthese</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">select_from</span><span class="p">(</span><span class="n">CorObserverSynthese</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">CorObserverSynthese</span><span class="o">.</span><span class="n">id_role</span> <span class="o">==</span> <span class="n">user</span><span class="o">.</span><span class="n">id_role</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">ors_filters</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">model_id_syn_col</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">subquery_observers</span><span class="p">),</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">model_id_digitiser_column</span> <span class="o">==</span> <span class="n">user</span><span class="o">.</span><span class="n">id_role</span><span class="p">,</span>
+            <span class="p">]</span>
+            <span class="n">datasets</span> <span class="o">=</span> <span class="n">DB</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">TDatasets</span><span class="o">.</span><span class="n">filter_by_scope</span><span class="p">(</span><span class="n">scope</span><span class="p">))</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+            <span class="n">allowed_datasets</span> <span class="o">=</span> <span class="p">[</span><span class="n">dataset</span><span class="o">.</span><span class="n">id_dataset</span> <span class="k">for</span> <span class="n">dataset</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">]</span>
+            <span class="n">ors_filters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_id_dataset_column</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">allowed_datasets</span><span class="p">))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">or_</span><span class="p">(</span><span class="o">*</span><span class="n">ors_filters</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="SyntheseQuery.filter_taxonomy">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.SyntheseQuery.filter_taxonomy">[docs]</a>
+    <span class="k">def</span> <span class="nf">filter_taxonomy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Filters the query with taxonomic attributes</span>
+<span class="sd">        Parameters:</span>
+<span class="sd">            - q (SQLAchemyQuery): an SQLAchemy query</span>
+<span class="sd">            - filters (dict): a dict of filter</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            -Tuple: the SQLAlchemy query and the filter dictionnary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cd_ref_childs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="s2">&quot;cd_ref_parent&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+            <span class="c1"># find all taxon child from cd_ref parent</span>
+            <span class="n">cd_ref_parent_int</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;cd_ref_parent&quot;</span><span class="p">)))</span>
+            <span class="n">sql</span> <span class="o">=</span> <span class="n">text</span><span class="p">(</span>
+<span class="w">                </span><span class="sd">&quot;&quot;&quot;SELECT DISTINCT cd_ref FROM taxonomie.find_all_taxons_children(:id_parent)&quot;&quot;&quot;</span>
+            <span class="p">)</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">DB</span><span class="o">.</span><span class="n">engine</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">sql</span><span class="p">,</span> <span class="n">id_parent</span><span class="o">=</span><span class="n">cd_ref_parent_int</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span><span class="p">:</span>
+                <span class="n">cd_ref_childs</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">result</span><span class="p">]</span>
+
+        <span class="n">cd_ref_selected</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="s2">&quot;cd_ref&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+            <span class="n">cd_ref_selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;cd_ref&quot;</span><span class="p">)</span>
+
+        <span class="c1"># concat cd_ref child and just selected cd_ref</span>
+        <span class="n">cd_ref_childs</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">cd_ref_selected</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">cd_ref_childs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_join</span><span class="p">(</span><span class="n">Taxref</span><span class="p">,</span> <span class="n">Taxref</span><span class="o">.</span><span class="n">cd_nom</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">cd_nom</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">Taxref</span><span class="o">.</span><span class="n">cd_ref</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">cd_ref_childs</span><span class="p">))</span>
+        <span class="k">if</span> <span class="s2">&quot;taxonomy_id_hab&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_join</span><span class="p">(</span><span class="n">Taxref</span><span class="p">,</span> <span class="n">Taxref</span><span class="o">.</span><span class="n">cd_nom</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">cd_nom</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                <span class="n">Taxref</span><span class="o">.</span><span class="n">id_habitat</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;taxonomy_id_hab&quot;</span><span class="p">))</span>
+            <span class="p">)</span>
+
+        <span class="n">aliased_cor_taxon_attr</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">protection_status_value</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">red_list_filters</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">colname</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">colname</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;taxonomy_group&quot;</span><span class="p">):</span>
+                <span class="c1"># colname = group type (group2 or group3 inpn)</span>
+                <span class="c1"># value = list of group values</span>
+                <span class="n">colname</span> <span class="o">=</span> <span class="n">colname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;taxonomy_&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_join</span><span class="p">(</span><span class="n">Taxref</span><span class="p">,</span> <span class="n">Taxref</span><span class="o">.</span><span class="n">cd_nom</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">cd_nom</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">Taxref</span><span class="p">,</span> <span class="n">colname</span><span class="p">)</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">colname</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;taxhub_attribut&quot;</span><span class="p">):</span>
+                <span class="c1"># Test si la valeur n&#39;est pas une liste transformation</span>
+                <span class="c1"># de value en liste pour utiliser le filtre IN</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">list</span><span class="p">:</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="p">[</span><span class="n">value</span><span class="p">]</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_join</span><span class="p">(</span><span class="n">Taxref</span><span class="p">,</span> <span class="n">Taxref</span><span class="o">.</span><span class="n">cd_nom</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">cd_nom</span><span class="p">)</span>
+                <span class="n">taxhub_id_attr</span> <span class="o">=</span> <span class="n">colname</span><span class="p">[</span><span class="mi">16</span><span class="p">:]</span>
+                <span class="n">aliased_cor_taxon_attr</span><span class="p">[</span><span class="n">taxhub_id_attr</span><span class="p">]</span> <span class="o">=</span> <span class="n">aliased</span><span class="p">(</span><span class="n">CorTaxonAttribut</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_join_multiple_cond</span><span class="p">(</span>
+                    <span class="n">aliased_cor_taxon_attr</span><span class="p">[</span><span class="n">taxhub_id_attr</span><span class="p">],</span>
+                    <span class="p">[</span>
+                        <span class="n">aliased_cor_taxon_attr</span><span class="p">[</span><span class="n">taxhub_id_attr</span><span class="p">]</span><span class="o">.</span><span class="n">id_attribut</span> <span class="o">==</span> <span class="n">taxhub_id_attr</span><span class="p">,</span>
+                        <span class="n">aliased_cor_taxon_attr</span><span class="p">[</span><span class="n">taxhub_id_attr</span><span class="p">]</span><span class="o">.</span><span class="n">cd_ref</span>
+                        <span class="o">==</span> <span class="n">func</span><span class="o">.</span><span class="n">taxonomie</span><span class="o">.</span><span class="n">find_cdref</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">cd_nom</span><span class="p">),</span>
+                    <span class="p">],</span>
+                <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                    <span class="n">aliased_cor_taxon_attr</span><span class="p">[</span><span class="n">taxhub_id_attr</span><span class="p">]</span><span class="o">.</span><span class="n">valeur_attribut</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">elif</span> <span class="n">colname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;_red_lists&quot;</span><span class="p">):</span>
+                <span class="n">red_list_id</span> <span class="o">=</span> <span class="n">colname</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_red_lists&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="n">all_red_lists_cfg</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;SYNTHESE&quot;</span><span class="p">][</span><span class="s2">&quot;RED_LISTS_FILTERS&quot;</span><span class="p">]</span>
+                <span class="n">red_list_cfg</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">all_red_lists_cfg</span> <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">red_list_id</span><span class="p">),</span> <span class="kc">None</span>
+                <span class="p">)</span>
+                <span class="n">red_list_filters</span><span class="p">[</span><span class="n">red_list_cfg</span><span class="p">[</span><span class="s2">&quot;status_type&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">value</span>
+
+            <span class="k">elif</span> <span class="n">colname</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;_protection_status&quot;</span><span class="p">):</span>
+                <span class="n">status_id</span> <span class="o">=</span> <span class="n">colname</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_protection_status&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+                <span class="n">all_status_cfg</span> <span class="o">=</span> <span class="n">current_app</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;SYNTHESE&quot;</span><span class="p">][</span><span class="s2">&quot;STATUS_FILTERS&quot;</span><span class="p">]</span>
+                <span class="n">status_cfg</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">item</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">all_status_cfg</span> <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">status_id</span><span class="p">),</span> <span class="kc">None</span>
+                <span class="p">)</span>
+                <span class="c1"># Check if a checkbox was used.</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+                    <span class="ow">and</span> <span class="n">value</span> <span class="o">==</span> <span class="kc">True</span>
+                    <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">status_cfg</span><span class="p">[</span><span class="s2">&quot;status_types&quot;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span>
+                <span class="p">):</span>
+                    <span class="n">value</span> <span class="o">=</span> <span class="n">status_cfg</span><span class="p">[</span><span class="s2">&quot;status_types&quot;</span><span class="p">]</span>
+
+                <span class="n">protection_status_value</span> <span class="o">+=</span> <span class="n">value</span>
+
+        <span class="k">if</span> <span class="n">protection_status_value</span> <span class="ow">or</span> <span class="n">red_list_filters</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">build_bdc_status_filters</span><span class="p">(</span><span class="n">protection_status_value</span><span class="p">,</span> <span class="n">red_list_filters</span><span class="p">)</span>
+        <span class="c1"># remove attributes taxhub from filters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filters</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">colname</span><span class="p">:</span> <span class="n">value</span>
+            <span class="k">for</span> <span class="n">colname</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">colname</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;taxhub_attribut&quot;</span><span class="p">)</span>
+        <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="SyntheseQuery.filter_other_filters">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.SyntheseQuery.filter_other_filters">[docs]</a>
+    <span class="k">def</span> <span class="nf">filter_other_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Other filters</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="s2">&quot;has_medias&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+            <span class="n">media_filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">medias</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">[</span><span class="s2">&quot;has_medias&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="n">media_filter</span> <span class="o">=</span> <span class="o">~</span><span class="n">media_filter</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">media_filter</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;has_alert&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+            <span class="n">alert_filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">reports</span><span class="o">.</span><span class="n">any</span><span class="p">(</span>
+                <span class="n">TReport</span><span class="o">.</span><span class="n">report_type</span><span class="o">.</span><span class="n">has</span><span class="p">(</span><span class="n">BibReportsTypes</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;alert&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">[</span><span class="s2">&quot;has_alert&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="n">alert_filter</span> <span class="o">=</span> <span class="o">~</span><span class="n">alert_filter</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">alert_filter</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;has_pin&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+            <span class="n">pin_filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">reports</span><span class="o">.</span><span class="n">any</span><span class="p">(</span>
+                <span class="n">and_</span><span class="p">(</span>
+                    <span class="n">TReport</span><span class="o">.</span><span class="n">report_type</span><span class="o">.</span><span class="n">has</span><span class="p">(</span><span class="n">BibReportsTypes</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;pin&quot;</span><span class="p">),</span>
+                    <span class="n">TReport</span><span class="o">.</span><span class="n">id_role</span> <span class="o">==</span> <span class="n">user</span><span class="o">.</span><span class="n">id_role</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">[</span><span class="s2">&quot;has_pin&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="n">pin_filter</span> <span class="o">=</span> <span class="o">~</span><span class="n">pin_filter</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">pin_filter</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;has_comment&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+            <span class="n">comment_filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">reports</span><span class="o">.</span><span class="n">any</span><span class="p">(</span>
+                <span class="n">TReport</span><span class="o">.</span><span class="n">report_type</span><span class="o">.</span><span class="n">has</span><span class="p">(</span><span class="n">BibReportsTypes</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;discussion&quot;</span><span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">[</span><span class="s2">&quot;has_comment&quot;</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="n">comment_filter</span> <span class="o">=</span> <span class="o">~</span><span class="n">comment_filter</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">comment_filter</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;id_dataset&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">id_dataset</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;id_dataset&quot;</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="s2">&quot;observers&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+            <span class="c1"># découpe des éléments saisies par des &quot;,&quot;</span>
+            <span class="n">observers</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;observers&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                <span class="n">or_</span><span class="p">(</span>
+                    <span class="o">*</span><span class="p">[</span>
+                        <span class="n">func</span><span class="o">.</span><span class="n">unaccent</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">observers</span><span class="p">)</span><span class="o">.</span><span class="n">ilike</span><span class="p">(</span>
+                            <span class="s2">&quot;%&quot;</span> <span class="o">+</span> <span class="n">remove_accents</span><span class="p">(</span><span class="n">observer</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span>
+                        <span class="p">)</span>
+                        <span class="k">for</span> <span class="n">observer</span> <span class="ow">in</span> <span class="n">observers</span>
+                    <span class="p">]</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;observers_list&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                <span class="n">and_</span><span class="p">(</span>
+                    <span class="o">*</span><span class="p">[</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">observers</span><span class="o">.</span><span class="n">ilike</span><span class="p">(</span><span class="s2">&quot;%&quot;</span> <span class="o">+</span> <span class="n">observer</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;nom_complet&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;%&quot;</span><span class="p">)</span>
+                        <span class="k">for</span> <span class="n">observer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;observers_list&quot;</span><span class="p">)</span>
+                    <span class="p">]</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;id_organism&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+            <span class="n">datasets</span> <span class="o">=</span> <span class="n">DB</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span>
+                <span class="n">select</span><span class="p">(</span><span class="n">CorDatasetActor</span><span class="o">.</span><span class="n">id_dataset</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                    <span class="n">CorDatasetActor</span><span class="o">.</span><span class="n">id_organism</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;id_organism&quot;</span><span class="p">))</span>
+                <span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+            <span class="n">formated_datasets</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">id_dataset</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">formated_datasets</span><span class="p">))</span>
+        <span class="k">if</span> <span class="s2">&quot;date_min&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">date_min</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;date_min&quot;</span><span class="p">))</span>
+        <span class="k">if</span> <span class="s2">&quot;date_max&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+            <span class="c1"># set the date_max at 23h59 because a hour can be set in timestamp</span>
+            <span class="n">date_max</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;date_max&quot;</span><span class="p">),</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">date_max</span> <span class="o">=</span> <span class="n">date_max</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">hour</span><span class="o">=</span><span class="mi">23</span><span class="p">,</span> <span class="n">minute</span><span class="o">=</span><span class="mi">59</span><span class="p">,</span> <span class="n">second</span><span class="o">=</span><span class="mi">59</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">date_max</span> <span class="o">&lt;=</span> <span class="n">date_max</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;id_source&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_join</span><span class="p">(</span><span class="n">TSources</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">id_source</span><span class="p">,</span> <span class="n">TSources</span><span class="o">.</span><span class="n">id_source</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">id_source</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;id_source&quot;</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="s2">&quot;id_module&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">id_module</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;id_module&quot;</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="s2">&quot;id_acquisition_framework&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="s2">&quot;id_acquisition_framework&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">id_acquisition_framework</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;id_acquisition_framework&quot;</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">add_join</span><span class="p">(</span><span class="n">TDatasets</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">id_dataset</span><span class="p">,</span> <span class="n">TDatasets</span><span class="o">.</span><span class="n">id_dataset</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                    <span class="n">TDatasets</span><span class="o">.</span><span class="n">id_acquisition_framework</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;id_acquisition_framework&quot;</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;geoIntersection&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+            <span class="c1"># Insersect with the geom send from the map</span>
+            <span class="n">geojson</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">[</span><span class="s2">&quot;geoIntersection&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">geojson</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">dict</span> <span class="ow">or</span> <span class="s2">&quot;type&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">geojson</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">BadRequest</span><span class="p">(</span><span class="s2">&quot;geoIntersection is missing type&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">geojson</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;Feature&quot;</span><span class="p">:</span>
+                <span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="n">FeatureSchema</span><span class="p">()</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">geojson</span><span class="p">)]</span>
+            <span class="k">elif</span> <span class="n">geojson</span><span class="p">[</span><span class="s2">&quot;type&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;FeatureCollection&quot;</span><span class="p">:</span>
+                <span class="n">features</span> <span class="o">=</span> <span class="n">FeatureCollectionSchema</span><span class="p">()</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">geojson</span><span class="p">)[</span><span class="s2">&quot;features&quot;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">BadRequest</span><span class="p">(</span><span class="s2">&quot;Unsupported geoIntersection type&quot;</span><span class="p">)</span>
+            <span class="n">geo_filters</span> <span class="o">=</span> <span class="p">[]</span>
+
+            <span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">features</span><span class="p">:</span>
+                <span class="n">geom_wkb</span> <span class="o">=</span> <span class="n">from_shape</span><span class="p">(</span><span class="n">shape</span><span class="p">(</span><span class="n">feature</span><span class="p">[</span><span class="s2">&quot;geometry&quot;</span><span class="p">]),</span> <span class="n">srid</span><span class="o">=</span><span class="mi">4326</span><span class="p">)</span>
+                <span class="n">geometry</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">ST_GeomFromWKB</span><span class="p">(</span><span class="n">geom_wkb</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">srid</span> <span class="o">!=</span> <span class="mi">4326</span><span class="p">:</span>
+                    <span class="n">geometry</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">ST_Transform</span><span class="p">(</span>
+                        <span class="n">geometry</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">srid</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+                <span class="c1"># if the geom is a circle</span>
+                <span class="k">if</span> <span class="s2">&quot;radius&quot;</span> <span class="ow">in</span> <span class="n">feature</span><span class="p">[</span><span class="s2">&quot;properties&quot;</span><span class="p">]:</span>
+                    <span class="n">radius</span> <span class="o">=</span> <span class="n">feature</span><span class="p">[</span><span class="s2">&quot;properties&quot;</span><span class="p">][</span><span class="s2">&quot;radius&quot;</span><span class="p">]</span>
+                    <span class="n">geo_filter</span> <span class="o">=</span> <span class="n">func</span><span class="o">.</span><span class="n">ST_DWithin</span><span class="p">(</span>
+                        <span class="p">(</span>
+                            <span class="n">sa</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">geom_column</span><span class="p">,</span> <span class="n">Geography</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">geom_column</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">Geometry</span><span class="p">)</span>
+                            <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">geom_column</span>
+                        <span class="p">),</span>
+                        <span class="n">sa</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">geometry</span><span class="p">,</span> <span class="n">Geography</span><span class="p">),</span>
+                        <span class="n">radius</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">geo_filter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">geom_column</span><span class="o">.</span><span class="n">ST_Intersects</span><span class="p">(</span><span class="n">geometry</span><span class="p">)</span>
+                <span class="n">geo_filters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">geo_filter</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">or_</span><span class="p">(</span><span class="o">*</span><span class="n">geo_filters</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;geoIntersection&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;period_start&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span> <span class="ow">and</span> <span class="s2">&quot;period_end&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+            <span class="n">period_start</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;period_start&quot;</span><span class="p">)</span>
+            <span class="n">period_end</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;period_end&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                <span class="n">or_</span><span class="p">(</span>
+                    <span class="n">func</span><span class="o">.</span><span class="n">gn_commons</span><span class="o">.</span><span class="n">is_in_period</span><span class="p">(</span>
+                        <span class="n">func</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">date_min</span><span class="p">),</span>
+                        <span class="n">func</span><span class="o">.</span><span class="n">to_date</span><span class="p">(</span><span class="n">period_start</span><span class="p">,</span> <span class="s2">&quot;DD-MM&quot;</span><span class="p">),</span>
+                        <span class="n">func</span><span class="o">.</span><span class="n">to_date</span><span class="p">(</span><span class="n">period_end</span><span class="p">,</span> <span class="s2">&quot;DD-MM&quot;</span><span class="p">),</span>
+                    <span class="p">),</span>
+                    <span class="n">func</span><span class="o">.</span><span class="n">gn_commons</span><span class="o">.</span><span class="n">is_in_period</span><span class="p">(</span>
+                        <span class="n">func</span><span class="o">.</span><span class="n">date</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">date_max</span><span class="p">),</span>
+                        <span class="n">func</span><span class="o">.</span><span class="n">to_date</span><span class="p">(</span><span class="n">period_start</span><span class="p">,</span> <span class="s2">&quot;DD-MM&quot;</span><span class="p">),</span>
+                        <span class="n">func</span><span class="o">.</span><span class="n">to_date</span><span class="p">(</span><span class="n">period_end</span><span class="p">,</span> <span class="s2">&quot;DD-MM&quot;</span><span class="p">),</span>
+                    <span class="p">),</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="s2">&quot;unique_id_sinp&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">uuid_filter</span> <span class="o">=</span> <span class="n">uuid</span><span class="o">.</span><span class="n">UUID</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">&quot;unique_id_sinp&quot;</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">BadRequest</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">unique_id_sinp</span> <span class="o">==</span> <span class="n">uuid_filter</span><span class="p">)</span>
+        <span class="c1"># generic filters</span>
+        <span class="k">for</span> <span class="n">colname</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">filters</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">colname</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;area&quot;</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">geom_column</span><span class="o">.</span><span class="n">class_</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span>
+                    <span class="n">l_areas_cte</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="n">select</span><span class="p">(</span><span class="n">LAreas</span><span class="o">.</span><span class="n">geom</span><span class="p">,</span> <span class="n">LAreas</span><span class="o">.</span><span class="n">geom_4326</span><span class="p">)</span>
+                        <span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">LAreas</span><span class="o">.</span><span class="n">id_area</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                        <span class="o">.</span><span class="n">cte</span><span class="p">(</span><span class="s2">&quot;area_filter&quot;</span><span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">srid</span> <span class="o">!=</span> <span class="mi">4326</span><span class="p">:</span>
+
+                        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">srid</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">srid_l_areas</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                                <span class="n">func</span><span class="o">.</span><span class="n">ST_Intersects</span><span class="p">(</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">geom_column</span><span class="p">,</span>
+                                    <span class="n">func</span><span class="o">.</span><span class="n">ST_Transform</span><span class="p">(</span><span class="n">l_areas_cte</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">geom</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">srid</span><span class="p">),</span>
+                                <span class="p">)</span>
+                            <span class="p">)</span>
+
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                                <span class="n">func</span><span class="o">.</span><span class="n">ST_Intersects</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">geom_column</span><span class="p">,</span> <span class="n">l_areas_cte</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">geom</span><span class="p">)</span>
+                            <span class="p">)</span>
+
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                            <span class="n">func</span><span class="o">.</span><span class="n">ST_Intersects</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">geom_column</span><span class="p">,</span> <span class="n">l_areas_cte</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">geom_4326</span><span class="p">)</span>
+                        <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">add_join</span><span class="p">(</span>
+                        <span class="n">CorAreaSynthese</span><span class="p">,</span>
+                        <span class="n">CorAreaSynthese</span><span class="o">.</span><span class="n">id_synthese</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">id_synthese</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">CorAreaSynthese</span><span class="o">.</span><span class="n">id_area</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="n">colname</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;id_&quot;</span><span class="p">):</span>
+                <span class="n">col</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">__table__</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">colname</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">col</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">value</span><span class="p">))</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">col</span> <span class="o">==</span> <span class="n">value</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">__table__</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">colname</span><span class="p">):</span>
+                <span class="n">col</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">__table__</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="n">colname</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">col</span><span class="o">.</span><span class="n">type</span><span class="p">)</span> <span class="o">==</span> <span class="s2">&quot;INTEGER&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">colname</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;precision&quot;</span><span class="p">]:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">col</span> <span class="o">&lt;=</span> <span class="n">value</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">col</span> <span class="o">==</span> <span class="n">value</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">col</span><span class="o">.</span><span class="n">ilike</span><span class="p">(</span><span class="s2">&quot;%</span><span class="si">{}</span><span class="s2">%&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="SyntheseQuery.apply_all_filters">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.SyntheseQuery.apply_all_filters">[docs]</a>
+    <span class="k">def</span> <span class="nf">apply_all_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">permissions</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">permissions</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>  <span class="c1"># scope</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filter_query_with_cruved</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">scope</span><span class="o">=</span><span class="n">permissions</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filter_query_with_permissions</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">permissions</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_taxonomy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_other_filters</span><span class="p">(</span><span class="n">user</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SyntheseQuery.build_query">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.SyntheseQuery.build_query">[docs]</a>
+    <span class="k">def</span> <span class="nf">build_query</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">query_joins</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">query</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span><span class="o">.</span><span class="n">select_from</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">query_joins</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">query</span></div>
+
+
+<div class="viewcode-block" id="SyntheseQuery.filter_query_all_filters">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.SyntheseQuery.filter_query_all_filters">[docs]</a>
+    <span class="k">def</span> <span class="nf">filter_query_all_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">permissions</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;High level function to manage query with all filters.</span>
+
+<span class="sd">        Apply CRUVED, taxonomy and other filters.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        user: str</span>
+<span class="sd">            User filtered by CRUVED.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        sqlalchemy.orm.query.Query.filter</span>
+<span class="sd">            Combined filter to apply.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apply_all_filters</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">permissions</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_query</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="SyntheseQuery.build_bdc_status_filters">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.SyntheseQuery.build_bdc_status_filters">[docs]</a>
+    <span class="k">def</span> <span class="nf">build_bdc_status_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">protection_status_value</span><span class="p">,</span> <span class="n">red_list_filters</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create subquery for bdc_status filters</span>
+
+<span class="sd">        Objectif : filtrer les données ayant :</span>
+<span class="sd">          - les statuts du type demandé par l&#39;utilisateur</span>
+<span class="sd">          - les status s&#39;appliquent bien sur la zone géographique de la donnée (c-a-d le département)</span>
+
+<span class="sd">        Idée de façon à limiter le nombre de sous requêtes (le nombre de status demandé ne dégrade pas les performances),</span>
+<span class="sd">            la liste des status selectionnés par l&#39;utilisateur s&#39;appliquant à l&#39;observation est</span>
+<span class="sd">            aggrégée de façon à tester le nombre puis jointer sur le département de la donnée</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Ajout de la table taxref si non ajouté</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_join</span><span class="p">(</span><span class="n">Taxref</span><span class="p">,</span> <span class="n">Taxref</span><span class="o">.</span><span class="n">cd_nom</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">cd_nom</span><span class="p">)</span>
+
+        <span class="c1"># Ajout jointure permettant d&#39;avoir le département pour chaque donnée</span>
+        <span class="n">cas_dep</span> <span class="o">=</span> <span class="n">aliased</span><span class="p">(</span><span class="n">CorAreaSynthese</span><span class="p">)</span>
+        <span class="n">lareas_dep</span> <span class="o">=</span> <span class="n">aliased</span><span class="p">(</span><span class="n">LAreas</span><span class="p">)</span>
+        <span class="n">bib_area_dep</span> <span class="o">=</span> <span class="n">aliased</span><span class="p">(</span><span class="n">BibAreasTypes</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_join</span><span class="p">(</span><span class="n">cas_dep</span><span class="p">,</span> <span class="n">cas_dep</span><span class="o">.</span><span class="n">id_synthese</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">id_synthese</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_join</span><span class="p">(</span><span class="n">lareas_dep</span><span class="p">,</span> <span class="n">lareas_dep</span><span class="o">.</span><span class="n">id_area</span><span class="p">,</span> <span class="n">cas_dep</span><span class="o">.</span><span class="n">id_area</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_join_multiple_cond</span><span class="p">(</span>
+            <span class="n">bib_area_dep</span><span class="p">,</span>
+            <span class="p">[</span><span class="n">bib_area_dep</span><span class="o">.</span><span class="n">id_type</span> <span class="o">==</span> <span class="n">lareas_dep</span><span class="o">.</span><span class="n">id_type</span><span class="p">,</span> <span class="n">bib_area_dep</span><span class="o">.</span><span class="n">type_code</span> <span class="o">==</span> <span class="s2">&quot;DEP&quot;</span><span class="p">],</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Creation requête CTE : taxon, zone d&#39;application départementale des textes</span>
+        <span class="c1">#   pour les taxons répondant aux critères de selection</span>
+        <span class="n">bdc_status_by_type_cte</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">select</span><span class="p">(</span>
+                <span class="n">TaxrefBdcStatutTaxon</span><span class="o">.</span><span class="n">cd_ref</span><span class="p">,</span>
+                <span class="n">bdc_statut_cor_text_area</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id_area</span><span class="p">,</span>
+                <span class="n">TaxrefBdcStatutText</span><span class="o">.</span><span class="n">cd_type_statut</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="o">.</span><span class="n">distinct</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">select_from</span><span class="p">(</span>
+                <span class="n">TaxrefBdcStatutTaxon</span><span class="o">.</span><span class="n">__table__</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="n">TaxrefBdcStatutCorTextValues</span><span class="p">,</span>
+                    <span class="n">TaxrefBdcStatutCorTextValues</span><span class="o">.</span><span class="n">id_value_text</span>
+                    <span class="o">==</span> <span class="n">TaxrefBdcStatutTaxon</span><span class="o">.</span><span class="n">id_value_text</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="n">TaxrefBdcStatutText</span><span class="p">,</span>
+                    <span class="n">TaxrefBdcStatutText</span><span class="o">.</span><span class="n">id_text</span> <span class="o">==</span> <span class="n">TaxrefBdcStatutCorTextValues</span><span class="o">.</span><span class="n">id_text</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="n">TaxrefBdcStatutValues</span><span class="p">,</span>
+                    <span class="n">TaxrefBdcStatutValues</span><span class="o">.</span><span class="n">id_value</span> <span class="o">==</span> <span class="n">TaxrefBdcStatutCorTextValues</span><span class="o">.</span><span class="n">id_value</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                    <span class="n">bdc_statut_cor_text_area</span><span class="p">,</span>
+                    <span class="n">bdc_statut_cor_text_area</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id_text</span> <span class="o">==</span> <span class="n">TaxrefBdcStatutText</span><span class="o">.</span><span class="n">id_text</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">TaxrefBdcStatutText</span><span class="o">.</span><span class="n">enable</span> <span class="o">==</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># ajout des filtres de selection des textes</span>
+        <span class="n">bdc_status_filters</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">red_list_filters</span><span class="p">:</span>
+            <span class="n">bdc_status_filters</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">and_</span><span class="p">(</span>
+                    <span class="n">TaxrefBdcStatutValues</span><span class="o">.</span><span class="n">code_statut</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">v</span><span class="p">),</span>
+                    <span class="n">TaxrefBdcStatutText</span><span class="o">.</span><span class="n">cd_type_statut</span> <span class="o">==</span> <span class="n">k</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">red_list_filters</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="p">]</span>
+        <span class="k">if</span> <span class="n">protection_status_value</span><span class="p">:</span>
+            <span class="n">bdc_status_filters</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="n">TaxrefBdcStatutText</span><span class="o">.</span><span class="n">cd_type_statut</span><span class="o">.</span><span class="n">in_</span><span class="p">(</span><span class="n">protection_status_value</span><span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="n">bdc_status_by_type_cte</span> <span class="o">=</span> <span class="n">bdc_status_by_type_cte</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">or_</span><span class="p">(</span><span class="o">*</span><span class="n">bdc_status_filters</span><span class="p">))</span>
+        <span class="n">bdc_status_by_type_cte</span> <span class="o">=</span> <span class="n">bdc_status_by_type_cte</span><span class="o">.</span><span class="n">cte</span><span class="p">(</span>
+            <span class="n">name</span><span class="o">=</span><span class="s2">&quot;bdc_status_by_type_&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">())[:</span><span class="mi">4</span><span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="c1"># group by de façon à ne selectionner que les taxons</span>
+        <span class="c1">#   qui ont l&#39;ensemble des textes selectionnés par l&#39;utilisateur</span>
+        <span class="c1">#   c-a-d dont le nombre de cd_type_statut correspond au nombre demandé</span>
+        <span class="n">bdc_status_cte</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span>
+            <span class="n">bdc_status_by_type_cte</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">cd_ref</span><span class="p">,</span>
+            <span class="n">func</span><span class="o">.</span><span class="n">array_agg</span><span class="p">(</span><span class="n">bdc_status_by_type_cte</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">id_area</span><span class="p">)</span><span class="o">.</span><span class="n">label</span><span class="p">(</span><span class="s2">&quot;ids_area&quot;</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">bdc_status_cte</span> <span class="o">=</span> <span class="n">bdc_status_cte</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="n">bdc_status_by_type_cte</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">cd_ref</span><span class="p">)</span><span class="o">.</span><span class="n">having</span><span class="p">(</span>
+            <span class="n">func</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">distinct</span><span class="p">(</span><span class="n">bdc_status_by_type_cte</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">cd_type_statut</span><span class="p">))</span>
+            <span class="o">==</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">protection_status_value</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">red_list_filters</span><span class="p">))</span>
+        <span class="p">)</span>
+
+        <span class="n">bdc_status_cte</span> <span class="o">=</span> <span class="n">bdc_status_cte</span><span class="o">.</span><span class="n">cte</span><span class="p">()</span>
+
+        <span class="c1"># Jointure sur le taxon</span>
+        <span class="c1"># et vérification que l&#39;ensemble des textes</span>
+        <span class="c1"># soit sur bien sur le département de l&#39;observation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">add_join_multiple_cond</span><span class="p">(</span>
+            <span class="n">bdc_status_cte</span><span class="p">,</span>
+            <span class="p">[</span>
+                <span class="n">bdc_status_cte</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">cd_ref</span> <span class="o">==</span> <span class="n">Taxref</span><span class="o">.</span><span class="n">cd_ref</span><span class="p">,</span>
+                <span class="n">func</span><span class="o">.</span><span class="n">array_length</span><span class="p">(</span>
+                    <span class="n">func</span><span class="o">.</span><span class="n">array_positions</span><span class="p">(</span><span class="n">bdc_status_cte</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">ids_area</span><span class="p">,</span> <span class="n">cas_dep</span><span class="o">.</span><span class="n">id_area</span><span class="p">),</span> <span class="mi">1</span>
+                <span class="p">)</span>
+                <span class="o">==</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">protection_status_value</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">red_list_filters</span><span class="p">)),</span>
+            <span class="p">],</span>
+        <span class="p">)</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="remove_accents">
+<a class="viewcode-back" href="../../../../../autoapi/geonature/core/gn_synthese/utils/query_select_sqla/index.html#geonature.core.gn_synthese.utils.query_select_sqla.remove_accents">[docs]</a>
+<span class="k">def</span> <span class="nf">remove_accents</span><span class="p">(</span><span class="n">input_str</span><span class="p">):</span>
+    <span class="n">nfkd_form</span> <span class="o">=</span> <span class="n">unicodedata</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="s2">&quot;NFKD&quot;</span><span class="p">,</span> <span class="n">input_str</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">nfkd_form</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">unicodedata</span><span class="o">.</span><span class="n">combining</span><span class="p">(</span><span class="n">c</span><span class="p">)])</span></div>
+
+</pre></div>
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2018-2024, Parc National des Écrins, Parc National des Cévennes
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer no-toc">
+      
+      
+      
+    </aside>
+  </div>
+</div><script src="../../../../../_static/documentation_options.js?v=831053d0"></script>
+    <script src="../../../../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../../../_static/scripts/furo.js?v=5fa4622c"></script>
+    <script src="../../../../../_static/translations.js?v=041d0952"></script>
+    </body>
+</html>
